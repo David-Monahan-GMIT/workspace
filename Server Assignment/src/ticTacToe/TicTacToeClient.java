@@ -5,6 +5,7 @@ package ticTacToe;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.*;
 import javax.swing.*;
@@ -42,7 +43,22 @@ public class TicTacToeClient extends JApplet implements Runnable {
 				clearBoard();
 				myTurn = true;
 				sendClickedSquare(10);				
-				// getThePage( event.getActionCommand() );
+				
+				try {
+					myMark = input.readChar();
+				} catch (IOException e) {
+					clientLog.log(Level.SEVERE, e+ "");
+				}
+
+				// display player ID in event-dispatch thread
+				SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						idField.setText("You are player \"" + myMark + "\"");
+					}
+				});
+
+				myTurn = (myMark == X_MARK ? true : false);
+				
 			}
 		} // end inner class
 		); // end call to addActionListener

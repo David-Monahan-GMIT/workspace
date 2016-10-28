@@ -153,7 +153,7 @@ public class TicTacToeServer extends JFrame {
 
 	// place code in this method to determine whether game over
 	public boolean isGameOver(char mark) {
-		if (gameWinner(mark) || moveCount == 9) {
+		if (gameWinner(mark) || moveCount >= 8) {
 			moveCount = 0;
 			return true;
 		}
@@ -197,7 +197,7 @@ public class TicTacToeServer extends JFrame {
 		private Socket connection;
 		private DataInputStream input;
 		private DataOutputStream output;
-		private int playerNumber, moveCount = 0;
+		private int playerNumber;
 		private char mark;
 		protected boolean suspended = true;
 
@@ -293,8 +293,8 @@ public class TicTacToeServer extends JFrame {
 				} else {
 					output.writeUTF("Draw Game");
 					output.writeUTF("Game Over");
-				}
-
+				}		
+				
 				connection.close(); // close connection to client
 
 			} // end try
