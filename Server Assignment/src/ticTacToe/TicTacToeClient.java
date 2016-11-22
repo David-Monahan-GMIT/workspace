@@ -1,12 +1,18 @@
 package ticTacToe;
 
-// Fig. 18.9: TicTacToeClient.java
-// Client that let a user play Tic-Tac-Toe with another across a network.
+/**
+ * David Monahan, Client Server Programming assignment 4
+ * Client applet for connecting to a server program and playing TicTacToe 
+ * against another identical client. When the game ends a reset button will
+ * become enabled allowing either client to restart the game.
+ */
 import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.io.*;
 import javax.swing.*;
 
@@ -23,10 +29,20 @@ public class TicTacToeClient extends JApplet implements Runnable {
 	private boolean myTurn;
 	private final char X_MARK = 'X', O_MARK = 'O';
 
-	private static final Logger clientLog = Logger.getLogger("clientServerLog");
+	public static final Logger logger = Logger.getLogger(TicTacToeClient.class.getName());
 
 	// Set up user-interface and board
 	public void init() {
+
+		try {
+			FileHandler fh = new FileHandler("c:\\Users\\Dave\\Desktop\\clientlog.log", true);
+			fh.setFormatter(new SimpleFormatter());
+			logger.addHandler(fh);
+
+		} catch (java.io.IOException IOE) {
+			IOE.printStackTrace();
+		}
+
 		Container container = getContentPane();
 
 		// set up JTextArea to display messages to user
@@ -36,34 +52,11 @@ public class TicTacToeClient extends JApplet implements Runnable {
 
 		resetButton = new JButton("Reset");
 		resetButton.setEnabled(false);
-		resetButton.addActionListener(new ActionListener() {
-			// get document specified by user
-			public void actionPerformed(ActionEvent event) {
-				resetButton.setEnabled(false);
-				clearBoard();
-				myTurn = true;
-				sendClickedSquare(10);				
-				
-				try {
-					myMark = input.readChar();
-				} catch (IOException e) {
-					clientLog.log(Level.SEVERE, e+ "");
-				}
 
-				// display player ID in event-dispatch thread
-				SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						idField.setText("You are player \"" + myMark + "\"");
-					}
-				});
+		myTurn = (myMark == X_MARK ? true : false);
 
-				myTurn = (myMark == X_MARK ? true : false);
-				
-			}
-		} // end inner class
-		); // end call to addActionListener
 		container.add(resetButton, BorderLayout.PAGE_START);
-		
+
 		// set up panel for squares in board
 		boardPanel = new JPanel();
 		boardPanel.setLayout(new GridLayout(3, 3, 0, 0));
@@ -125,6 +118,27 @@ public class TicTacToeClient extends JApplet implements Runnable {
 
 	// control thread that allows continuous update of displayArea
 	public void run() {
+		/**
+		 * Adding Action Listener, This will restart the client, creating a new
+		 * socket in the process
+		 */
+		resetButton.addActionListener(new ActionListener() {
+			// get document specified by user
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+
+				
+				start();
+				for (int row = 0; row < board.length; row++) {
+					for (int col = 0; col < board[row].length; col++) {
+						setMark(board[row][col], ' ');
+					}
+				}
+				resetButton.setEnabled(false);
+			}
+		});
+
 		// get player's mark (X or O)
 		try {
 			myMark = input.readChar();
@@ -186,10 +200,58 @@ public class TicTacToeClient extends JApplet implements Runnable {
 				ioException.printStackTrace();
 			}
 
-		} 
-		else if (message.equals("Game Over")) {
+		}
+
+		if (message.equals("You Lose")) {
+
+			// get move location and update board
+			try {
+				int location = input.readInt();
+				int row = location / 3;
+				int column = location % 3;
+
+				setMark(board[row][column], (myMark == X_MARK ? O_MARK : X_MARK));
+				displayMessage("You lose.\n");
+				resetButton.setEnabled(true);
+				myTurn = false;
+
+			} // end try
+
+			// process problems communicating with server
+			catch (IOException ioException) {
+				ioException.printStackTrace();
+			}
+
+		} else if (message.equals("Draw")) {
+
+			// get move location and update board
+			try {
+				if (input.available() !=0) {
+					int location = input.readInt();
+					int row = location / 3;
+					int column = location % 3;	
+					setMark(board[row][column], (myMark == X_MARK ? O_MARK : X_MARK));
+				}
+				resetButton.setEnabled(true);
+				displayMessage("Game tied!\n");
+				myTurn = false;
+
+			} // end try
+
+			// process problems communicating with server
+			catch (IOException ioException) {
+				ioException.printStackTrace();
+			}
+
+		} else if (message.equals("You Win")) {
+
+			displayMessage("You Win!\n");
 			resetButton.setEnabled(true);
-		} // end else if
+			myTurn = false;
+
+		} else if (message.equals("reset")) {
+			start();
+		}
 
 		// simply display message
 		else
@@ -223,16 +285,19 @@ public class TicTacToeClient extends JApplet implements Runnable {
 			}
 		});
 	}
-	
+
 	private void clearBoard() {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				board = new Square[3][3];
 
-				// When creating a Square, the location argument to the constructor
-				// is a value from 0 to 8 indicating the position of the Square on
+				// When creating a Square, the location argument to the
+				// constructor
+				// is a value from 0 to 8 indicating the position of the Square
+				// on
 				// the board. Values 0, 1, and 2 are the first row, values 3, 4,
-				// and 5 are the second row. Values 6, 7, and 8 are the third row.
+				// and 5 are the second row. Values 6, 7, and 8 are the third
+				// row.
 				for (int row = 0; row < board.length; row++) {
 
 					for (int column = 0; column < board[row].length; column++) {
@@ -245,7 +310,6 @@ public class TicTacToeClient extends JApplet implements Runnable {
 			}
 		});
 	}
-
 
 	// send message to server indicating clicked square
 	public void sendClickedSquare(int location) {

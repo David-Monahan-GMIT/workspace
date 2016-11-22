@@ -1,14 +1,21 @@
 package ticTacToe;
 
-// Fig. 18.8: TicTacToeServer.java
-// This class maintains a game of Tic-Tac-Toe for two client applets.
+/**
+ * David Monahan, Client Server Programming assignment 4
+ * This is a server program for allowing to clients to play the game of TicTacToe
+ * against each other. Both clients are handled as two separate threads which will 
+ * take turns making moves until a draw happens or one wins. Either client can then
+ * reset the game to start over by clicking on a reset button.
+ */
 import java.awt.*;
 import java.awt.event.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.io.*;
 import javax.swing.*;
 
@@ -20,12 +27,22 @@ public class TicTacToeServer extends JFrame {
 	private int currentPlayer, moveCount = 0;
 	private final int PLAYER_X = 0, PLAYER_O = 1;
 	private final char X_MARK = 'X', O_MARK = 'O';
-	
-	private static final Logger serverLog = Logger.getLogger("clientServerLog");
+
+	public static final Logger logger = Logger.getLogger(TicTacToeServer.class.getName());
 
 	// set up tic-tac-toe server and GUI that displays messages
 	public TicTacToeServer() {
 		super("Tic-Tac-Toe Server");
+
+		try {
+			FileHandler fh = new FileHandler("c:\\Users\\Dave\\Desktop\\serverlog.log", true);
+			fh.setFormatter(new SimpleFormatter());
+			logger.addHandler(fh);
+
+		} catch (java.io.IOException IOE) {
+			logger.log(Level.SEVERE, IOE + "");
+			IOE.printStackTrace();
+		}
 
 		board = new char[9];
 		players = new Player[2];
@@ -33,12 +50,13 @@ public class TicTacToeServer extends JFrame {
 
 		// set up ServerSocket
 		try {
+			logger.log(Level.SEVERE, "Creating socket.");
 			server = new ServerSocket(12345, 2);
 		}
 
 		// process problems creating ServerSocket
 		catch (IOException ioException) {
-			serverLog.log(Level.SEVERE, ioException + "");
+			logger.log(Level.SEVERE, ioException + "");
 			ioException.printStackTrace();
 			System.exit(1);
 		}
@@ -66,7 +84,7 @@ public class TicTacToeServer extends JFrame {
 
 			// process problems receiving connection from client
 			catch (IOException ioException) {
-				serverLog.log(Level.SEVERE, ioException + "");
+				logger.log(Level.SEVERE, ioException + "");
 				ioException.printStackTrace();
 				System.exit(1);
 			}
@@ -102,7 +120,7 @@ public class TicTacToeServer extends JFrame {
 	// Determine if a move is valid. This method is synchronized because
 	// only one move can be made at a time.
 	public synchronized boolean validateAndMove(int location, int player) {
-		boolean moveDone = false;
+		// boolean moveDone = false;
 
 		// while not current player, must wait for turn
 		while (player != currentPlayer) {
@@ -114,13 +132,15 @@ public class TicTacToeServer extends JFrame {
 
 			// catch wait interruptions
 			catch (InterruptedException interruptedException) {
-				serverLog.log(Level.SEVERE, interruptedException + "");
+				logger.log(Level.SEVERE, interruptedException + "");
 				interruptedException.printStackTrace();
 			}
 		}
 
 		// if location not occupied, make move
 		if (!isOccupied(location)) {
+			// increment the move counter
+			moveCount++;
 
 			// set move in board array
 			board[location] = currentPlayer == PLAYER_X ? X_MARK : O_MARK;
@@ -128,16 +148,20 @@ public class TicTacToeServer extends JFrame {
 			// change current player
 			currentPlayer = (currentPlayer + 1) % 2;
 
-			// let new current player know that move occurred
-			players[currentPlayer].otherPlayerMoved(location);
+			if (!isGameOver())
+				players[currentPlayer].otherPlayerMoved(location);
+			else {
+				if (gameWinner(X_MARK) || gameWinner(O_MARK)) {
+					players[currentPlayer].gameOver(location);
+				} else
+					players[currentPlayer].draw(location);
+			}
 
 			notify(); // tell waiting player to continue
 
 			// tell player that made move that the move was valid
 			return true;
-		}
-
-		// tell player that made move that the move was not valid
+		} // tell player that made move that the move was not valid
 		else
 			return false;
 
@@ -152,19 +176,22 @@ public class TicTacToeServer extends JFrame {
 	}
 
 	// place code in this method to determine whether game over
-	public boolean isGameOver(char mark) {
-		if (gameWinner(mark) || moveCount >= 8) {
-			moveCount = 0;
+	public boolean isGameOver() {
+		if (gameWinner(X_MARK) || gameWinner(O_MARK)) {
 			return true;
+		} else if (moveCount == 9) {
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 
 	/**
 	 * Declare a List of 3 element Integer arrays to enumerate all possible
 	 * winning moves
 	 * 
-	 * @param mark The character mark being used by the current active player
+	 * @param mark
+	 *            The character mark being used by the current active player
 	 * @return True if someone has won, False otherwise
 	 */
 	public boolean gameWinner(char mark) {
@@ -184,6 +211,32 @@ public class TicTacToeServer extends JFrame {
 			}
 		}
 		return false; // this is left as an exercise
+	}
+
+	/**
+	 * Resets the game board at the end of the game
+	 */
+	public void resetBoard() {
+		for (int i = 0; i < board.length; i++)
+			board[i] = '\u0000';
+		moveCount = 0;
+		logger.log(Level.SEVERE, "Board was reset at end of game");
+
+	}
+
+	public boolean resetPressed() {
+		if (players[0].checkInput()) {
+			if (players[0].readInput() == "reset") {
+				players[1].sendString("reset");
+				return true;
+			}
+		} else if (players[1].checkInput()) {
+			if (players[1].readInput() == "reset") {
+				players[0].sendString("reset");
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static void main(String args[]) {
@@ -238,6 +291,24 @@ public class TicTacToeServer extends JFrame {
 			}
 		}
 
+		public void gameOver(int location) {
+			try {
+				output.writeUTF("You Lose");
+				output.writeInt(location);
+			} catch (IOException ioException) {
+				ioException.printStackTrace();
+			}
+		}
+
+		public void draw(int location) {
+			try {
+				output.writeUTF("Draw");
+				output.writeInt(location);
+			} catch (IOException ioException) {
+				ioException.printStackTrace();
+			}
+		}
+
 		// control thread's execution
 		public void run() {
 			// send client message indicating its mark (X or O),
@@ -274,28 +345,54 @@ public class TicTacToeServer extends JFrame {
 				}
 
 				// while game not over
-				while (!isGameOver(playerNumber == PLAYER_X ? X_MARK : O_MARK)) {
+				while (!isGameOver()) {
 
 					// get move location from client
 					int location = input.readInt();
 
-					// check for valid move
 					if (validateAndMove(location, playerNumber)) {
 						displayMessage("\nlocation: " + location);
 						output.writeUTF("Valid move.");
-						moveCount++;
+
 					} else
 						output.writeUTF("Invalid move, try again");
 				}
-				if (gameWinner(playerNumber == PLAYER_X ? X_MARK : O_MARK)) {
-					output.writeUTF("YOU WIN");
-					output.writeUTF("Game Over");
-				} else {
-					output.writeUTF("Draw Game");
-					output.writeUTF("Game Over");
-				}		
-				
-				connection.close(); // close connection to client
+				if (isGameOver()) {
+					if (gameWinner(X_MARK) || gameWinner(O_MARK)) {
+						output.writeUTF("You Win");
+					} else {
+						output.writeUTF("Draw");
+					}
+
+					//while (!resetPressed());
+
+					resetBoard();
+
+					// Reset The Players
+					players = new Player[2];
+					for (int i = 0; i < players.length; i++) {
+
+						// wait for connection, create Player, start thread
+						try {
+							players[i] = new Player(server.accept(), i);
+							players[i].start();
+							currentPlayer = PLAYER_X;
+						}
+
+						// process problems receiving connection from client
+						catch (IOException ioException) {
+							ioException.printStackTrace();
+							System.exit(1);
+						}
+					}
+
+					// Player X is suspended until Player O connects.
+					// Resume player X now.
+					synchronized (players[PLAYER_X]) {
+						players[PLAYER_X].setSuspended(false);
+						players[PLAYER_X].notify();
+					}
+				}
 
 			} // end try
 
@@ -304,27 +401,46 @@ public class TicTacToeServer extends JFrame {
 				ioException.printStackTrace();
 				System.exit(1);
 			}
+		}
 
-		} // end method run
-
+		// end method run
 		// set whether or not thread is suspended
+		public boolean checkInput() {
+			int temp = 0;
+			try {
+				temp = input.available();
+			} catch (IOException e) {
+				logger.log(Level.SEVERE, "" + e);
+			}
+			return (temp == 0 ? false : true);
+		}
+
+		// end method run
+		// set whether or not thread is suspended
+		public String readInput() {
+			String temp = "";
+			try {
+				temp = input.readUTF();
+			} catch (IOException e) {
+				logger.log(Level.SEVERE, "" + e);
+			}
+			return temp;
+		}
+
+		// end method run
+		// set whether or not thread is suspended
+		public void sendString(String msg) {
+			try {
+				output.writeUTF(msg);
+				;
+			} catch (IOException e) {
+				logger.log(Level.SEVERE, "" + e);
+			}
+		}
+
 		public void setSuspended(boolean status) {
 			suspended = status;
 		}
-
 	} // end class Player
 
-} // end class TicTacToeServer09
-
-/**************************************************************************
- * (C) Copyright 1992-2003 by Deitel & Associates, Inc. and * Prentice Hall. All
- * Rights Reserved. * * DISCLAIMER: The authors and publisher of this book have
- * used their * best efforts in preparing the book. These efforts include the *
- * development, research, and testing of the theories and programs * to
- * determine their effectiveness. The authors and publisher make * no warranty
- * of any kind, expressed or implied, with regard to these * programs or to the
- * documentation contained in these books. The authors * and publisher shall not
- * be liable in any event for incidental or * consequential damages in
- * connection with, or arising out of, the * furnishing, performance, or use of
- * these programs. *
- *************************************************************************/
+}
