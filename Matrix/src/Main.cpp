@@ -1,0 +1,35 @@
+/*
+ * Main.cpp
+ *
+ *  Created on: 24 Jan 2017
+ *      Author: Dave
+ */
+#include <iostream>
+#include <string>
+#include "Matrix.h"
+
+void testConstructor();
+
+int main(int argc, char *argv[]) {
+
+	testConstructor();
+
+	return 0;
+}
+void testConstructor() {
+	Matrix m1;
+	Matrix m2(2.2);
+	Matrix m3(5,5);
+	
+	std::cout << "Matrix 1 = " << std::endl << m1;
+	std::cout << "Matrix 1 element at 5,5 = " << m1.getElement(5,5) << std::endl;
+	
+	
+	std::cout << "Matrix 2= " << std::endl << m2;
+	std::cout << "Matrix 2 element at 5,5 = " << m2.getElement(5,5) << std::endl;
+	
+	std::cout << "Matrix 3 (5x5)= " << std::endl << m3;
+	std::cout << "Matrix 3 element at 2,2 = " << m3.getElement(2,2) << std::endl;
+}
+
+
