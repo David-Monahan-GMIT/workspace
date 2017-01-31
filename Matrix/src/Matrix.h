@@ -23,6 +23,7 @@ class Matrix {
 		Matrix();
 		Matrix(double num);
 		Matrix(unsigned int row, unsigned int col);
+		Matrix(Matrix&);
 		~Matrix();
 	// Functions
 		unsigned int getRows();

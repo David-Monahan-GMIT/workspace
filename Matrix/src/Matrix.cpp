@@ -44,7 +44,7 @@ Matrix::Matrix(double num) {
 	unsigned int i,j;
 	
 	if(mat != nullptr) {
-		mat = new double* [rows];
+		mat = new double* [rows];	// New is an operator that can be overloaded, or to add to an existing class
 		for(i=0;i<rows;i++) {
 			mat[i] = new double [cols];
 			for(j=0;j<cols;j++) {
@@ -57,7 +57,7 @@ Matrix::Matrix(double num) {
 Matrix::Matrix(unsigned int row, unsigned int col) {
 
 	#if VERBOSE
-		std::cout << "Default Constructor" << std::endl;
+		std::cout << "Custom Matrix Constructor" << std::endl;
 	#endif
 	rows=row;
 	cols=col;
@@ -76,11 +76,31 @@ Matrix::Matrix(unsigned int row, unsigned int col) {
 	}	
 }
 
+Matrix::Matrix(Matrix& matCopy) {
+
+	#if VERBOSE
+		std::cout << " Copy Constructor" << std::endl;
+	#endif
+	rows=matCopy.getRows();
+	cols=matCopy.getCols();
+	
+	unsigned int i,j;
+	if(mat != nullptr) {
+		mat = new double* [rows];
+		for(i=0;i<rows;i++) {
+			mat[i] = new double[cols];
+			for(j=0;j<cols;j++) {
+				mat[i][j] = matCopy.getElement(i,j);
+			}
+		}
+	}	
+}
+
 Matrix::~Matrix() {
 	#if VERBOSE
 		std::cout << "Default Destructor" << std::endl;
 	#endif
-	if(mat != nullptr){
+	if(mat != nullptr){ 
 		for(unsigned int i=0; i<rows; i++) {
 			delete [] mat[i];
 		}
