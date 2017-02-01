@@ -9,6 +9,8 @@
 
 #include <iostream>
 #include <cmath>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
 #include "Matrix.h"
 
 Matrix::Matrix() {
@@ -20,7 +22,8 @@ Matrix::Matrix() {
 	cols=10;
 	
 	unsigned int i,j;
-	unsigned int k=0;
+	unsigned int k =0;
+	srand(time(NULL));
 	
 	if(mat != nullptr) {
 		mat = new double* [rows];
@@ -28,10 +31,10 @@ Matrix::Matrix() {
 			mat[i] = new double[cols];
 			for(j=0;j<cols;j++) {
 				mat[i][j] = k;
-				k++;
+				k=rand()%100; // random number between 1-100
 			}
 		}	
-	}	
+	}
 }
 Matrix::Matrix(double num) {
 	#if VERBOSE
@@ -63,7 +66,7 @@ Matrix::Matrix(unsigned int row, unsigned int col) {
 	cols=col;
 	
 	unsigned int i,j;
-	unsigned int k=0;
+	unsigned int k=1;
 	if(mat != nullptr) {
 		mat = new double* [rows];
 		for(i=0;i<rows;i++) {
@@ -79,11 +82,12 @@ Matrix::Matrix(unsigned int row, unsigned int col) {
 Matrix::Matrix(Matrix& matCopy) {
 
 	#if VERBOSE
-		std::cout << " Copy Constructor" << std::endl;
+		std::cout << "Copy Constructor" << std::endl;
 	#endif
+
 	rows=matCopy.getRows();
 	cols=matCopy.getCols();
-	
+
 	unsigned int i,j;
 	if(mat != nullptr) {
 		mat = new double* [rows];
@@ -93,7 +97,7 @@ Matrix::Matrix(Matrix& matCopy) {
 				mat[i][j] = matCopy.getElement(i,j);
 			}
 		}
-	}	
+	}
 }
 
 Matrix::~Matrix() {
@@ -115,12 +119,12 @@ unsigned int Matrix::getCols() {
 	return cols;
 }
 double Matrix::getElement(unsigned int row, unsigned int col){
-	//return matrix[row][col];
+	// returns the element located at [row,col]
 	return mat[row][col];
 }
 
 std::ostream& operator<<(std::ostream &output, Matrix &m) {
-	//output << "(" << m.getRows() << ", " << m.getCols() <<")" << std::endl;
+	// Generate a formatted string for the matrix and return it
 	unsigned int i,j;
 	for(i=0; i<m.getRows();i++) {
 		for(j=0;j<m.getCols();j++) {
@@ -129,4 +133,34 @@ std::ostream& operator<<(std::ostream &output, Matrix &m) {
 		output << std::endl;
 	}	
 	return output;
+}
+void Matrix::operator=(Matrix &matrix) {
+
+	// Check for self assignment
+	if(this != &matrix){
+
+		// If it's not null delete whatever it has
+		if(mat != nullptr){
+			for(unsigned int i=0; i<rows; i++) {
+				delete [] mat[i];
+			}
+			delete [] mat;
+		}
+
+		// Reassign the rows and cols
+		rows=matrix.getRows();
+		cols=matrix.getCols();
+
+		unsigned int i,j; // elements
+		// Allocate memory for a new matrix and assign it's elements the correct values
+		if(mat != nullptr) {
+			mat = new double* [rows];
+			for(i=0;i<rows;i++) {
+				mat[i] = new double[cols];
+				for(j=0;j<cols;j++) {
+					mat[i][j] = matrix.getElement(i,j);
+				}
+			}
+		}
+	}
 }

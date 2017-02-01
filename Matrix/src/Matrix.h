@@ -30,5 +30,6 @@ class Matrix {
 		unsigned int getCols();
 		double getElement(unsigned int row, unsigned int col);
 		friend std::ostream &operator<<(std::ostream &, Matrix &);	
-};
+		void operator=(Matrix &matrix);
+		};
 #endif /* SRC_MATRIX_H_ */
