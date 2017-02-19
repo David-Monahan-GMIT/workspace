@@ -1,0 +1,541 @@
+C51 COMPILER V9.02   OS_CPU_C                                                              02/17/2017 11:57:45 PAGE 1   
+
+
+C51 COMPILER V9.02, COMPILATION OF MODULE OS_CPU_C
+NO OBJECT MODULE REQUESTED
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE src\arch\OS_CPU_C.C LARGE WARNINGLEVEL(0) OPTIMIZE(SIZE) REGFILE(.\bin\obj\
+                    -kernel.ORC) BROWSE ORDER NOAREGS INCDIR(src\include) DEBUG OBJECTEXTEND NOCOND PRINT(.\bin\lst\OS_CPU_C.lst) SRC(.\bin\o
+                    -bj\OS_CPU_C.SRC)
+
+line level    source
+
+   1          /********************************************************************************************************
+   2          
+   3          ********************************************************************************************************/
+   4          
+   5          #define  OS_CPU_GLOBALS
+   6          #include "includes.h"
+   7          
+   8          #undef data
+   9          #undef pdata
+  10          #undef xdata
+  11          #undef idata
+  12          
+  13          
+  14          /* Local variable definitions */
+  15          OS_EXT OS_TCB *OSTCBHighRdy;
+  16          data INT8U RxBuffer = 0;
+  17          INT8U data SaveSP;
+  18          
+  19          /* External variable definitions */
+  20          extern idata INT8U Stack[1];
+  21          extern INT8U xdata * data C_XBP;
+  22          
+  23          /* Local function definitions */
+  24          void LoadCtx() KCREENTRANT;
+  25          
+  26          
+  27          /********************************************************************************************************
+  28          *                                        INITIALIZE A TASK'S STACK
+  29          *
+  30          * Description: This function is called by either OSTaskCreate() or OSTaskCreateExt() to initialize the
+  31          *              stack frame of the task being created.  This function is highly processor specific.
+  32          *
+  33          * Arguments  : task          is a pointer to the task code
+  34          *
+  35          *              pdata         is a pointer to a user supplied data area that will be passed to the task
+  36          *                            when the task first executes.
+  37          *
+  38          *              ptos          is a pointer to the top of stack.  It is assumed that 'ptos' points to
+  39          *                            a 'free' entry on the task stack.  If OS_STK_GROWTH is set to 1 then 
+  40          *                            'ptos' will contain the HIGHEST valid address of the stack.  Similarly, if
+  41          *                            OS_STK_GROWTH is set to 0, the 'ptos' will contains the LOWEST valid address
+  42          *                            of the stack.
+  43          *
+  44          *              opt           specifies options that can be used to alter the behavior of OSTaskStkInit().
+  45          *                            (see uCOS_II.H for OS_TASK_OPT_???).
+  46          *
+  47          * Returns    : Always returns the location of the new top-of-stack' once the processor registers have
+  48          *              been placed on the stack in the proper order.
+  49          *
+  50          * Note(s)    : Interrupts are enabled when your task starts executing. You can change this by setting the
+  51          *              PSW to 0x0002 instead.  In this case, interrupts would be disabled upon task startup.  The
+  52          *              application code would be responsible for enabling interrupts at the beginning of the task
+  53          *              code.  You will need to modify OSTaskIdle() and OSTaskStat() so that they enable 
+C51 COMPILER V9.02   OS_CPU_C                                                              02/17/2017 11:57:45 PAGE 2   
+
+  54          *              interrupts.  Failure to do this will make your system crash!
+  55          **********************************************************************************************************
+             -/
+  56          OS_STK *OSTaskStkInit (void (*task)(void *pd) KCREENTRANT, void *ptd, OS_STK *ptos, INT16U opt) KCREENTRAN
+             -T
+  57          {
+  58   1        INT8U *stk;
+  59   1      
+  60   1        /* 'opt' is not used, prevent warning */
+  61   1        opt = opt;
+  62   1        
+  63   1        /* Get pointer to the top of the stack */                       
+  64   1        stk = (INT8U *)(ptos);                
+  65   1      
+  66   1        /* Save the ptd to external stack */
+  67   1        stk -= sizeof(void *);    
+  68   1        *(void**)stk = ptd;
+  69   1      
+  70   1        /* The value should be loaded to PC next time when this task is running*/
+  71   1        stk -= sizeof(INT16U);
+  72   1        *(INT16U*)(stk) = (INT16U)(task);
+  73   1      
+  74   1          /* The value should be loaded to PC next time when this task is running*/
+  75   1        stk -= sizeof(INT16U);
+  76   1        *(INT16U*)(stk) = (INT16U)(task);
+  77   1      
+  78   1        /* Following is the registers pushed into hardware stack */
+  79   1        *--stk = 'A';                 /* ACC */
+  80   1        *--stk = 'B';                 /* B   */
+  81   1        *--stk = 'H';                 /* DPH */
+  82   1        *--stk = 'L';                 /* DPL */
+  83   1        *--stk = PSW;                 /* PSW */
+  84   1        *--stk = 0;                   /* R0  */
+  85   1      
+  86   1        stk -= sizeof(void *);        /* R1,R2,R3 */
+  87   1        *(void**)stk = ptd;            /* functions args */       
+  88   1      
+  89   1        *--stk = 0x04;                /* R4  */
+  90   1        *--stk = 0x05;                /* R5  */
+  91   1        *--stk = 0x06;                /* R6  */
+  92   1        *--stk = 0x07;                /* R7  */
+  93   1        *--stk = 0x80;                /* IE, EA is enabled  */
+  94   1      
+  95   1        /* Next is calculating the hardware stack pointer */
+  96   1        *--stk = (INT8U)(Stack-1) + 14 + sizeof(INT16U) + sizeof(INT16U);
+  97   1      
+  98   1        /* Return the top-of-stack address */
+  99   1        return ((void *)stk);
+ 100   1      }
+ 101          
+ 102          
+ 103          /*
+ 104          **********************************************************************************************************
+             -*
+ 105          * OSStartHighRdy: START MULTITASKING
+ 106          *     
+ 107          * Duty:     a) Call OSTaskSwHook() then,
+ 108          *           b) Set OSRunning to TRUE,
+ 109          *           c) Switch to the highest priority task.
+ 110          *
+ 111          **********************************************************************************************************
+             -*
+C51 COMPILER V9.02   OS_CPU_C                                                              02/17/2017 11:57:45 PAGE 3   
+
+ 112          */
+ 113          void OSStartHighRdy(void) KCREENTRANT
+ 114          {
+ 115   1        OSTaskSwHook();
+ 116   1        
+ 117   1        OSRunning = 1;
+ 118   1      
+ 119   1        C_XBP = OSTCBHighRdy->OSTCBStkPtr;
+ 120   1      
+ 121   1        LoadCtx();
+ 122   1      }
+ 123          
+ 124          /*********************************************************************************************************
+             -*
+ 125          * C_OSCtxSw is the c part of OSCtxSw.
+ 126          * When control passes to this function, the processor registers have been saved in external stack
+ 127          **********************************************************************************************************
+             -*/
+ 128          void C_OSCtxSw(void) KCREENTRANT
+ 129          {
+ 130   1        OSTCBCur -> OSTCBStkPtr = C_XBP;
+ 131   1        OSTaskSwHook();
+ 132   1        OSTCBCur = OSTCBHighRdy;
+ 133   1        OSPrioCur = OSPrioHighRdy;
+ 134   1        C_XBP = OSTCBCur -> OSTCBStkPtr;
+ 135   1        LoadCtx();
+ 136   1      }
+ 137          
+ 138          /*********************************************************************************************************
+             -*
+ 139          * void OSIntCtxSw(void)
+ 140          * 
+ 141          **********************************************************************************************************
+             -*/
+ 142          void OSIntCtxSw(void) KCREENTRANT
+ 143          {
+ 144   1      #pragma ASM
+ 145   1              CLR EA
+ 146   1              MOV SP, SaveSP
+ 147   1      #pragma ENDASM
+ 148   1      
+ 149   1        C_XBP = OSTCBCur->OSTCBStkPtr;
+ 150   1      
+ 151   1      #pragma ASM
+ 152   1              EXTRN   CODE(_?KCOSCtxSw)
+ 153   1              MOV   A, #LOW  _?KCOSCtxSw
+ 154   1              PUSH  ACC
+ 155   1              MOV   A, #HIGH _?KCOSCtxSw
+ 156   1              PUSH  ACC
+ 157   1              RETI
+ 158   1      #pragma ENDASM
+ 159   1      }
+ 160          
+ 161          /*********************************************************************************************************
+             -*
+ 162          * void OSTickISR(void)
+ 163          * 
+ 164          **********************************************************************************************************
+             -/
+ 165          void OSTickISR(void) interrupt 1
+ 166          {
+ 167   1        /* Must be called first at every hardware interrupt entry point */
+C51 COMPILER V9.02   OS_CPU_C                                                              02/17/2017 11:57:45 PAGE 4   
+
+ 168   1        OSIntEnter();
+ 169   1          
+ 170   1        if(OSIntNesting == 1)
+ 171   1        {
+ 172   2          #pragma ASM
+ 173   2                  PUSH IE
+ 174   2                  CLR  EA
+ 175   2                  MOV  SaveSP, SP
+ 176   2          #pragma ENDASM
+ 177   2      
+ 178   2          EA = 0;
+ 179   2      
+ 180   2          OSTCBCur->OSTCBStkPtr = C_XBP;
+ 181   2        }
+ 182   1      
+ 183   1        /* Must be called during tick isr */
+ 184   1        OSTimeTick();
+ 185   1        
+ 186   1        /* Must be called finally at every hardware interupt exit point */     
+ 187   1        OSIntExit();
+ 188   1      
+ 189   1        if(OSIntNesting==0)
+ 190   1        {
+ 191   2          EA = 0;
+ 192   2      
+ 193   2          C_XBP =OSTCBCur->OSTCBStkPtr;
+ 194   2      
+ 195   2          #pragma ASM
+ 196   2                  MOV  SP, SaveSP
+ 197   2                  POP  IE
+ 198   2          #pragma ENDASM
+ 199   2        }
+ 200   1      }
+ 201          
+ 202          /*********************************************************************************************************
+             -*
+ 203          * SetupComms(void)
+ 204          * 
+ 205          **********************************************************************************************************
+             -/
+ 206          void initSystem(void) KCREENTRANT
+ 207          {
+ 208   1        /* Setup Timer */
+ 209   1              TMOD = (TMOD & 0xF0) | 0x21;
+ 210   1        
+ 211   1        /* Freq=25Hz (Ticks per second) */
+ 212   1              TL0  = 0xF0;    
+ 213   1              TH0  = 0xF0;
+ 214   1              TR0  = 1;
+ 215   1              ET0  = 1;
+ 216   1              EA   = 1;
+ 217   1      }
+ 218          
+ 219          /*********************************************************************************************************
+             -*
+ 220          * SetupComms(void)
+ 221          * 
+ 222          **********************************************************************************************************
+             -/
+ 223          void SetupComms(void) KCREENTRANT
+ 224          {
+ 225   1        /* Set for 8,No parity,19200 baud */
+C51 COMPILER V9.02   OS_CPU_C                                                              02/17/2017 11:57:45 PAGE 5   
+
+ 226   1        SCON  = 0x50;
+ 227   1      
+ 228   1        /* T1 as baud generator TH1=253=FD=9600  */
+ 229   1        TH1   = 0xFD;
+ 230   1      
+ 231   1        /* Double the baud rate approx. 19200 */
+ 232   1        PCON |= 0x80;
+ 233   1      
+ 234   1        /* Enable the serial interrupt */ 
+ 235   1        ES    = 1;
+ 236   1      
+ 237   1        /* Start running the timer */     
+ 238   1        TR1   = 1;
+ 239   1      }
+ 240          
+ 241          /*********************************************************************************************************
+             -*
+ 242          * void SendChar()
+ 243          * 
+ 244          **********************************************************************************************************
+             -/
+ 245          void SendChar(unsigned char c) KCREENTRANT
+ 246          {
+ 247   1      //  TI = 1;
+ 248   1        int i;
+ 249   1        SBUF = c;
+ 250   1        for(i = 0; i < 30; i++);
+ 251   1      }
+ 252          /*********************************************************************************************************
+             -*
+ 253          * void SendChar()
+ 254          * New function to send a string of text 
+ 255          *
+ 256          **********************************************************************************************************
+             -/
+ 257          void SendString(char *s) KCREENTRANT {
+ 258   1      
+ 259   1      INT8U i;
+ 260   1         while(*s != '\0') {
+ 261   2            SendChar(*s++);
+ 262   2            for(i = 0; i < 30; i++);
+ 263   2            }
+ 264   1      }
+ 265          
+ 266          /*********************************************************************************************************
+             -*
+ 267          * void Serial_ISR(void)
+ 268          * Sample user ISR: Serial communication
+ 269          **********************************************************************************************************
+             -/
+ 270          void Serial_ISR(void) interrupt 4
+ 271          {
+ 272   1        /* Do this first */
+ 273   1        /* Must be called first at every hardware interrupt entry point */
+ 274   1        OSIntEnter();
+ 275   1      
+ 276   1        /* Only at the outerest interrupt we do these. */
+ 277   1        if(OSIntNesting == 1)
+ 278   1        {
+ 279   2          #pragma ASM
+ 280   2                  PUSH IE
+ 281   2                  CLR  EA
+C51 COMPILER V9.02   OS_CPU_C                                                              02/17/2017 11:57:45 PAGE 6   
+
+ 282   2                  MOV  SaveSP, SP
+ 283   2          #pragma ENDASM
+ 284   2      
+ 285   2          EA = 0;
+ 286   2      
+ 287   2          OSTCBCur->OSTCBStkPtr = C_XBP;  
+ 288   2        }
+ 289   1      
+ 290   1      
+ 291   1        /* Deal with the type of Serial Interrupt */
+ 292   1        if(TI)
+ 293   1        {
+ 294   2          TI = 0;
+ 295   2        }
+ 296   1        else if(RI)
+ 297   1        {
+ 298   2          RI = 0;
+ 299   2          RxBuffer = SBUF;
+ 300   2        }
+ 301   1      
+ 302   1      
+ 303   1        /* Finally, before exit from ISR, must do as following. */
+ 304   1        /* Must be called finally at every hardware interupt exit point */
+ 305   1        OSIntExit();
+ 306   1        
+ 307   1        if(OSIntNesting == 0)
+ 308   1        {
+ 309   2          EA = 0;
+ 310   2      
+ 311   2          C_XBP = OSTCBCur->OSTCBStkPtr;
+ 312   2      
+ 313   2          #pragma ASM
+ 314   2                  MOV  SP, SaveSP
+ 315   2                  POP  IE
+ 316   2          #pragma ENDASM
+ 317   2      
+ 318   2        }
+ 319   1      }
+ 320          
+ 321          
+ 322          /*$PAGE*/
+ 323          #if OS_CPU_HOOKS_EN
+ 324          /*
+ 325          *********************************************************************************************************
+ 326          *                                       OS INITIALIZATION HOOK
+ 327          *                                            (BEGINNING)
+ 328          *
+ 329          * Description: This function is called by OSInit() at the beginning of OSInit().
+ 330          *
+ 331          * Arguments  : none
+ 332          *
+ 333          * Note(s)    : 1) Interrupts should be disabled during this call.
+ 334          *********************************************************************************************************
+ 335          */
+ 336          #if OS_VERSION > 203
+ 337          void OSInitHookBegin (void) KCREENTRANT
+ 338          {
+ 339   1      }
+ 340          #endif
+ 341          
+ 342          /*
+ 343          *********************************************************************************************************
+C51 COMPILER V9.02   OS_CPU_C                                                              02/17/2017 11:57:45 PAGE 7   
+
+ 344          *                                       OS INITIALIZATION HOOK
+ 345          *                                               (END)
+ 346          *
+ 347          * Description: This function is called by OSInit() at the end of OSInit().
+ 348          *
+ 349          * Arguments  : none
+ 350          *
+ 351          * Note(s)    : 1) Interrupts should be disabled during this call.
+ 352          *********************************************************************************************************
+ 353          */
+ 354          #if OS_VERSION > 203
+ 355          void OSInitHookEnd (void) KCREENTRANT
+ 356          {
+ 357   1      }
+ 358          #endif
+ 359          
+ 360          
+ 361          /*
+ 362          *********************************************************************************************************
+ 363          *                                          TASK CREATION HOOK
+ 364          *
+ 365          * Description: This function is called when a task is created.
+ 366          *
+ 367          * Arguments  : ptcb   is a pointer to the task control block of the task being created.
+ 368          *
+ 369          * Note(s)    : 1) Interrupts are disabled during this call.
+ 370          *********************************************************************************************************
+ 371          */
+ 372          void OSTaskCreateHook (OS_TCB *ptcb) KCREENTRANT
+ 373          {
+ 374   1          ptcb = ptcb;                       /* Prevent compiler warning                                     */
+ 375   1      }
+ 376          
+ 377          
+ 378          /*
+ 379          *********************************************************************************************************
+ 380          *                                           TASK DELETION HOOK
+ 381          *
+ 382          * Description: This function is called when a task is deleted.
+ 383          *
+ 384          * Arguments  : ptcb   is a pointer to the task control block of the task being deleted.
+ 385          *
+ 386          * Note(s)    : 1) Interrupts are disabled during this call.
+ 387          *********************************************************************************************************
+ 388          */
+ 389          void OSTaskDelHook (OS_TCB *ptcb) KCREENTRANT
+ 390          {
+ 391   1          ptcb = ptcb;                       /* Prevent compiler warning                                     */
+ 392   1      }
+ 393          
+ 394          /*
+ 395          *********************************************************************************************************
+ 396          *                                           TASK SWITCH HOOK
+ 397          *
+ 398          * Description: This function is called when a task switch is performed.  This allows you to perform other
+ 399          *              operations during a context switch.
+ 400          *
+ 401          * Arguments  : none
+ 402          *
+ 403          * Note(s)    : 1) Interrupts are disabled during this call.
+ 404          *              2) It is assumed that the global pointer 'OSTCBHighRdy' points to the TCB of the task that
+ 405          *                 will be 'switched in' (i.e. the highest priority task) and, 'OSTCBCur' points to the 
+C51 COMPILER V9.02   OS_CPU_C                                                              02/17/2017 11:57:45 PAGE 8   
+
+ 406          *                 task being switched out (i.e. the preempted task).
+ 407          *********************************************************************************************************
+ 408          */
+ 409          void OSTaskSwHook (void) KCREENTRANT
+ 410          {
+ 411   1      }
+ 412          
+ 413          /*
+ 414          *********************************************************************************************************
+ 415          *                                           STATISTIC TASK HOOK
+ 416          *
+ 417          * Description: This function is called every second by uC/OS-II's statistics task.  This allows your 
+ 418          *              application to add functionality to the statistics task.
+ 419          *
+ 420          * Arguments  : none
+ 421          *********************************************************************************************************
+ 422          */
+ 423          void OSTaskStatHook (void) KCREENTRANT
+ 424          {
+ 425   1      }
+ 426          
+ 427          /*
+ 428          *********************************************************************************************************
+ 429          *                                           OSTCBInit() HOOK
+ 430          *
+ 431          * Description: This function is called by OSTCBInit() after setting up most of the TCB.
+ 432          *
+ 433          * Arguments  : ptcb    is a pointer to the TCB of the task being created.
+ 434          *
+ 435          * Note(s)    : 1) Interrupts may or may not be ENABLED during this call.
+ 436          *********************************************************************************************************
+ 437          */
+ 438          #if OS_VERSION > 203
+ 439          void OSTCBInitHook (OS_TCB *ptcb) KCREENTRANT
+ 440          {
+ 441   1          ptcb = ptcb;                                           /* Prevent Compiler warning                 */
+ 442   1      }
+ 443          #endif
+ 444          
+ 445          
+ 446          /*
+ 447          *********************************************************************************************************
+ 448          *                                               TICK HOOK
+ 449          *
+ 450          * Description: This function is called every tick.
+ 451          *
+ 452          * Arguments  : none
+ 453          *
+ 454          * Note(s)    : 1) Interrupts may or may not be ENABLED during this call.
+ 455          *********************************************************************************************************
+ 456          */
+ 457          void OSTimeTickHook (void) KCREENTRANT
+ 458          {
+ 459   1      }
+ 460          
+ 461          
+ 462          /*
+ 463          *********************************************************************************************************
+ 464          *                                             IDLE TASK HOOK
+ 465          *
+ 466          * Description: This function is called by the idle task.  This hook has been added to allow you to do  
+ 467          *              such things as STOP the CPU to conserve power.
+C51 COMPILER V9.02   OS_CPU_C                                                              02/17/2017 11:57:45 PAGE 9   
+
+ 468          *
+ 469          * Arguments  : none
+ 470          *
+ 471          * Note(s)    : 1) Interrupts are enabled during this call.
+ 472          *********************************************************************************************************
+ 473          */
+ 474          #if OS_VERSION >= 251
+ 475          void OSTaskIdleHook (void) KCREENTRANT
+ 476          {
+ 477   1      }
+ 478          #endif
+ 479          
+ 480          #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1208    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

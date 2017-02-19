@@ -1,0 +1,208 @@
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             02/14/2017 13:44:30 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.02
+OBJECT MODULE PLACED IN .\bin\obj\OS_CPU_A.obj
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE src\arch\OS_CPU_A.ASM SET(LARGE) DEBUG PRINT(.\bin\lst\OS_CPU_A.lst) NOCON
+                      D NOSYMBOLS XREF OBJECT(.\bin\obj\OS_CPU_A.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; 
+                       2     ; The uC/OS II port for Keil C51 V6
+                       3     ;
+                       4     ; Ported date:     Dec 5, 2001
+                       5     ; By:              John X. Liu, China, (johnxliu@163.com)
+                       6     ; Target platform: Keil C51 V6.20, V6.21
+                       7     
+                       8             NAME    OS_CPU_A_ASM
+                       9     
+                      10     ; ?C_XBP is the simulated external stack pointer in large mode, but its origianal
+                      11     ; declare makes it can not be used in c files, so redeclare it in this module 
+                      12     ; insteading of the old one
+                      13             PUBLIC  ?C_XBP, C_XBP                                   ;
+                      14     
+                      15             EXTRN   CODE(_?C_OSCtxSw)
+                      16     
+                      17             PUBLIC  _?LoadCtx, Stack, _?OSCtxSw, _?KCOSCtxSw
+                      18     
+                      19     LoadXBP MACRO
+                      20                     MOV     DPH, C_XBP
+                      21                     MOV     DPL, C_XBP+1
+                      22             ENDM
+                      23     
+                      24     SaveXBP MACRO
+                      25                     PUSH    IE
+                      26                     CLR     EA
+                      27                     MOV     C_XBP,   DPH
+                      28                     MOV     C_XBP+1, DPL
+                      29                     POP     IE
+                      30             ENDM
+                      31     
+                      32     LoadReg MACRO   REG
+                      33                     MOVX    A,   @DPTR
+                      34                     MOV     REG, A
+                      35             ENDM
+                      36     
+                      37     SaveReg MACRO   REG
+                      38                     MOV     A,      REG
+                      39                     MOVX    @DPTR,  A
+                      40             ENDM
+                      41     
+                      42     ; The PUSHA now emulates the pushing sequence what Keil C does.
+                      43     PUSHA   MACRO
+                      44                     IRP     REG,    <ACC, B, DPH, DPL, PSW, 0, 1, 2, 3, 4, 5, 6, 7>
+                      45                     PUSH    REG
+                      46                     ENDM
+                      47             ENDM
+                      48     
+                      49     POPA    MACRO
+                      50                     IRP     REG,    <7, 6, 5, 4, 3, 2, 1, 0, PSW, DPL, DPH, B, ACC>
+                      51                     POP     REG
+                      52                     ENDM
+                      53             ENDM
+                      54     
+                      55     ; Declare the external stack pointer by ourself, so that we can use it freely.
+                      56     ; you know, in the name of '?C_XBP' it can not be used in c modules but in the 
+                      57     ; name of 'C_XBP' it can do.
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             02/14/2017 13:44:30 PAGE     2
+
+                      58     DT?C_XBP        SEGMENT DATA
+----                  59                     RSEG    DT?C_XBP
+0000                  60     ?C_XBP:                                 ; These two labels point to the same address
+0000                  61     C_XBP:                                  ;
+0000                  62             DS      2
+                      63     
+                      64     ; Declare a label 'Stack' in the hardware stack segment so that we know where it begins.
+                      65     ?STACK  SEGMENT IDATA
+----                  66             RSEG    ?STACK
+0000                  67     Stack:
+                      68     
+                      69     ; Load context from the external stack pointed by C_XBP
+                      70     PR?LoadCtx      SEGMENT CODE
+----                  71             RSEG    PR?LoadCtx
+0000                  72     _?LoadCtx:
+                      73             LoadXBP                                 ; Load the C_XBP to DPTR
+                      76     
+                      77             LoadREG SP                              ; Load the hardware stack pointer
+0009 A3               80             INC     DPTR                            ;
+                      81     
+000A A881             82             MOV     R0, SP                          ; Now we pop the hardware stack
+000C                  83     LC_1:                                           ; from the external one.
+                      84             LoadREG @R0                             ; Did not use the PUSH ACC instruction for 
+                             if we want to
+000E A3               87             INC     DPTR                            ; do so, we have to DEC DPTR, which costs m
+                             uch.
+000F 18               88             DEC     R0                              ;
+0010 B800F9   F       89             CJNE    R0, #Stack-1, LC_1              ;
+                      90     
+                      91             SaveXBP                                 ; after the hardware stack has been popped,
+                      97                                                     ; the external stack pointer should be adju
+                             sted
+                      98     
+001F                  99     RestoreCtx:
+  0001               100     WANTFASTER      EQU     1
+                             $else 
+001F D0E0            105             POP     ACC                             ; Safe way to do the same thing.
+0021 33              106             RLC     A                               ;
+0022 92AF            107             MOV     EA, C                           ;
+                     108     $endif 
+                     109                                                     ; Now that the context has been loaded into
+                              hardware
+                     110             POPA                                    ; stack, what we need do is just popping th
+                             em upto registers.
+                     127                                                     ;
+                     128     
+003E 22              129             RET                                     ; Now everything is ready, a RET will bring
+                              the task to run.
+                     130     
+                     131     ; Task level context switch entry point, which is intended to be called by task gracefully.
+                              
+003F                 132     _?OSCtxSw:
+                     133             PUSHA                                   ; Save current context first into hardware 
+                             stack
+0059 C0A8            150             PUSH    IE
+                     151     
+005B                 152     _?KCOSCtxSw:                                    ; Now begin pushing hardware stack to exter
+                             nal one
+                     153             LoadXBP                                 ; Load the external stack pointer first to 
+                             prepare storing 
+                     156                                                     ; data into it.
+                     157     
+0061 E581            158             MOV     A, SP                           ; Calculate how much memory in external sta
+                             ck needed
+0063 C3              159             CLR     C                               ; so that we can adjust the external stack 
+                             pointer
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             02/14/2017 13:44:30 PAGE     3
+
+0064 9400     F      160             SUBB    A, #Stack-1                     ; Calculated the length of hardware stack
+                     161     
+0066 F8              162             MOV     R0, A                           ; Save the length of hardware stack to R0, 
+                             which is used as a counter on saving hardware stack.
+                     163     
+0067 04              164             INC     A                               ; Add the space for storing SP
+                     165     
+0068 C3              166             CLR     C
+0069 C582            167             XCH     A, DPL                          ; Now ACC contains the right amount of exte
+                             rnal stack memory should be used.
+006B 9582            168             SUBB    A, DPL                          ; Adjust the external pointer.stored in DPT
+                             R to make to point to the new stack top from where we will store hardware stack.
+006D 5002            169             JNC     SC_1
+006F 1583            170             DEC     DPH
+0071                 171     SC_1:
+0071 F582            172             MOV     DPL,A                           ; Now DPTR contains the external stack poin
+                             ter after pushing context into external stack.
+                     173     
+                     174             SaveXBP                                 ; Save to external stack pointer.
+                     180                                                     ; Keeps the DPTR containing the external st
+                             ack pointer still.
+                     181             SaveREG SP                              ; Save hardware stack pointer in the top of
+                              external stack
+                     184     
+0082                 185     SC_2:
+0082 A3              186             INC     DPTR                            ;
+0083 D0E0            187             POP     ACC                             ; Pop the data from hareware stack
+0085 F0              188             MOVX    @DPTR, A                        ; and save into external one.
+0086 D8FA            189             DJNZ    R0, SC_2                        ; Remember, R0 contains the hardware stack'
+                             s length.
+                     190     
+0088 020000   F      191             LJMP    _?C_OSCtxSw                     ; 
+                     192     
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             02/14/2017 13:44:30 PAGE     4
+
+XREF SYMBOL TABLE LISTING
+---- ------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES / REFERENCES
+
+?C_XBP . . . . . .  D ADDR   0000H   R   SEG=DT?C_XBP   13 60#
+?STACK . . . . . .  I SEG    0000H       REL=UNIT   65# 66
+ACC. . . . . . . .  D ADDR   00E0H   A      105 126 137 187
+B. . . . . . . . .  D ADDR   00F0H   A      125 138
+C_XBP. . . . . . .  D ADDR   0000H   R   SEG=DT?C_XBP   13 61# 74 75 94 95 154 155 177 178
+DPH. . . . . . . .  D ADDR   0083H   A      74 94 124 139 154 170 177
+DPL. . . . . . . .  D ADDR   0082H   A      75 95 123 140 155 167 168 172 178
+DT?C_XBP . . . . .  D SEG    0002H       REL=UNIT   58# 59
+EA . . . . . . . .  B ADDR   00A8H.7 A      93 107 176
+IE . . . . . . . .  D ADDR   00A8H   A      92 96 150 175 179
+LC_1 . . . . . . .  C ADDR   000CH   R   SEG=PR?LOADCTX   83# 89
+OS_CPU_A_ASM . . .  N NUMB   -----          8
+PR?LOADCTX . . . .  C SEG    008BH       REL=UNIT   70# 71
+PSW. . . . . . . .  D ADDR   00D0H   A      122 141
+RESTORECTX . . . .  C ADDR   001FH   R   SEG=PR?LOADCTX   99#
+SC_1 . . . . . . .  C ADDR   0071H   R   SEG=PR?LOADCTX   169 171#
+SC_2 . . . . . . .  C ADDR   0082H   R   SEG=PR?LOADCTX   185# 189
+SP . . . . . . . .  D ADDR   0081H   A      79 82 158 182
+STACK. . . . . . .  I ADDR   0000H   R   SEG=?STACK   17 67# 89 160
+WANTFASTER . . . .  N NUMB   0001H   A      100#
+_?C_OSCTXSW. . . .  C ADDR   -----       EXT   15# 191
+_?KCOSCTXSW. . . .  C ADDR   005BH   R   SEG=PR?LOADCTX   17 152#
+_?LOADCTX. . . . .  C ADDR   0000H   R   SEG=PR?LOADCTX   17 72#
+_?OSCTXSW. . . . .  C ADDR   003FH   R   SEG=PR?LOADCTX   17 132#
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

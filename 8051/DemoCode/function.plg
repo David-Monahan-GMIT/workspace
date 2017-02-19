@@ -1,0 +1,86 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+C:\GMIT-Notes\RTOS\8051\function.uv2
+Project File Date:  03/20/2003
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling function.c...
+linking...
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  _FUNCTION3
+    MODULE:  function.obj (FUNCTION)
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  _FUNCTION4
+    MODULE:  function.obj (FUNCTION)
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  FUNCTION1
+    MODULE:  function.obj (FUNCTION)
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  _FUNCTION2
+    MODULE:  function.obj (FUNCTION)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  FUNCTION1
+    MODULE:  function.obj (FUNCTION)
+    ADDRESS: 0016H
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _FUNCTION2
+    MODULE:  function.obj (FUNCTION)
+    ADDRESS: 001DH
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _FUNCTION3
+    MODULE:  function.obj (FUNCTION)
+    ADDRESS: 0028H
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _FUNCTION4
+    MODULE:  function.obj (FUNCTION)
+    ADDRESS: 0037H
+Program Size: data=15.0 xdata=0 code=69
+"function" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling function.c...
+FUNCTION.C(7): error C141: syntax error near ';'
+FUNCTION.C(11): error C141: syntax error near 'x'
+FUNCTION.C(11): error C231: 'x': redefinition
+FUNCTION.C(28): error C141: syntax error near 'int'
+Target not created
+Build target 'Target 1'
+compiling function.c...
+FUNCTION.C(28): error C141: syntax error near 'int'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling function.c...
+linking...
+Program Size: data=15.0 xdata=0 code=82
+"function" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling function.c...
+linking...
+Program Size: data=15.0 xdata=0 code=82
+"function" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling function.c...
+linking...
+Program Size: data=15.0 xdata=0 code=82
+"function" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling function.c...
+linking...
+Program Size: data=15.0 xdata=0 code=82
+"function" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling function.c...
+linking...
+Program Size: data=19.0 xdata=0 code=101
+"function" - 0 Error(s), 0 Warning(s).
+</pre>
+</body>
+</html>

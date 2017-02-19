@@ -1,0 +1,384 @@
+<html>
+<body>
+<pre>
+<h1>µVision2 Build Log</h1>
+<h2>Project:</h2>
+C:\GMIT-Notes\RTOS\8051\functionreent.uv2
+Project File Date:  03/20/2003
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling functionreent.c...
+FUNCTIONREENT.C(2): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(3): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(3): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(3): error C136: 'KCREENTRANT': 'void' on variable
+FUNCTIONREENT.C(3): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(4): error C132: '_function3': not in formal parameter list
+FUNCTIONREENT.C(4): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(4): error C136: 'KCREENTRANT': 'void' on variable
+FUNCTIONREENT.C(4): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(5): error C132: '_function4': not in formal parameter list
+FUNCTIONREENT.C(5): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(5): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(11): error C132: 'main': not in formal parameter list
+FUNCTIONREENT.C(11): error C141: syntax error near '{'
+FUNCTIONREENT.C(12): error C244: 'i': can't initialize, bad type or class
+FUNCTIONREENT.C(12): error C132: 'i': not in formal parameter list
+FUNCTIONREENT.C(12): error C244: 'j': can't initialize, bad type or class
+FUNCTIONREENT.C(12): error C132: 'j': not in formal parameter list
+FUNCTIONREENT.C(12): error C244: 'k': can't initialize, bad type or class
+FUNCTIONREENT.C(12): error C132: 'k': not in formal parameter list
+FUNCTIONREENT.C(12): error C244: 'l': can't initialize, bad type or class
+FUNCTIONREENT.C(12): error C132: 'l': not in formal parameter list
+FUNCTIONREENT.C(14): error C132: 'function1': not in formal parameter list
+FUNCTIONREENT.C(15): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(16): error C132: '_function3': not in formal parameter list
+FUNCTIONREENT.C(17): error C244: 'i': can't initialize, bad type or class
+FUNCTIONREENT.C(17): error C202: 'j': undefined identifier
+FUNCTIONREENT.C(17): error C132: 'i': not in formal parameter list
+FUNCTIONREENT.C(18): error C141: syntax error near '}'
+FUNCTIONREENT.C(20): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(20): error C141: syntax error near '{'
+FUNCTIONREENT.C(22): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(22): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(22): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(23): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(24): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(24): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(24): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(25): error C141: syntax error near '}'
+FUNCTIONREENT.C(27): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(27): error C141: syntax error near '{'
+FUNCTIONREENT.C(28): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(28): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(29): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(29): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(29): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(30): error C244: 'y': can't initialize, bad type or class
+FUNCTIONREENT.C(30): error C202: 'b': undefined identifier
+FUNCTIONREENT.C(30): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(31): error C141: syntax error near '}'
+FUNCTIONREENT.C(33): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(33): error C141: syntax error near '{'
+FUNCTIONREENT.C(34): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(34): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(34): error C132: 'z': not in formal parameter list
+FUNCTIONREENT.C(35): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(35): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(35): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(36): error C244: 'y': can't initialize, bad type or class
+FUNCTIONREENT.C(36): error C202: 'b': undefined identifier
+FUNCTIONREENT.C(36): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(37): error C244: 'z': can't initialize, bad type or class
+FUNCTIONREENT.C(37): error C202: 'c': undefined identifier
+FUNCTIONREENT.C(37): error C132: 'z': not in formal parameter list
+FUNCTIONREENT.C(38): error C141: syntax error near 'return'
+FUNCTIONREENT.C(38): error C141: syntax error near '+', expected ')'
+FUNCTIONREENT.C(38): error C129: missing ';' before '+'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling functionreent.c...
+FUNCTIONREENT.C(2): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(3): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(3): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(3): error C136: 'KCREENTRANT': 'void' on variable
+FUNCTIONREENT.C(3): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(4): error C132: '_function3': not in formal parameter list
+FUNCTIONREENT.C(4): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(4): error C136: 'KCREENTRANT': 'void' on variable
+FUNCTIONREENT.C(4): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(5): error C132: '_function4': not in formal parameter list
+FUNCTIONREENT.C(5): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(5): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(11): error C132: 'main': not in formal parameter list
+FUNCTIONREENT.C(11): error C141: syntax error near '{'
+FUNCTIONREENT.C(12): error C244: 'i': can't initialize, bad type or class
+FUNCTIONREENT.C(12): error C132: 'i': not in formal parameter list
+FUNCTIONREENT.C(12): error C244: 'j': can't initialize, bad type or class
+FUNCTIONREENT.C(12): error C132: 'j': not in formal parameter list
+FUNCTIONREENT.C(12): error C244: 'k': can't initialize, bad type or class
+FUNCTIONREENT.C(12): error C132: 'k': not in formal parameter list
+FUNCTIONREENT.C(12): error C244: 'l': can't initialize, bad type or class
+FUNCTIONREENT.C(12): error C132: 'l': not in formal parameter list
+FUNCTIONREENT.C(14): error C132: 'function1': not in formal parameter list
+FUNCTIONREENT.C(15): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(16): error C132: '_function3': not in formal parameter list
+FUNCTIONREENT.C(17): error C244: 'i': can't initialize, bad type or class
+FUNCTIONREENT.C(17): error C202: 'j': undefined identifier
+FUNCTIONREENT.C(17): error C132: 'i': not in formal parameter list
+FUNCTIONREENT.C(18): error C141: syntax error near '}'
+FUNCTIONREENT.C(20): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(20): error C141: syntax error near '{'
+FUNCTIONREENT.C(22): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(22): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(22): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(23): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(24): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(24): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(24): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(25): error C141: syntax error near '}'
+FUNCTIONREENT.C(27): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(27): error C141: syntax error near '{'
+FUNCTIONREENT.C(28): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(28): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(29): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(29): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(29): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(30): error C244: 'y': can't initialize, bad type or class
+FUNCTIONREENT.C(30): error C202: 'b': undefined identifier
+FUNCTIONREENT.C(30): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(31): error C141: syntax error near '}'
+FUNCTIONREENT.C(33): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(33): error C141: syntax error near '{'
+FUNCTIONREENT.C(34): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(34): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(34): error C132: 'z': not in formal parameter list
+FUNCTIONREENT.C(35): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(35): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(35): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(36): error C244: 'y': can't initialize, bad type or class
+FUNCTIONREENT.C(36): error C202: 'b': undefined identifier
+FUNCTIONREENT.C(36): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(37): error C244: 'z': can't initialize, bad type or class
+FUNCTIONREENT.C(37): error C202: 'c': undefined identifier
+FUNCTIONREENT.C(37): error C132: 'z': not in formal parameter list
+FUNCTIONREENT.C(38): error C141: syntax error near 'return'
+FUNCTIONREENT.C(38): error C141: syntax error near '+', expected ')'
+FUNCTIONREENT.C(38): error C129: missing ';' before '+'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling functionreent.c...
+FUNCTIONREENT.C(1): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(2): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(2): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(2): error C136: 'KCREENTRANT': 'void' on variable
+FUNCTIONREENT.C(2): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(3): error C132: '_function3': not in formal parameter list
+FUNCTIONREENT.C(3): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(3): error C136: 'KCREENTRANT': 'void' on variable
+FUNCTIONREENT.C(3): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(4): error C132: '_function4': not in formal parameter list
+FUNCTIONREENT.C(4): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(4): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(10): error C132: 'main': not in formal parameter list
+FUNCTIONREENT.C(10): error C141: syntax error near '{'
+FUNCTIONREENT.C(11): error C244: 'i': can't initialize, bad type or class
+FUNCTIONREENT.C(11): error C132: 'i': not in formal parameter list
+FUNCTIONREENT.C(11): error C244: 'j': can't initialize, bad type or class
+FUNCTIONREENT.C(11): error C132: 'j': not in formal parameter list
+FUNCTIONREENT.C(11): error C244: 'k': can't initialize, bad type or class
+FUNCTIONREENT.C(11): error C132: 'k': not in formal parameter list
+FUNCTIONREENT.C(11): error C244: 'l': can't initialize, bad type or class
+FUNCTIONREENT.C(11): error C132: 'l': not in formal parameter list
+FUNCTIONREENT.C(13): error C132: 'function1': not in formal parameter list
+FUNCTIONREENT.C(14): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(15): error C132: '_function3': not in formal parameter list
+FUNCTIONREENT.C(16): error C244: 'i': can't initialize, bad type or class
+FUNCTIONREENT.C(16): error C202: 'j': undefined identifier
+FUNCTIONREENT.C(16): error C132: 'i': not in formal parameter list
+FUNCTIONREENT.C(17): error C141: syntax error near '}'
+FUNCTIONREENT.C(19): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(19): error C141: syntax error near '{'
+FUNCTIONREENT.C(21): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(21): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(21): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(22): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(23): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(23): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(23): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(24): error C141: syntax error near '}'
+FUNCTIONREENT.C(26): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(26): error C141: syntax error near '{'
+FUNCTIONREENT.C(27): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(27): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(28): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(28): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(28): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(29): error C244: 'y': can't initialize, bad type or class
+FUNCTIONREENT.C(29): error C202: 'b': undefined identifier
+FUNCTIONREENT.C(29): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(30): error C141: syntax error near '}'
+FUNCTIONREENT.C(32): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(32): error C141: syntax error near '{'
+FUNCTIONREENT.C(33): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(33): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(33): error C132: 'z': not in formal parameter list
+FUNCTIONREENT.C(34): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(34): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(34): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(35): error C244: 'y': can't initialize, bad type or class
+FUNCTIONREENT.C(35): error C202: 'b': undefined identifier
+FUNCTIONREENT.C(35): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(36): error C244: 'z': can't initialize, bad type or class
+FUNCTIONREENT.C(36): error C202: 'c': undefined identifier
+FUNCTIONREENT.C(36): error C132: 'z': not in formal parameter list
+FUNCTIONREENT.C(37): error C141: syntax error near 'return'
+FUNCTIONREENT.C(37): error C141: syntax error near '+', expected ')'
+FUNCTIONREENT.C(37): error C129: missing ';' before '+'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling functionreent.c...
+FUNCTIONREENT.C(13): warning C206: 'function1': missing function-prototype
+FUNCTIONREENT.C(14): warning C206: 'function2': missing function-prototype
+FUNCTIONREENT.C(14): error C267: 'function2': requires ANSI-style prototype
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling functionreent.c...
+FUNCTIONREENT.C(3): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(4): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(4): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(4): error C136: 'KCREENTRANT': 'void' on variable
+FUNCTIONREENT.C(4): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(5): error C132: '_function3': not in formal parameter list
+FUNCTIONREENT.C(5): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(5): error C136: 'KCREENTRANT': 'void' on variable
+FUNCTIONREENT.C(5): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(6): error C132: '_function4': not in formal parameter list
+FUNCTIONREENT.C(6): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(6): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(12): error C132: 'main': not in formal parameter list
+FUNCTIONREENT.C(12): error C141: syntax error near '{'
+FUNCTIONREENT.C(13): error C244: 'i': can't initialize, bad type or class
+FUNCTIONREENT.C(13): error C132: 'i': not in formal parameter list
+FUNCTIONREENT.C(13): error C244: 'j': can't initialize, bad type or class
+FUNCTIONREENT.C(13): error C132: 'j': not in formal parameter list
+FUNCTIONREENT.C(13): error C244: 'k': can't initialize, bad type or class
+FUNCTIONREENT.C(13): error C132: 'k': not in formal parameter list
+FUNCTIONREENT.C(13): error C244: 'l': can't initialize, bad type or class
+FUNCTIONREENT.C(13): error C132: 'l': not in formal parameter list
+FUNCTIONREENT.C(15): error C132: 'function1': not in formal parameter list
+FUNCTIONREENT.C(16): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(17): error C132: '_function3': not in formal parameter list
+FUNCTIONREENT.C(18): error C244: 'i': can't initialize, bad type or class
+FUNCTIONREENT.C(18): error C202: 'j': undefined identifier
+FUNCTIONREENT.C(18): error C132: 'i': not in formal parameter list
+FUNCTIONREENT.C(19): error C141: syntax error near '}'
+FUNCTIONREENT.C(21): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(21): error C141: syntax error near '{'
+FUNCTIONREENT.C(23): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(23): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(23): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(24): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(25): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(25): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(25): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(26): error C141: syntax error near '}'
+FUNCTIONREENT.C(28): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(28): error C141: syntax error near '{'
+FUNCTIONREENT.C(29): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(29): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(30): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(30): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(30): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(31): error C244: 'y': can't initialize, bad type or class
+FUNCTIONREENT.C(31): error C202: 'b': undefined identifier
+FUNCTIONREENT.C(31): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(32): error C141: syntax error near '}'
+FUNCTIONREENT.C(34): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(34): error C141: syntax error near '{'
+FUNCTIONREENT.C(35): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(35): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(35): error C132: 'z': not in formal parameter list
+FUNCTIONREENT.C(36): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(36): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(36): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(37): error C244: 'y': can't initialize, bad type or class
+FUNCTIONREENT.C(37): error C202: 'b': undefined identifier
+FUNCTIONREENT.C(37): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(38): error C244: 'z': can't initialize, bad type or class
+FUNCTIONREENT.C(38): error C202: 'c': undefined identifier
+FUNCTIONREENT.C(38): error C132: 'z': not in formal parameter list
+FUNCTIONREENT.C(39): error C141: syntax error near 'return'
+FUNCTIONREENT.C(39): error C141: syntax error near '+', expected ')'
+FUNCTIONREENT.C(39): error C129: missing ';' before '+'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling functionreent.c...
+functionreent.c(2): warning C315: unknown #directive 'incluse'
+FUNCTIONREENT.C(4): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(5): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(5): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(5): error C136: 'KCREENTRANT': 'void' on variable
+FUNCTIONREENT.C(5): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(6): error C132: '_function3': not in formal parameter list
+FUNCTIONREENT.C(6): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(6): error C136: 'KCREENTRANT': 'void' on variable
+FUNCTIONREENT.C(6): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(7): error C132: '_function4': not in formal parameter list
+FUNCTIONREENT.C(7): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(7): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(13): error C132: 'main': not in formal parameter list
+FUNCTIONREENT.C(13): error C141: syntax error near '{'
+FUNCTIONREENT.C(14): error C244: 'i': can't initialize, bad type or class
+FUNCTIONREENT.C(14): error C132: 'i': not in formal parameter list
+FUNCTIONREENT.C(14): error C244: 'j': can't initialize, bad type or class
+FUNCTIONREENT.C(14): error C132: 'j': not in formal parameter list
+FUNCTIONREENT.C(14): error C244: 'k': can't initialize, bad type or class
+FUNCTIONREENT.C(14): error C132: 'k': not in formal parameter list
+FUNCTIONREENT.C(14): error C244: 'l': can't initialize, bad type or class
+FUNCTIONREENT.C(14): error C132: 'l': not in formal parameter list
+FUNCTIONREENT.C(16): error C132: 'function1': not in formal parameter list
+FUNCTIONREENT.C(17): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(18): error C132: '_function3': not in formal parameter list
+FUNCTIONREENT.C(19): error C244: 'i': can't initialize, bad type or class
+FUNCTIONREENT.C(19): error C202: 'j': undefined identifier
+FUNCTIONREENT.C(19): error C132: 'i': not in formal parameter list
+FUNCTIONREENT.C(20): error C141: syntax error near '}'
+FUNCTIONREENT.C(22): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(22): error C141: syntax error near '{'
+FUNCTIONREENT.C(24): error C132: '_function2': not in formal parameter list
+FUNCTIONREENT.C(24): error C141: syntax error near 'KCREENTRANT'
+FUNCTIONREENT.C(24): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(25): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(26): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(26): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(26): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(27): error C141: syntax error near '}'
+FUNCTIONREENT.C(29): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(29): error C141: syntax error near '{'
+FUNCTIONREENT.C(30): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(30): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(31): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(31): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(31): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(32): error C244: 'y': can't initialize, bad type or class
+FUNCTIONREENT.C(32): error C202: 'b': undefined identifier
+FUNCTIONREENT.C(32): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(33): error C141: syntax error near '}'
+FUNCTIONREENT.C(35): error C132: 'KCREENTRANT': not in formal parameter list
+FUNCTIONREENT.C(35): error C141: syntax error near '{'
+FUNCTIONREENT.C(36): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(36): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(36): error C132: 'z': not in formal parameter list
+FUNCTIONREENT.C(37): error C244: 'x': can't initialize, bad type or class
+FUNCTIONREENT.C(37): error C202: 'a': undefined identifier
+FUNCTIONREENT.C(37): error C132: 'x': not in formal parameter list
+FUNCTIONREENT.C(38): error C244: 'y': can't initialize, bad type or class
+FUNCTIONREENT.C(38): error C202: 'b': undefined identifier
+FUNCTIONREENT.C(38): error C132: 'y': not in formal parameter list
+FUNCTIONREENT.C(39): error C244: 'z': can't initialize, bad type or class
+FUNCTIONREENT.C(39): error C202: 'c': undefined identifier
+FUNCTIONREENT.C(39): error C132: 'z': not in formal parameter list
+FUNCTIONREENT.C(40): error C141: syntax error near 'return'
+FUNCTIONREENT.C(40): error C141: syntax error near '+', expected ')'
+FUNCTIONREENT.C(40): error C129: missing ';' before '+'
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling functionreent.c...
+linking...
+Program Size: data=17.0 xdata=0 code=403
+"functionreent" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling functionreent.c...
+linking...
+Program Size: data=17.0 xdata=0 code=403
+"functionreent" - 0 Error(s), 0 Warning(s).

@@ -1,0 +1,8 @@
+"..\out\UCOS_II.obj",
+"..\out\OS_CPU_C.obj",
+"..\out\OS_CPU_A.obj",
+"..\out\mainfile.obj",
+"..\out\function.obj" 
+TO "..\out\EXEc51" REGFILE (..\out\EXEc51.ORC) 
+PRINT("..\out\EXEc51.m51") CODE( 0X0000-0XFFFF )
+XDATA( 0X3000-0X7FFF )

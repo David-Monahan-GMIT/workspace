@@ -1,0 +1,3620 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0065)http://www.atmel.com/dyn/resources/prod_documents/8051INF_TXT.htm -->
+<!-- saved from url=(0066)http://webadmin.atmel.com/dyn/resources/prod_documents/8051INF.TXT --><HTML><HEAD>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="MSHTML 6.00.2800.1126" name=GENERATOR></HEAD>
+<BODY><XMP>Path: senator-bedfellow.mit.edu!faqserv
+From: russ@shani.net (Russ Hersch)
+Newsgroups: comp.arch.embedded,comp.sys.intel,comp.robotics.misc,comp.realtime,sci.electronics.design,alt.comp.hardware.homebuilt,comp.answers,sci.answers,alt.answers,news.answers
+Subject: 8051 microcontroller FAQ
+Supersedes: <microcontroller-faq/8051_854536810@rtfm.mit.edu>
+Followup-To: poster
+Date: 3 Mar 1997 12:16:55 GMT
+Organization: none
+Lines: 3590
+Approved: news-answers-request@MIT.EDU
+Expires: 17 Apr 1997 12:16:27 GMT
+Message-ID: <microcontroller-faq/8051_857391387@rtfm.mit.edu>
+NNTP-Posting-Host: bloom-picayune.mit.edu
+Summary: This article is a collection of information sources on the
+         Intel 8051 family of microcontrollers (and variants).
+X-Last-Updated: 1997/01/05
+Originator: faqserv@bloom-picayune.MIT.EDU
+Xref: senator-bedfellow.mit.edu comp.arch.embedded:17229 comp.sys.intel:116435 comp.robotics.misc:12999 comp.realtime:19117 sci.electronics.design:32265 alt.comp.hardware.homebuilt:29348 comp.answers:24636 sci.answers:6008 alt.answers:24419 news.answers:96126
+
+Archive-name: microcontroller-faq/8051
+Posting-Frequency: monthly
+Last-modified: January, 5, 1997
+
+This article is a collection of information sources on the Intel 8051
+family of microcontrollers (and variants).
+
+The following topics are addressed:
+
+      0)  Rantings and ravings (to make the FAQ zero-based)
+
+      1)  ABOUT THIS FAQ
+    1.1)  Who put this FAQ together?
+    1.2)  How can I contribute to this FAQ?
+    1.3)  What newsgroups will this FAQ be posted to?
+    1.4)  May I distribute this FAQ or post it somewhere else?
+    1.5)  How about FAQs on other microcontrollers?
+
+      2)  ABOUT THE 8051
+    2.1)  The 8051 microcontroller
+    2.2)  8051 Flavors
+    2.3)  16-bit 8051 parts
+    2.4)  8051 representatives and approximate prices
+    2.5)  Common and New 80x51 variants
+    2.6)  Advantages realized in implementing control applications on
+          this family of microcontrollers
+    2.7)  Getting started
+    2.8)  Technical Questions and Answers
+
+      3)  SOURCES OF INFORMATION ON THE 8051
+    3.1)  FTP sites
+    3.2)  Web pages
+    3.3)  Mailing lists
+    3.4)  BBSs
+    3.5)  Help available!
+
+      4)  8051 PRODUCTS
+    4.1)  Free languages and development tools
+    4.2)  Free C compilers
+    4.3)  Commercially available products
+
+      5)  8051 DOCUMENTATION
+    5.1)  Periodicals
+    5.2)  Books
+    5.3)  Miscellaneous documentation
+
+
+0)  Rantings and ravings
+
+    Disclaimer:  Just so it is understood, the "rantings and ravings" are
+    my rantings and raving.  My readers are refined and sophisticated and
+    would never rant or rave.  I, on the other hand, sit in front of the
+    TV in torn underwear and drink beer out of the bottle.
+
+
+    If you are interested in trying out BASIC-52, you won't be able to
+    find much in the way of reference material. However, the good news
+    is, is that the material available is top-notch. I've covered Jan
+    Axelson's book in the past. This first rate book is based on the
+    8052-BASIC chip, and is a must have for anyone (hobbyist or
+    professional) who is planning on working with the 8051. However,
+    Jan's book isn't a software reference book, it mostly covers
+    hardware, interfacing, and programming technique.
+
+    Another must have book, is "Basic-52 Programming" by Bruce Boyes,
+    Will Bagley, and Scott Kendall of Systronix, Inc.  The book starts
+    out with an introduction to BASIC-52 programming, program editing,
+    and techniques.  About a hundred of the book's 160 pages are a
+    detailed and quite useful reference of the commands and statements.
+    Six appendixes covering advanced topics rounds out this most useful
+    volume.  A quick index to commands, operators, and instructions
+    printed on the back cover of the book is a nice finishing touch.  For
+    only $20.00, it's a bargain at twice the price.  Well, let's not get
+    carried away, but if you're programming in Basic-52, this book is
+    indispensible.
+
+
+    C-31 is a new cross compiler from SPJ Systems.  The full package
+    which costs $150 (USD) includes a C compiler (ANSI compatible
+    subset), assembler, source linker, and simulator (source code
+    debugger).
+
+    The compiler is a reasonable ANSI subset.  I tried a program from a
+    project I'm working on (with the Dunfield compiler), and the compiler
+    informed me that structures (struct) are not yet supported.  However,
+    other programs I tried were more successful.
+
+    Compiler features include:
+       - support for floating point numbers
+       - extensive collection of library routines
+       - support for using Special Function Registers (SFR)
+       - assembly language interface
+       - asm keyword (for in-line assembly code)
+       - peripheral keyword (allows specifying an address of a standard
+         peripheral)
+
+    The simulator is very nice.  It doesn't allow on-chip debugging, but
+    it does allow source level debugging.  I tried a couple of sample
+    programs (one of theirs and one of mine), and after I learned my way
+    around the command structure, it worked beautifully.  Full support of
+    breakpoints, tracing, etc.  A few memory mapped hardware peripherals
+    are simulated including an LCD display, 8279 keyboard processor, and
+    an 8255 parallel port.  (SPJ also has a plain simulator available as
+    a separate product for assembly/machine code debugging.)
+
+    A working demo of the compiler package, which includes the library
+    sources and permits the compilation of small programs, is available
+    from their web site.
+
+    The documentation at the present is not very good.  I have been told
+    that this is being worked on now, and in fact, should be finished by
+    the time you read this.
+
+    This is a new package with a few rough edges, but it easy to use, has
+    a decent price, and has good potential.  Check out the demo on their
+    web site and see for yourselves.
+
+    For questions or comments about the product, you can contact them at:
+    International   COMSOFT PTE LTD
+                    20 Maxwell Rd, #10-11 Maxwell House, Singapore 0106
+                    (65)227-2369   Fax: (65)227-3429
+                    Email: comsoft@po.pacific.net.sg
+    India           SPJ SYSTEMS
+                    114, Chitrashala Bldg.,562, Sadashiv Peth, Pune
+                    Pin - 411 030
+                    Phone: 91-212-451607
+                    Email: vs@SPJ.xeepnq.xeemail.ems.vsnl.net.in
+    Web             http://www.prime-digest.w1.com/spj
+
+
+    Thinking about starting a project using an Atmel AT89C2051 Flash
+    Microcontroller.  Good idea - it's got an unbelievably low price
+    (about 2 bucks), and has got everything you need in a tiny package
+    (20 pins).  But (there's always a but), what about a programmer?
+    Well, there goes the low price.  BlowIT!  No, I'm not being rude...
+    check out Silicon Studio's web site: http://sistudio.com They've got
+    a simple, REALLY simple (2 transistors and 5 resistors), plan for a
+    2051 programmer, called the BlowIT 2051.  Should cost all of about
+    five or ten dollars.  A lot of you probably have most of the parts in
+    your junk box.
+
+
+    An interesting new MCU system based on the DS80C320 is available from
+    CG Microsystems.  It has piles of features including 2 ISA slots.
+    The price is about $90 (I forget the exact price) for the basic
+    system.  Check out their web site for more information:
+    http://home.earthlink.net/~cgmicro/
+
+
+    If you're looking for a way to get away from the vicious EPROM
+    program/try/cry/erase cycle, take a look at Chris Burkey's (KB8ZLI)
+    web page.  You'll find plans for a cheap (about $10) and simple (4
+    chips) ROM emulator.  I haven't tried it myself (no time), but this
+    looks like a real worthwhile project on which to invest a few weekend
+    hours.  The link is:
+        ftp://ieee.cas.uc.edu/pub/electronics/software/burkey/
+
+
+    Once upon a time, Barry Kauler developed a tiny operating system for
+    the 8051, called TERSE.  Well, now it's been ported to the 8086, for
+    the '186 class of microcontrollers and it's still tiny, but
+    sophisticated (well, so's my wife for that matter) at about 1000
+    bytes.
+
+    His "K-Flow" design methodology got renamed, with the quite unlikely
+    name of the "GOOFEE" methodology.  The accompanying book "Object
+    Oriented Flow Design for Embedded Systems" has now grown up -
+    twice the size (funny, so did my wife, she's pregnant), renamed to
+    "Flow Design for Embedded Systems" and has been taken up by a major
+    publisher:
+         PUBLISHER: R&D Books / Miller Freeman (USA)
+         ISBN:      0-87930-469-3
+         WWW:       http://www.rdbooks.com/
+         DATE:      1997
+         DISTRIBUTED IN EUROPE BY: McGraw-Hill
+
+    His CASE program, the GOOFEE Diagrammer, is bundled FREE with the
+    book, and is now at version 1.1c with major enhancements.  It runs on
+    Windows 3.1 and 95, and is a complete analysis/design and project
+    management tool.  CASE software is very expensive, so his thinking is
+    that something "for the rest of us" needs to be cheap.  I'm sure
+    you'd agree with him that free with the book is cheap enough.
+
+    For information on GOOFEE, look at the GOOFEE Systems Pty Ltd page:
+         http://www.arrowweb.com/goofee/
+    Barry's personal page:
+         http://scorpion.cowan.edu.au/science/terse/index.html
+
+
+    Gilad Barak wrote to me about his discovery of New Micros of Dallas
+    Texas from an add in Circuit Cellar Ink.  They make various SBCs for
+    various microcontrollers and add on boards (they have their own
+    extension bus which allows piggyback mounting of several boards).
+
+    He bought their NMIY0031 SBC, which is 8051 based, and from first
+    impression he says it is something very nice for an unbeatable price.
+    For $39 + shipping you get:  SBC with 8051 (Siemens SAB8051, can be
+    substituted), 8K RAM, EPROM with a burnt-in monitor which supports
+    downloading hex files into the RAM and executing them.  The board can
+    accept 3 memory chips (each one up to 32K), one of which is for
+    program, one for data and the third can be configured as wanted. It
+    has a 4x5 matrix keyboard interface, LCD interface, RS232 and support
+    for RS422/485 (need to add the chips). It also has a prototyping
+    area of about 3.5 x 2 inches.
+
+    On floppy you get:  User manual for the board in Word format and
+    plain text format with many programming examples in all supplied
+    languages (about 150 pages), A51 assembler, Small C compiler, hex
+    file for the MCS-52 Basic interpreter EPROM with MCS-52 manual, hex
+    file for MAX-FORTH interpreter EPROM with documentation, hex file for
+    the supplied monitor and documentation, and a terminal program.
+
+    For beginners, this system has the benefit of having everything
+    needed in one package.
+
+
+    Daniel Drennan is offering issue 1 of Inquisitor for free except for
+    postage.  This issue contains plans, schematics, and troubleshooting
+    tips for putting together a 8052-based microcontroller.  It is free
+    except for the postage which is $1.00 in the United States; $2.00 for
+    Canada and overseas surface mail; and $3.00 for overseas airmail.  If
+    you're thinking of putting together an 8051 system, you might want to
+    check this out.
+
+
+    Thanks to Hans Schou for sending information on Intel's Universal
+    Serial Bus, a 12Mbit/sec serial bus to be standard on all new Intel
+    motherboards. The USB topology has three elements: host, hubs and
+    functions. The PC is the host and the peripherals are the functions
+    which need to interface via the USB to the PC. This is where the
+    8x930Ax comes in. The 8x930Ax is an 8-bit microcontroller designed
+    specifically for USB peripherals based on the MCS AE 251
+    microcontroller architecture. It is the first USB microcontroller in
+    a roadmap planned to include other Intel architectures and features
+    throughout 1996 and beyond.
+
+    For more information on this important new development:
+        http://www.teleport.com/~usb
+        http://www.intel.com/design/usb/
+        http://www.intel.com/design/usb/prodbref/272809_2.htm
+
+
+    A good source of pointers for information are the Cera/EG3 web sites:
+    - Electronic Engineers' Toolbox (home page)
+        http://www.eg3.com/ebox.htm
+        http://www.cera2.com/ebox.htm
+    - MCU/MPU resources
+        http://www.cera2.com/micro.htm
+    - Navi-GATOR (embedded development tools and chip-specific)
+        http://www.cera2.com/gator.htm
+
+
+    Take care,
+
+              Uncle Russ
+
+
+1)  ABOUT THIS FAQ
+
+1.1)  Who put this FAQ together?
+
+    I was prompted to put this FAQ together in response to my own
+    frustration in searching for information, and to the constant
+    occurrence of requests for information on this subject in various
+    newsgroups.  Hopefully others won't need to go through what I did.
+
+    Normally, I spend all day programming in assembler or C on an IBM PC.
+    With my hobbyist hat on I decided to try my hand at a little
+    microcontroller project design.  When it came time to start, I had no
+    idea what to do.  I had nothing to start with - no assembler, no
+    programming language, no simulator.  I cobbled together a simulator
+    to help me learn about the workings of the chip.  It's not being made
+    available to the public since I'm afraid the simulator isn't very
+    good.  It was for my own use, so the user interface (there is none)
+    really sucks eggs.
+
+    I decided to search the net for information on the 8051.  This list
+    was compiled the hard way, logging onto every anonymous ftp site I
+    could find and looking around.  I also used Archie, other FAQs and
+    lists, and every reference to the 8051 that appeared in the various
+    news groups.  It took a long time till stuff finally started popping
+    up.  I saved all of my notes and the result was the first version of
+    this FAQ.  Responses have been pouring in, and the result is a much
+    more complete and thorough FAQ.
+
+
+1.2)  How can I contribute to this list?
+
+    I please ask that if you have any suggestions or additions, or you
+    would like to correct any of the information contained herein, please
+    send me a note.
+         My Email address is:  russ@shani.net
+         My Snail-Mail address is:
+               Russ Hersch
+               HaVradim 11
+               Ginot Shomron
+               ISRAEL
+
+    The list of individuals who have sent suggestions and encouragement
+    has finally overflowed.  I hope it suffices to say "Thank you to all
+    who have contributed to this FAQ - we all appreciate it."
+
+    Special thanks to recent contributors:
+          Dave Dunfield (Dunfield Development Systems)
+          Bruce Boyes (Systronix)
+          Burkhard Kohl
+          Gray Creager (Xicor)
+          John Whitten
+          Alan Harry (Crossware)
+          Siegfried W. Bleher (President and CEO, Franklin Software)
+          Gal Savion
+          Jon D. Verne
+          Eero-Pekka Mand
+          Chris Gulick (CG Microsystems)
+          Pramod Ramade (SPJ Systems)
+          Gilad Barak
+          Barry Kauler (GOOFEE Systems Pty Ltd)
+
+
+    I hope that those of you who know of interesting items for the 8051
+    will share with everyone by contributing to this list.  Piles of
+    stuff is turning up thanks to everyone's help.
+
+    If you are a manufacturer and have an anonymous ftp site or BBS
+    available that supports the 8051, please let me know by EMail so that
+    I can add it to this FAQ.  Also, please feel free to update me on new
+    products.
+
+
+1.3)  What newsgroups will this FAQ be posted to?
+
+    This FAQ will be posted to the following newsgroups:
+          comp.sys.intel
+          comp.realtime
+          comp.robotics
+          comp.lang.forth
+          sci.electronics
+    These newsgroups often contain discussions, announcements, or
+    information on the 8051.  Check them out from time to time.
+
+    The schedule for posting will be once a month.  I can't promise that
+    it will be on time, but I hope to post it on the 26th of each month.
+
+    You might also want to check out the following newsgroups, since they
+    quite frequently have discussions about the 8051 and other
+    microcontrollers:
+          comp.arch.embedded
+          alt.comp.hardware.homebuilt
+
+    A bit farther afield, but still of possible interest:
+          comp.lang.misc
+          comp.ai.fuzzy
+          comp.dsp
+          sci.engr.control
+          sci.engr.semiconductors
+
+
+1.4)  May I post this FAQ to my local BBS?
+
+    I am putting no restrictions on the use of this FAQ except - It must
+    be distributed in its entirety with the copyright notice, and no
+    financial gain may be realized from it.  After all, I have spent, and
+    continue to spend, a lot of time on this.  The only thing that I
+    intend to gain from it is more information on the 8051, and getting
+    to know my fellow 8051 groupies better.
+
+    For this reason I have appended a copyright statement to the end of
+    this FAQ.  I feel pretty silly doing this, but I just want to protect
+    myself.  The copyright does not limit the use of this list for
+    noncommercial purposes.  I hereby give my permission to one and all
+    to pass this list around and post it wherever you want - as long as
+    it is not for financial gain.
+
+        Thank you.
+
+
+1.5)  How about FAQs on other microcontrollers?
+
+    If anyone wishes to start a FAQ on another microcontroller, please
+    feel free to copy the format of this FAQ - I don't intend on
+    copyrighting the look and feel ;-).  With a common format, we will
+    all benefit when trying to find information on a particular
+    microcontroller.
+
+
+    Other Microcontroller FAQs
+
+      Subject:  PIC microcontrollers
+      Newsgroups:  <no longer posted to newsgroups>
+      Web page:  http://digiserve.com/takdesign
+      Maintainer:  Tom Kellett
+                   Email: Tom@takdsign.demon.co.uk
+
+      Subject:  68hc11 microcontrollers
+      Newsgroups:  comp.realtime
+                   comp.robotics
+                   sci.electronics
+      Archive:  rtfm.mit.edu :  <plus all mirror sites>
+                /pub/usenet/comp.answers/microcontroller-faq/68hc11
+                /pub/usenet/sci.answers/microcontroller-faq/68hc11
+                /pub/usenet/news.answers/microcontroller-faq/68hc11
+      Maintainer:  Robert Boys - Ontario, Canada
+                   Email: rboys@best.com
+                   Russ Hersch (maintainer emeritus :-)
+
+      Subject:  Microcontroller primer and FAQ
+      Newsgroups:  comp.sys.intel
+                   comp.arch.embedded
+                   comp.robotics
+                   sci.electronics
+                   alt.comp.hardware.homebuilt
+      Archive:  rtfm.mit.edu :  <plus all mirror sites>
+                /pub/usenet/comp.answers/microcontroller-faq/primer
+                /pub/usenet/sci.answers/microcontroller-faq/primer
+                /pub/usenet/news.answers/microcontroller-faq/primer
+      Maintainer:  Russ Hersch
+                   Email: russ@shani.net
+
+
+    Additional FAQs of interest
+
+      Subject:  I2C protocol
+      Newsgroups:  sci.electronics
+                   alt.hardware.homebuilt
+                   comp.robotics
+                   comp.protocols.misc.
+      Comments:    The I2C bus is a simple 2 wire serial interface
+                   developed by Philips.  A number of 8051 variants as
+                   well as several peripherals include I2C support.
+      Maintainer:  Vincent Himpe
+                   Email: Vincent.Himpe@ping.be
+
+      Subject:  Robotics
+      Newsgroups:  comp.robotics
+      Maintainer:  Kevin Dowling
+                   (412)268-8830
+                   Email: nivek@ri.cmu.edu
+                   Smail: Carnegie Mellon University
+                          The Robotics Institute
+                          Pittsburgh, PA 15213
+
+      Subject:  Electronics
+      Newsgroups:  sci.electronics
+      Comments:  There are a number of FAQs available in this newsgroup
+                 on various subjects.  Among some of the subjects covered
+                 are:  LCDs, stepper motors, etc.
+
+      FAQ subject:  Real-time
+      Newsgroups:  comp.realtime, comp.answers, news.answers
+      Archive:  rtfm.mit.edu : pub/usenet/comp.realtime
+      Maintainer:  Mark Linimon
+                       Lonesome Dove Computing Services
+                       Roanoke, Virginia
+                   Email: linimon@nominil.lonesome.com.
+
+      Subject:  Motorola 68K microprocessor line
+      Newsgroups:  comp.sys.m68k
+      Comments:  without a doubt, one of the finest FAQs ever written
+                 (well, of course Bob paid me to say this ;-)
+      Archive:  bode.ee.ualberta.ca : pub/motorola/general
+                ftp.luth.se : /pub/misc/motorola/faq
+                file name of archive is m68kfaq?.zip (? is version)
+      Maintainer:  Robert Boys - Ontario, Canada
+                   Email: rboys@best.com
+
+
+    For more detailed information on various 8051 microcontroller parts,
+    see the article posted to comp.robotics and sci.electronics which
+    provides a tabular cross reference of features and pin counts on a
+    wide range of microcontrollers (including the 8051 family).  This
+    list was compiled and is being maintained by Roger Nelson
+    <rnelson@wsuaix.csc.wsu.edu>.
+
+    For more information on various microcontrollers and their features,
+    refer to the Microcontroller primer and FAQ listed above.
+
+
+2)  ABOUT THE 8051
+
+
+2.1)  The 8051 microcontroller
+
+    The 8051 is an 8 bit microcontroller originally developed by Intel in
+    1980.  It is the world's most popular microcontroller core, made by
+    many independent manufacturers (truly multi-sourced).  There were 126
+    million 8051s (and variants) shipped in 1993!!
+
+    A typical 8051 contains:
+       - CPU with boolean processor
+       - 5 or 6 interrupts: 2 are external
+                            2 priority levels
+       - 2 or 3 16-bit timer/counters
+       - programmable full-duplex serial port
+         (baud rate provided by one of the timers)
+       - 32 I/O lines (four 8-bit ports)
+       - RAM
+       - ROM/EPROM in some models
+
+    The 8051 architecture is a tad bizarre, but then so are the
+    architectures of most microcontrollers due to their specialization
+    (check out the PIC for creativity - for that matter, take a look at
+    any RISC chip).  One vexing problem with the 8051 is its very
+    non-orthogonal instruction set - especially the restrictions on
+    accessing the different address spaces.  However, after some time
+    programming the chip, you can get used to it - maybe even appreciate
+    it.
+
+    One strong point of the 8051 is the way it handles interrupts.
+    Vectoring to fixed 8-byte areas is convenient and efficient.  Most
+    interrupt routines are very short (or at least they should be), and
+    generally can fit into the 8-byte area.  Of course if your interrupt
+    routine is longer, you can still jump to the appropriate routine from
+    within the 8 byte interrupt region.
+
+    The 8051 instruction set is optimized for the one-bit operations so
+    often desired in real-world, real-time control applications.  The
+    boolean processor provides direct support for bit manipulation.  This
+    leads to more efficient programs that need to deal with binary input
+    and output conditions inherent in digital-control problems.  Bit
+    addressing can be used for test pin monitoring or program control
+    flags.
+
+
+2.2)  8051 Flavors
+
+    The 8051 has the widest range of variants of any embedded controller
+    on the market.  The smallest device is the Atmel 89c1051, a 20 Pin
+    FLASH variant with 2 timers, UART, 20mA.  The fastest parts are from
+    Dallas, with performance close to 10 MIPS!  The most powerful chip is
+    the Siemens 80C517A, with 32 Bit ALU, 2 UARTS, 2K RAM, PLCC84
+    package, 8 x 16 Bit PWMs, and other features.
+
+    Among the major manufacturers are:
+        AMD      Enhanced 8051 parts (no longer producing 80x51 parts)
+        Atmel    FLASH and semi-custom parts
+        Dallas   Battery backed, program download, and fastest variants
+        Intel    8051 through 80c51gb / 80c51sl
+        Matra    80c154, low voltage static variants
+        OKI      80c154, mask parts
+        Philips  87c748 thru 89c588 - more variants than anyone else
+        Siemens  80c501 through 80c517a, and SIECO cores
+        SMC      COM20051 with ARCNET token bus network engine
+        SSI      80x52, 2 x HDLC variant for MODEM use
+
+    Advanced Micro Devices (AMD)
+
+       AMD was one of the first manufacturers of enhanced variants
+       including such features as:  dual data pointers, slave interface
+       with arbitration unit, dual port RAM, FIFO buffers, and others.
+       They are now out of the 8051 business.
+
+
+    Atmel
+
+       The smallest current device is the ATMEL 89c1051, a 20 Pin FLASH
+       variant with 2 timers, UART, 20mA.  ATMEL was the first with
+       standard pinout FLASH, and with more program cycles than other
+       custom pinout FLASH.  These parts compete with OTP and MASK
+       product on price, but eliminate inventory problems and the hidden
+       costs of OTP development.  This will put real pressure on
+       "vanilla" micros like PIC and ST6.
+
+
+    Dallas Soft Microcontrollers - DS5000(T), DS5001(T), DS2250(T)
+
+       The Dallas Soft Microcontrollers have standard 8051 cores with
+       on-chip non-volatile RAM instead of ROM.  This gives the user the
+       ability to easily alter the system and is perfect for data
+       logging.  These processors are available in both chip and module
+       solutions.  Among the features included in this family of
+       products:
+          - on-chip non-volatile RAM
+          - loader in ROM for downloading programs (eliminates the hassle
+            of EPROM erase/program/install cycle)
+          - built in real time clock option
+          - watchdog timer
+          - software security (program and data encryption)
+
+       The DS500x is a standard 40 pin DIP package (well, mostly
+       standard, it is really a BOX which is about double the height of a
+       normal chip).  The DS225x is a SIP version which is functionally
+       identical to the DS5000 but usually a bit less expensive.
+
+       The nice thing about having the RAM on-chip, is that the I/O ports
+       are unaffected.  When the RAM is configured as CODE memory, the
+       DS5000 behaves exactly as a single-chip 8051.  The NV-RAM is
+       static with a built-in lithium battery, and has no limitations on
+       the number of writes.  You can download your code as many times as
+       you like without damaging the device.  The DS5000 also includes a
+       loader in ROM, which permits you to bootstrap code into the RAM to
+       get underway.  The loader and on-chip RAM have an encryption
+       feature with which you can protect your code from being read back
+       from the device if you wish.
+
+
+    Dallas High-Speed Micros - DS80c320, DS87c520, DS87c530
+
+       Real barn-burners - performance up to 10 MIPS!  Dallas was the
+       first to speed up the core.  Wasted clock and memory cycles have
+       been removed using a redesigned processor core.  As a result,
+       every 8051 instruction is executed up to 3 times faster than the
+       original for the same crystal speed.  Clock speeds from DC to
+       33MHz!
+
+       High performance doesn't just mean speed.  High integration gives
+       the user 2 full-duplex hardware serial ports, 13 total interrupt
+       sources (6 external), watchdog timer, power management, power-fail
+       reset, and other features.
+
+
+    Intel MCS-51
+
+       Introduced in 1980, it has become the industry standard for
+       embedded control.  Intel offers a wide variety of 8051 versions
+       with different configurations of on-board EPROM/ROM.  Also low
+       power, high integration, and specialized parts are also offered.
+
+
+    OKI
+
+       OKI makes an 85c154 piggyback - an 8751 but with an EPROM socket
+       on top!  Great with an EPROM emulator.
+
+
+    Philips
+
+       Philips has more 8051 variants than anyone else.  Among the
+       derivatives that they have:  40MHz, 24 pin skinny DIP, low
+       voltage, quad flat pack (QFP) versions for saving board space,
+       OTP, I2C bus, and so on.
+
+       The c5xx line features high integration, with many built-in
+       features including built-in EMI/RFI suppression.
+
+       The c7xx series are very low-end, inexpensive micros.  They are
+       offered with less memory (1k, 2k, etc.) and fewer features.  In
+       fact the 83c750 sells for only $1 in very high OEM volumes.
+
+
+    Siemens sab80c517a
+
+       The 80c517a is one of the most powerful 8051 variants available.
+       It features high clock speed (40 MHz), and high integration with
+       32 Bit ALU, 2 UARTS, 2K RAM, PLCC84 package, 8x16 bit PWMs, and
+       more.
+
+
+    Standard Microsystems Corporation SMC COM20051
+       The COM20051 is an integrated microcontroller and network
+       interface which features:
+         -  high performance and low cost
+         -  based on popular 8051 architecture
+         -  drop-in replacement for 80C32 PLCC
+         -  network supports up to 255 nodes
+         -  powerful network diagnostics
+         -  maximum 512 byte packets
+         -  duplicate node ID detection
+         -  self-configuring network protocol
+         -  retains all 8051 peripherals including Serial I/O and
+            2 Timers
+         -  utilizes ARCNET(R) Token Bus Network Engine
+         -  requires no special emulators
+         -  5 Mbps to 156 Kbps data rate
+         -  network interface supports RS-485, twisted pair,
+            coaxial, and fiber optic interfaces
+         -  "receive all" mode allows any packet to be received
+
+
+    Silicon Systems Inc. SSI73M2910/2910A
+
+       The SSI73M2910 is a high performance microcontroller designed for
+       modem and communications applications.
+         - 8052 Compatible Instruction set.
+         - 34 MHz Operation @ 4.5 - 5.5V
+         - 44 MHz Operation @ 4.75 - 5.5.V (2910A)
+         - 22 MHz Operation @ 3.3 - 5.5.V
+         - HDLC Support Logic (Packetizer, 16 and 32 CRC, zero ID)
+         - 24 pins for user programmable I/O ports
+         - 8 pins programmable chip select logic or I/O for memory mapped
+           peripherals eliminating glue logic
+         - 3 external interrupt sources (programmable polarity)
+         - 16 dedicated latched address pins
+         - Multiplexed latched/address bus
+         - Instruction cycle time identical to 8052
+         - Buffered oscillator (or OSC/2) output pin
+         - 1.8432 MHz UART clock available
+         - Bank select circuitry to support up to 128K of external
+           program memory
+         - 100-Lead TQFP package available for PCMCIA applications
+         - Also available in 100-Lead QFP package
+
+
+2.3)  16-bit 8051 parts
+
+
+    A joint project between Intel and Philips Semiconductors has resulted
+    in two new excting products - 16 bit 8051s!  Due to a disagreement
+    between the parties, they each went their separate ways.  Intel
+    developed the MCS-251, which was originally called the ZX (this name
+    can still be found on one of the Intel slide shows).  Philips came
+    out with the eXtended Architecture (XA) line.
+
+    The Intel MCS-251 is a drop-in replacement for the 8051 (at least,
+    after programming the mode control bits first), and is also binary
+    compatible.  The XA is more of a 16 bit micro which also happens to
+    be source code compatible.  One can argue the merits of which
+    approach is better.
+
+    Pin compatible parts allow instant performance upgrades for existing
+    designs, and the binary compatibility truly preserves users
+    investment in code and tools.  By staying firmly in the 80x51 camp,
+    Intel allows users transparent access to an enormous horsepower
+    range.  To further improve throughput in numerically intensive areas,
+    users can use INTEGER, LONGINT, and FLOAT libraries written for the
+    MCS-251.  The Philips XA is not a drop-in replacement for the 8051.
+
+    Binary code compatibility is nice, you can move right up to a more
+    powerful engine without having to bust a gut (We all know the Intel
+    binary compatible success story with their 80x86 microprocessors).
+    But if you're working on a new design, how necessary is binary
+    compatibility?  If you're just looking for a souped up '51, Dallas
+    already has the 320.  If you need the advanced features, you'll need
+    to recompile or rewrite your software anyhow.  You'll also have to
+    drag along some compatibility baggage with you in order to use the 16
+    bit operations - these are preceded by an escape code (A5H), the only
+    instruction not used in the 8051 instruction set.
+
+    With source code compatibility, you have to recompile your code (with
+    a new set of development tools), since the instruction set has been
+    recrafted to allow the biggest bang for the buck.  This process isn't
+    100% transparent, but then again, binary compatibility isn't either.
+
+    If you're upgrading an existing design, the 251 is probably your only
+    reasonable choice (although you might also want to consider the
+    Dallas 320).  On new designs, you'll have a tough decision to make.
+    Whichever path you choose to take, the 8051 will never be the same
+    again.
+
+
+    Intel MCS-251
+
+       The Intel MCS-251 is 100% binary and pin compatible with the 8051,
+       but with a 5-15 times boost in horsepower.  This is achieved by a
+       six fold gain in bus cycles, and further hardware improvements to
+       avoid wasted bus cycles.
+
+       Further performance gains are possible by recoding critical
+       sections to take advantage of the new features:  powerful 8/16/32
+       bit instructions, flexible 8/16/32 registers, 16MB linear address
+       space, 16-bit stack pointer, enhanced BIT manipulations, and
+       improved control instructions.  In addition to extra 16/32 bit
+       instructions, the 251 includes 40 registers with Accumulator and
+       Index functions overlayed as 16x8, 16x16, 10x32.
+
+       Should we expect a 351 in the future.  How about a 451?  Or maybe
+       a Penti-uC?
+
+
+    Philips 8051XA
+
+       By tossing compatibility out the window, Philips was able to
+       develop a true 16 microcontroller while at the same time
+       preserving the basic 8051 instruction set (source).  The benefits
+       of this break with tradition result in a chip that has dual 16MB
+       address spaces (data and code), multitasking support with task
+       protected memory segments, a separate SFR bus, fast context
+       switching, and optimized code efficiency.  Other features include:
+       hardware divide and multiply (over 100 times faster than an 8051),
+       32 vectored interrupts, 16 hardware exceptions, and 16 trap
+       instructions.
+
+
+2.4)  8051 representatives and approximate prices (in USD $)
+
+    There are many, many varieties of 8051 out there.  This is only a
+    small sampling of typical prices on Intel chips.
+
+        8031 (128 bytes RAM)...................................3.59
+        80C31 (CMOS version of previous).......................6.95
+        8051AH (256 bytes RAM).................................6.95
+        8051AHBASIC (w/Basic interpreter built in)............29.95
+        8751 (4K EPROM, 128 bytes RAM)........................26.95
+        87C51 (CMOS version of previous)......................39.95
+
+
+2.5)  Common and New 80x51 variants
+
+    Intel has announced that 8052AH-BASIC has reached its EOL (end of
+    life) and is not any more in production. Resellers may still have
+    some chips in stock. However, both source and object code is
+    available in many ftp-sites (and Intel BBS) and can be loaded into
+    any 8052-compatible internal ROM memory (or external ROM, but then
+    PROG and DMA cannot be used).
+
+    At least few years ago, MicroMint Inc. (4 Park St, Vernon,
+    CT 06066, USA) was selling their own 80C52-BASIC at USD 25, speed DC
+    12 MHz, CMOS.
+
+    <Thanks to Eero-Pekka Mand>
+
+
+    Thanks to Jim Granville of Mandeno Granville Electronics, Ltd. for
+    the following nice summary.
+
+    Key:
+        PCA programmable counter array
+        LV  low voltage
+        PWM pulse width modulation
+        CC  capture/compare
+        UPI Universal Peripheral Interface (Philips)
+
+    Variant  Pins  Mfg     RAM  CODE XRAM  Notes (LV - low voltage)
+    ---------------------------------------------------------------------
+    MCS251    40   Intel    1K  16K    0   16 Bit 80x51FX! Prelim
+    80C509L  100qf Siemens 256  64Kx  3K   ALU,PWM,CC,2UART,10bA/D
+    80C517A   84   Siemens 256  64Kx  2K   ALU,8PWM,CC,2UART,10bA/D
+    80C537A   84   Siemens 256  32K   2K   ALU,8PWM,CC,2UART,10bA/D
+    80537     84   Siemens 256  64Kx   0   ALU,8PWM,CC,2UART,8bA/D
+    80517     84   Siemens 256   8K    0   ALU,8PWM,CC,2UART,8bA/D
+    73D2910 100qfp SSI     256 128Kx   0   80C52+Ports+HDLC
+    80C535A   68   Siemens 256  64Kx  1K   515+10bA/D,1K XRAM,BRG,OWD
+    80CE558  80qfp Philips 256  64Kx 768   Enhanced 80C552, Sep i2c, RSO
+    80C515A   68   Siemens 256  32K   1K   515+10bA/D,1K XRAM,BRG,OWD
+    80535     68   Siemens 256  64Kx   0   Timer2CaptComp 6ports 8/10bA/D
+    80515     68   Siemens 256   8K    0   Timer2 CaptComp 4 ports 8b A/D
+    80C535    68   Siemens 256  64Kx   0   Timer2 CaptComp 5 ports 8b A/D
+    80C51GB   68   Intel   256  64Kx   0   8051FA+PCA, 8b A/D, SPI
+    87C51GB   68   Intel   256   8K    0   8051FA+PCA, 8b A/D, SPI
+    80C592    68   Philips 256  64Kx 256   552-i2c+CAN+XRAM
+    87C592    68   Philips 256  16K  256   552-i2c+CAN+XRAM
+    87C598    80   Philips 256  32K  256   552-i2c+CAN+XRAM
+    80C552    68   Philips 256  64Kx   0   10b A/D, i2c, CaptComp, PWM
+    87C552    68   Philips 256   8K    0   10b A/D, i2c, CaptComp, PWM
+    80C562    68   Philips 256  64Kx   0   8b A/D, i2c, CaptComp, PWM
+    SABC505C  44   Siemens 256  64Kx 256   8bA/D,XRAM,OWD,CAN V2B, Xt2
+    SABC504   44   Siemens 256  64Kx 256   10bA/D,XRAM,OWD,DC Motor PWM
+    87C451    68   Philips 128   4K    0   7 Ports, 1 Handshake
+    80C451    68   Philips 128  64Kx   0   7 Ports, 1 Handshake
+    87C453    68   Philips 256   8K    0   7 Ports, 1 Handshake
+    83CL580  56,64 Philips 256   6K    0   LV 8052+ADC+i2c+More INTs,WDOG
+    80C320    40   Dallas  256  64Kx   0   FAST, 2 DPTR 2 UART VRST
+    80C310    40   Dallas  256  64Kx   0   Simpler 80C320 e62.5Mhz
+    87C520    40   Dallas  256  16K   1K   16K OTP enhanced 80C320
+    80C51FX   40   Intel   256  64Kx   0   80C58i+PCA,AsRST
+    87C51FA   40   Intel   256   8K    0   8052+PCA,Enh Serial Automotive
+    87C51FB   40   Intel   256  16K    0   8052+PCA,Enh Serial Automotive
+    87C51FC   40   Intel   256  32K    0   8052+PCA,Enh Serial Automotive
+    8XC51FB   40   Philips 256  16K    0   87C51FB with ALE RFI mode
+    87C51FXL  40   Intel   256  32K    0   3.3v 80C51FC
+    80C152JD  68   Intel   256  64Kx   0   HDLC/SDLC Serial
+    80C152    48   Intel   256  64Kx   0   HDLC Serial
+    8044      40   Intel   192  64Kx   0   RUPI Serial
+    80C575    40   Philips 256  64Kx   0   8052+PCA,AnalogComp,WDOG,RSTLo
+    87C575    40   Philips 256   8K    0   8052+PCA,AnalogComp,WDOG,RSTLo
+    80C576    40   Philips 256   8K    0 8052+PCA,UPI,A/D,PWM,WDOG,VRSTLo
+    87C576    40   Philips 256   8K    0 8052+PCA,UPI,A/D,PWM,WDOG,VRSTLo
+    SABC501   40   Siemens 256  64Kx   0   40MHz Enhanced 8052 U/D
+    SABC502   40   Siemens 256  64Kx 256   8052+XRAM+8DP+WD+BRG+OWD
+    80C528    40   Philips 256  64Kx 256   8052+Wdog, XRAM
+    87C528    40   Philips 256  32K  256   8052+Wdog, XRAM
+    89CE528   44   Philips 256  32KF 256   Flash 528
+    87C524    40   Philips 256  16K  256   16K 87C528
+    80C550    40   Philips 128   4K    0   8b A/D WDog
+    80CL781   40   Philips 256  64Kx   0   LV 8052, More INTs, WDOG
+    83CL781   40   Philips 256  16K    0   LV 8052, More INTs, WDOG
+    80CL782   40   Philips 256  64Kx   0   LV, faster 781
+    89S8252  40.44 Atmel   256 10KFE   0   FLASH, 8K+2KEE, WDOG, SPI
+    89C55    40.44 Atmel   256 20KF    0   FLASH, Fast,LV 87C52+20K
+    89C52    40.44 Atmel   256  8KF    0   FLASH, Fast,LV 87C52
+    87C54     40   Intel   256  16K    0   16K 87C52i
+    87C58     40   Intel   256  32K    0   32K 87C52i
+    87C52     40   Intel   256   8K    0   8052+U/D+OscO+4Li
+    80C154    40   Matra   256  64Kx   0   Enhanced 8052 (also OKI)
+    83C154D   40   Matra   256  32K    0   Enhanced 8052
+    83C154    40   OKI     256  16K    0   Enhanced 8052
+    80C654    40   Philips 256  64Kx   0   i2c
+    87C652    40   Philips 256   8K    0   i2c
+    87C654    40   Philips 256  16K    0   i2c
+    83CE654  44qfp Philips 256  16K    0   i2c, low RFI 654
+    DS5000    40   Dallas  128  32KR 32K   80x51 Secure+NVsupport,BootLdr
+    DS2250   40sim Dallas  128  32K  32K   5000, in SIMM package
+    DS5001   80qfp Dallas  128  64Kx 64K   Enhanced DS5000, RPC BatSw
+    80C851    40   Philips 128  64Kx   0   8051+256B EEPROM
+    83C852     6   Philips 256   6K    0   ALU,2K EEPROM SmartCard,Die
+    8052      40   All     256  64Kx   0   8051+Timer2
+    8752      40   Intel   256   8K    0   8051+Timer2
+    80C52     40   Siemens 256  64Kx   0   8051+Timer2,Philips,Oki,Matra
+    88SC54C   8    Atmel   256  64Kx 512   8052+PublicKey,prelim
+    80CL410   40   Philips 128  64Kx   0   LV, More INTs i2c-UART
+    80CL31    40   Philips 128  64Kx   0   LV, More Ints 80x51
+    80CL610   40   Philips 256  64Kx   0   LV, More INTs i2c-UART
+    83CL411   40   Philips 256  64Kx   0   80CL31 with 256 RAM, No T2
+    89C51    40.44 Atmel   128   4KF   0   FLASH,Fast,LV 87C51
+    8751      40   All     128   4K    0   Core processor,UART,Tmr0,Tmr1
+    87C51     40   All     128   4K    0   Core processor,UART,Tmr0,Tmr1
+    8031      40   All     128  64Kx   0   Core processor,UART,Tmr0,Tmr1
+    8051      40   All     128   4K    0   Core processor,UART,Tmr0,Tmr1
+    80C31L    40   Matra   128  64Kx   0   LV 80x51
+    87C752    28   Philips  64   2KE   0   87751+ A/D, PWM
+    87C749    28   Philips  64   2KE   0   87C752 - i2c
+    87C751    24   Philips  64   2KE   0   Small size, bit i2c
+    87C748    24   Philips  64   2KE   0   87C751 - i2c
+    87C750    24   Philips  64   1KE   0   Small size
+    89C2051   20   Atmel   128   2KF   0   20Pin 89C51,+AnaComp+LED
+    89C1051   20   Atmel    64   1KF   0   20Pin 2051 -uart,timer1
+
+
+2.6)  Advantages realized in implementing control applications on this
+      family of microcontrollers
+
+    Wildly popular - readily available and widely supported, a full range
+    of free and commercial support products is available
+
+    Fast and effective - the architecture correlates closely with the
+    problem being solved (control systems), specialized instructions mean
+    that fewer bytes of code need to be fetched and fewer conditional
+    jumps are processed
+
+    Low cost - high level of system integration within one component,
+    only a handful of components needed to create a working system
+
+    Wide range -  ONE set of tools covers the greatest horsepower range
+    of any microcontroller family, other suppliers handle a number of
+    DIFFERENT and INCOMPATIBLE (and often single-sourced) cores to cover
+    the same power range as the 80x51, the 8051 provides a real cost
+    savings in tools, training, and software support
+
+    Compatibility - opcodes and binaries are the SAME for all 80x51
+    variants (unlike most other microcontroller families)
+
+    Multi-sourced - over 12 manufacturers, hundreds of varieties,
+    something for everyone with the security of ready availability
+
+    Constant improvements - improvements in silicon/design increase speed
+    and power annually, 16 bit models coming from several manufacturers,
+    low cost skinny DIP models now available
+
+
+2.7)  Getting started
+
+    If you are interested in getting started with the 8051, you will need
+    to concern yourself with getting the appropriate hardware and
+    software to develop your system.
+
+    A good start would be to pick up a couple of books on the subject.
+    Two really great books for beginners are "The Microcontroller Idea
+    Book" by Jan Axelson (Lakeview Research) and "Programming and
+    Interfacing the 8051 Microcontroller" by Sencer Yeralan and Ashutosh
+    Ahluwalia (Addison Wesley).  Both books contain complete plans for
+    microcontroller boards/systems if you plan on rolling your own.  The
+    Yeralan/Ahluwalia books also contains a diskette with just about all
+    of the software that you'll need to get started progamming for the
+    8051 (assembler, simulator, etc).  These books also have many circuit
+    and code examples and are very useful for the beginner (I'm going to
+    need an extra copy of each for reading in the bathroom :-).
+
+
+    Which software you choose is mostly a matter of personal preference,
+    how much time you have to invest, how much money you have to invest,
+    and what you want to accomplish.  Serious work can be accomplished
+    using much of the free software listed in this FAQ, however in most
+    cases technical support is unavailable.  Registering shareware, or
+    buying a mainstream commercial package gives you backup and support
+    and helps you get going much faster.
+
+    If you are a hobbyist or student, and would like to program in C, I
+    would recommend looking at the Dunfield Development System.  I use
+    this package and it is a powerful package for only $100.  It includes
+    a full suite of development tools including C compiler, assembler,
+    linker, and much more.  A hardware-resident simulator/emulator is
+    available for an additional $50.  Another C compiler package from
+    Micro Computer Control provides similar capabilities for the same
+    price.
+
+    A wide range of development options exists for all budgets and
+    purposes.  One convenient way to start is the Ceibo/Philips DS-750
+    development system, based on the 80c75x (a scaled down 8051 variant).
+    The "emulator" board programs the chips (so you won't need an EPROM
+    programmer and the debugger has a user interface much like Borland's
+    Turbo Debugger.
+
+    The development system that I use is based on the Dallas DS5000.  The
+    nice thing about the DS5000 is that you can upload your programs
+    directly to the chip (no EPROM needed!).  The Dunfield package
+    provides excellent support for this chip, including plans for
+    building a "pseudo-ice".  With this setup, all you need to do is
+    upload your program, and debug (emulate) on the target hardware.
+    This setup is highly recommended.
+
+
+    One other possibility is the 8052AH-BASIC chip.  With a Basic
+    interpreter built in, you have an interactive development system when
+    attached to your PC.  Jan Axelson's book gives complete coverage on
+    this chip, including plans to build your own system, programming in
+    Basic, and interfacing to various peripherals and devices.
+
+
+2.8)  Technical Questions and Answers
+
+    Q:  Why are ports P0 and P2 unavailable for I/O when using external
+        memory?
+
+    A:  The output drivers of ports 0 and 2, and the input buffers of
+        port 0, are used to access external memory.  Port 0 outputs the
+        low byte of the external memory address, time-multiplexed with
+        the byte being read/written.  Port 2 outputs the high byte of the
+        external memory address when the address is 16 bits wide.
+        Otherwise, the port 2 pins continue to emit the P2 SFR contents.
+        Therefore, when external memory is being used, ports 0 and 2 are
+        unavailable for their primary use as general I/O lines.
+
+
+    Q:  Is there anything I can do to use these ports for I/O when using
+        external memory?
+
+    A1: Not really.
+
+    A2: If you really want to make your life miserable, you can try to
+        use P2 for output when it isn't being used for memory access.
+        The contents of the SFR latch for port 2 are not modified during
+        the execution of a Data Memory fetch cycle on the Expanded Bus.
+        If an instruction requiring a cycle on the Expanded Bus is not
+        followed by another instruction requiring a cycle on the Expanded
+        Bus, then the original contents of the port 2 SFR latch will
+        appear during the next machine cycle.  That is, when PSEN, RD and
+        WR are all inactive, you can use port 2 for output (check the
+        timing charts in the data book).  The chip will emit the contents
+        of the P2 SFR at that time.  Do you REALLY want to bother with
+        this though?
+
+    A3: By including the external RAM "on-chip", the Dallas DS5000 makes
+        these ports available for I/O.  The SLIC E2 from Xicor does the
+        same thing for other 8051 parts.
+
+    A4: If you really need the extra I/O ports, there are number of 8051
+        variants that have additional ports.  Philips and Siemens are two
+        such manufacturers that have these parts in their product lines.
+
+
+    Q:  I'm outputting a 1 to a pin on port 0, but I'm not getting a 1
+        out.  If I use a pin on port 1 instead, it works fine.  What am I
+        doing wrong?
+
+    A:  Port 0 has open drain outputs.  Ports 1, 2, and 3 have internal
+        pullups.  What does this mean?  See the next question and answer.
+
+
+    Q:  Port 0 has open drain outputs.  Ports 1, 2, and 3 have internal
+        pullups. What does this mean, and why should I care?
+
+    A:  When used as outputs, all port pins will drive the state to which
+        the associated SFR latch bit has been set.  Except for port 0,
+        which will only drive low (not high).  When a 0 is written to a
+        bit in port 0, the pin is pulled low (0).  But, when a 1 is
+        written to a bit in port 0, the pin goes into a high impedance
+        state - or in other words, "disconnected", no value.  To be able
+        to get a 1 as output, you need an external pullup resistor to
+        pull up the port (to 1) when the port is in its high impedence
+        state.  Typical values for pullups might be 470 ohm to drive a
+        LED, and 4.7K or higher to drive logic circuits.
+
+    C:  Any port pin may be used as a general purpose input simply by
+        writing a 1 into the associated SFR latch bit.  Since ports 1, 2,
+        and 3 have internal pull-up devices they will pull high and will
+        source current when pulled low.  When a port 0 bit is programmed
+        for input (set to 1) it will go to a high impedance state.
+
+
+    Q:  Why is such an oddball crystal frequency of 11.0592 MHz used so
+        often for 8051 designs.
+
+    A1: 11.0592 MHz crystals are often used because it can be divided to
+        give you exact clock rates for most of the common baud rates for
+        the UART, especially for the higher speeds (9600, 19200).
+        Despite the "oddball" value, these crystals are readily available
+        and commonly used.
+
+    A2: When Timer 1 is used as the baud rate generator, the baud rates
+        in Modes 1 and 3 are determined by the Timer 1 overflow rate and
+        the value of SMOD (PCON.7 - double speed baud rates) as follows:
+
+                            smod
+                           2
+           Baud rate =   ------   x (Timer 1 overflow rate)
+                           32
+
+        Most typically, the timer is configured in the auto-reload mode
+        (mode 2, high nibble of TMOD = 0100B).  In this case, the baud
+        rate is given as:
+
+                            smod
+                           2        Oscillator frequency
+           Baud rate =   -------  x --------------------
+                           32         12 x (256 - TH1)
+
+        Some typical baud rates for an 11.0592 crystal:
+
+           Baud rate  SMOD   TH1
+           ---------------------
+             19200      1   0FDH
+              9600      0   0FDH
+              4800      0   0FAH
+              2400      0   0F4H
+              1200      0   0E8H
+               300      0   0A0H
+
+        Another way to look at it, would be to rework the formula to give
+        us the crystal frequency that we need for the desired baud rate:
+
+                                                        smod
+        Minimum crystal frequency =  Baud rate x 384 / 2
+
+        This gives us the minimum crystal frequency possible for the
+        desired baud rate.  The frequency can be evenly multiplied to
+        obtain higher clock speeds.
+
+        As an example, the minimum crystal frequency for 19.2K baud is:
+              3.6864 = 19200 x 384 / 2 (smod is 1 for 19.2K baud)
+
+              11.0592 = 3.6864 x 3
+
+
+        To determine the timer reload value needed, the formula can be
+        changed to factor in the multiplier:
+                                                             smod
+        Crystal frequency = Baud rate x (256 - TH1) x 384 / 2
+
+
+        From the example above, the multiplier (3) is used to determine
+        TH1:
+              TH1 = 256 - 3 = 253 = 0FDH
+
+        The crystal frequency for 19.2K baud is:
+              11.0592 = 19200 x (256 - 0FDH) x 384 / 2
+                      (smod is 1 for 19.2K baud)
+
+
+        Other values can also give good results, but 11.0592 is one of
+        the higher speed crystals that allows high baud rates.
+
+    A:  Well, you wanta talk about oddball values?  Another good crystal
+        value is 7.3728 MHz and its multiples. Using counter1 this gives
+        an even 38.4 kbps rate exactly, which is not possible with
+        11.0952 MHz Xtal. <Thanks to Eero-Pekka Mand>
+
+
+    Q:  How do I decrement the data pointer (DPTR)?  Where did the DEC
+        DPTR instruction go?
+
+    A1: You can't decrement DPTR.  Although there is an INC DPTR
+        instruction, there is no DEC DPTR.  In fact, there is no other
+        way to change the contents of DPTR except for MOV and INC.
+
+    A2: You can use the accumulator as an offset if you need to perform
+        "calculations" on the DPTR.  As an example:
+              MOV   DPTR,#9000         ; load base address into DPTR
+              MOV   A,#10              ; load desired offset
+              MOVC  A,@A+DPTR          ; retrieve desired data
+
+    A3: Another method would be to use indirect addressing.  Instructions
+        such as MOVX A,@Ri can address a 256 byte "page" of external RAM.
+        The value represented by @Ri (@R0 or @R1) is emitted to Port 0,
+        which is the low byte of the external RAM address bus.  In
+        addition, the contents of the P2 register is emitted to Port 2,
+        which is the high byte of the external memory address bus.  The
+        indirect addressing register together with the P2 register, which
+        specifies the "current page number", gives us a 16 bit pointer
+        into the external memory address space.
+
+        This technique can make moving data in external memory much
+        faster than reloading DPTR every time.  The indirect addressing
+        register can be manipulated much easier than DPTR which can only
+        be loaded and incremented.  Just remember to make sure that P2
+        contains the proper value for the high byte of the address.
+
+    A4: Inside the BASIC interpreter source code, and published in its
+        manual, is a short and efficient subroutine to decrement data
+        pointer, only 6 statements:
+            XCH A,DPL ; JNZ $+4 ; DEC DPH ; DEC A ; XCH A,DPL ; RET
+        Only DPTR is affected, not A or any flags!
+        <Thanks to Eero-Pekka Mand>
+
+
+    Q:  I'm trying to PUSH and POP the accumulator, but my assembler
+        complains about the instruction  PUSH  A.  What's wrong with
+        this?
+
+    A:  In instructions that are accumulator specific, A is used to
+        represent the accumulator.  However, PUSH and POP have no
+        accumulator specific forms, only direct addressing forms.
+        Therefore, you need to specify the correct accumulator "address"
+        - ACC.  Use the instruction PUSH ACC.
+
+
+    Q:  The 8052 AH-BASIC interpreter seems to work OK when I perform
+        simple interpreted commands.  For example:
+             READY
+             > PRINT "HELLO"
+             HELLO
+        However, when I try to enter a [numbered] statement, I get an
+        error:
+             READY
+             > 10 PRINT "HELLO"
+             INVALID LINE NUMBER..!!
+        I get the same error when I try LIST.  No matter what value I set
+        a variable to, it returns a 0.  What's my problem?
+
+    A1: Faulty memory decoding or addressing is the most common cause for
+        this error message.  This happens when RD/WR is affecting two (or
+        more) active memory chips. So, decode each CS very carefully!
+
+    A2: Your address decoding might also indicate that there is more
+        memory than really exists.  Go over your circuit design and
+        inspect your wiring carefully.
+
+
+    Q:  Can I use C for time critical code?
+
+    A:  The code produced by many of the excellent compilers today, is
+        remarkably efficient - for both speed and size.  Modern compilers
+        are quite adept at keeping track of register and variable usage.
+        Further optimization techiniques result in code that can be as
+        good or better than hand written assembler.  Even for ISRs
+        (interrupt service routines), C should be acceptable for all but
+        the most time critical routines.
+
+        Makes you think twice about breaking your head over assembly
+        code.
+
+
+    Q:  The Intel MCS-51 assembly language defines alternate symbols AR0
+        ... AR7 for registers R0 ... R7.  What is this good for? (Thanks
+        to Wolfgang Heinz who submitted this Q & A)
+
+    A:  Some 8051 instructions do not support all possible addressing
+        modes.  For example, the PUSH and POP instructions are only
+        available with direct addressing. Since the registers R0 ... R7
+        are mapped into the internal memory, they must also have a DATA
+        (= direct) address.  The special assembler symbols AR0 ... AR7
+        are simply the absolute DATA addresses of registers R0 ... R7.
+        Although there is no instruction PUSH R5 with true register
+        addressing, you can do it with PUSH AR5 (= direct addressing)!
+
+    Q:  Usually the 8051 register banks are switched with the RS0 and RS1
+        bits in the status register PSW at runtime.  But how is it
+        possible to switch the banks at assembly time with the USING
+        instruction, implemented in so many 8051 assemblers?
+        (Thanks to Wolfgang Heinz who submitted this Q & A)
+
+    A:  Not at all!  This must ALWAYS be done with bits RS0 and RS1 at
+        runtime.  The USING instruction switches only the absolute DATA
+        addresses of the special assembler symbols AR0 ... AR7 according
+        to the selected bank number.  With most assemblers that implement
+        relocatable segments and object modules, the linker is forced to
+        reserve space for the corresponding register bank in the internal
+        memory.
+
+
+    Q:  The Intel 8x151/8x251 won't "drop-in" for an 8051. What gives?
+        (Thanks to Dave Baldwin of The Computer Journal for this one)
+
+    A:  You need to use a programmer to set a couple bits to the correct
+        state.  This info is hidden away in an app note available from
+        their fax-back service.
+
+
+
+
+3)  SOURCES OF INFORMATION ON THE 8051
+
+
+3.1)  FTP sites
+
+    The following is a list of the various anonymous ftp sites that have
+    8051 source code and programming languages.  There are many others
+    that  are not listed here that contains bits and pieces.  Usually you
+    can find them using Archie and searching for "8051", "AS31", "ASM51",
+    "MCS-51", "MCS51", and stuff like that.
+
+    ftp.pppl.gov (formerly lyman.pppl.gov)
+        - this is a great source of 8051 stuff
+        /pub/8051
+        /pub/incoming - check this out for new untested/unsorted items
+
+    ftp.funet.fi (nic.funet.fi)
+        - this is a great one, too
+        /pub/compilers/8051
+        /pub/microprocs/MCS-51   <mirror of ftp.pppl.gov>
+        other subdirectories in /pub/microprocs include:
+          1802, 6805, 6811, 8048, 8096 and many other microprocessors
+
+    ftp.intel.com
+        - this ftp site is pretty good now, and getting better all the
+          time!
+        - send comments to:  ftp-admin@intel.com
+        /pub/mcs51
+        /pub/mcs51/tools - contains various development tools
+
+    ftp.InetBSystems.us.com
+        - lots of good stuff here!
+        /pub/Philips-MCU/bbs
+        - contains the following directories:
+            .../assemblers - assemblers, disassemblers, and simulators
+            .../basic - Basic utilities and interpreters
+            .../forth - Forth programming tools
+            .../debuggers - monitors and debuggers
+            .../utilities - miscellaneous information and utilities
+            .../examples - code examples
+            .../unsorted - new [unsorted] files
+            .../xa - files on the new XA "16 bit 8051"
+        /pub/Philips-MCU/archive - email archive
+
+    nctuccca.edu.tw
+        - mirror of ftp.intel.com
+        - /vendors/Intel
+
+    ftp.zilker.net
+        - /pub/philips
+        - Philips "mini ftp site" set up by Phil Wood of Philips
+        - lots of 8051 code and programming tools from their BBS
+
+    ftp.mcc.ac.uk
+        - this is a new 8051 ftp site
+        - soon to be improved
+
+    ftp.bsl.unsw.edu.au
+        - new 8051 ftp site
+        - accepting uploads
+
+    info@circellar.com - Email (not ftp)
+        - send Email to get information file on services available
+        - all Circuit Cellar INK and BYTE related files available
+
+    ftp.ee.ualberta.ca
+        /pub/cookbook/digital
+        - circuits of all types
+        - prog51.zip is a programmer for the ATMEL 89C51 flash part
+          by Werner Terreblanche
+
+    ftp.luth.se
+        /pub/languages/assembler
+
+    asterix.inescn.pt - FORTH archive
+        /pub/forth/8051
+
+    hpcsos.col.hp.com
+        /mirrors/.hpib0/forth/8051 (mirror of asterix Forth archive)
+        /misc/ns32k/beowulf/a-8051
+        /mirrors/.hpib0/forth/eForth
+
+    ftp.armory.com (Steve Walz)
+        /pub/user/rstevew/8051
+        /pub/user/rstevew/TB8051
+        /pub/user/rstevew/incoming
+
+    ftp.oak.oakland.edu
+        - has information and software for a wide range of
+          microprocessors and microcontrollers, you may have to look
+          around a bit
+
+    130.123.96.9
+        giovanni/51forth.zip
+
+    ai.uga.edu
+        /pub/hardware
+        - stuff on the Philips 87C750/1/2 microcontrollers
+        - assembler, an update for the software in the DS-750 kit,
+          notebook of some early experiences and code
+        - responses welcome, Michael A. Covington (mcovingt@ai.uga.edu)
+
+    ftp.hte.com
+        - HiTech Equipment Corporation's ftp site
+        - information about their products including some sample code,
+          a free 8051 simulator, and various things from around the net
+          that relate to the 8051 family
+
+    csd4.csd.uwm.edu - no longer supports 8051, don't even try
+
+
+3.2)  Web pages
+
+    8051 board level products
+        - http://bailey2.unibase.com/local/beck04.html
+
+    8051 Microcontrollers
+        - http://www.cit.ac.nz/smac/cbt/hwsys/i8051/default.htm
+
+    AM Research Web Site
+        - http://www.amresearch.com/
+        - Forth development systems and boards.
+
+    Automation and Process Control (Olaf Pfeiffer)
+        - http://www.ba-karlsruhe.de/automation/home.html
+        - http://www.ba-karlsruhe.de/automation/FAQ
+
+    Archimedes Software
+        - http://www.archimedes.com/devtools
+
+    Brian Brown's 8051 web page
+        - http://www.cit.ac.nz/smac/cbt/hwsys/i8051/default.htm
+        - contains Brian Brown's 8051 course
+        - lots of other good stuff
+
+    Chip Directory and Chip Manufacturers (Jaap van Ganswijk)
+        - http://www.hitex.com/chipdir           (USA, California)
+        - http://www.civil.mtu.edu/chipdir       (USA, Michigan)
+        - http://www.leg.ufrj.br/chipdir         (Brasil)
+        - http://www.xs4all.nl/~ganswijk/chipdir (The Netherlands)
+        - http://bbs.cc.uniud.it/chipdir         (Italy)
+
+    Chipmaker web page
+        - http://www.scruznet.com/~gcreager/hello5.htm
+        - contains over 200 URLs of chipmakers
+
+    Circuit Cellar Ink
+        - http://www.circellar.com
+
+    Dallas Semiconductor
+        - http://www.dalsemi.com
+
+    Gernsback Web page (Electronics Now, Popular Electronics)
+        - http://www.gernsback.com
+        - current issue information, recent article related files, FTP
+          site, subscription information
+
+    Emulation Technology
+        - http://www.emulation.com
+
+    FIG (Forth Interest Group) web site
+        - http://www.forth.org/fig.html
+        - http://www.forth.org/Forth/FAQ
+
+    Forth, Inc.
+        - http://www.earthlink.net/~forth
+        - follow the links to chipFORTH, then to 8051
+
+    French Forth web site
+        - http://ourworld.compuserve.com/homepages/mp7
+          maintained by Marc Petremann:
+             17, allee de la Noiseraie
+             F - 93160 NOISY LE GRAND
+             Email: 100647.3306@compuserve.com
+        - http://ourworld.compuserve.com/homepages/bioforth
+          maintained by Gerard SOULA
+
+    Gregory Pugh's homepage
+        - http://sleepy.anest.ufl.edu/~glp/8051.html
+
+    Hi-Tech Software
+        - http://www.hitech.com.au
+        - demo C compiler available (limits - 1K size, no library source)
+
+    Intel MCS(R) 51 Microcontroller Family
+        - http://www.intel.com/embedded/051/index.html
+
+    S. Joel Katz's web page
+        - http://www.panix.com/stimpson/micro.html
+        - information about 8051 and related microcontrollers
+        - not much information yet, but it is increasing rapidly
+
+    Ken Tindell's CAN web pag
+        - http://www.nrtt.demon.co.uk/can.html
+        - Source code to drive the Intel 82527 CAN controller is
+          available: just send e-mail to info@nrtt.demon.co.uk, with
+          "Request Intel 82527 drivers" (without the quotes) in the
+          subject line.
+
+    Lakeview Research (Jan Axelson)
+        - http://www.lvr.com/
+        - microcontroller page (resources for 8052-Basic projects):
+          http://www.lvr.com/microc.htm
+
+    Mike Miller's 8051 Home Page
+        - http://www.ece.orst.edu/serv/8051/
+        - pointers to other 8051 pages
+        - contains html copy of this FAQ
+
+    Nohau Elektronik AB
+        - http://www.nohau.com/nohau
+
+    Packet Radio web page
+        - http://www.tu-bs.de/studenten/akafunk/pr8051
+        - Contains some schematics and code to do packet radio (AX.25)
+          experiments with different types of MCS51 controllers. Packet
+          radio is used by ham radio amateurs to exchange data. There is
+          an almost worldwide net of PR stations.
+        - The programs were written by August Gihr and they are only
+          available on the packet radio net or this web page.
+
+    Paul's 8051 Tools, Projects and Free Code
+        - http://www.ece.orst.edu/~paul/8051-goodies/goodies-index.html
+        - page contents: AS31 Assembler
+                         PAULMON 8051 Family Monitor/Debugger
+                         Low-Cost 8051 Development Board Designs
+                         8051 Code Library
+                         Atmel 89C2051 in-circuit programmer
+
+    Philips
+        - http://www.semiconductors.philips.com/ps/philips17.html
+
+    The Polis research project web page
+    - http://www-cad.eecs.berkeley.edu/Respep/Research/hsc/abstract.html
+
+    Pseudocorp
+        - http://www.teleport.com/~rhowden
+        - New Site - products and pricing
+
+    Richard Grant's 8051 Based Vario
+        - http://cougar.stanford.edu:7878/RGvario/vario.html
+        - Hang-Gliding/Paragliding WWW server. The application is an
+          8751 based variometer (used by pilots to indicate the rate of
+          ascent or descent). It includes schematics and assembly
+          language source.
+
+    Standard Microsystems Corporation
+        - http://www.smc.com
+
+    Steve Merrifield's 8051 home page
+        - http://www.ee.latrobe.edu.au/postgrad/steve/8051.html
+
+    Systronix web site
+        - http://www.systronix.com
+
+    Thomas Wedemeyer's SAB80C535 web page
+        - http://www.zfn.uni-bremen.de/~g16i/
+        - SAB80C535 based board design
+        - English and German
+
+    Xicor's web page
+        - http://www.xicor.com/
+        - 8051 code - http://www.xicor.com/xicor/menulink/link42.htm
+        - 8051 microperipherals -
+          http://www.xicor.com/xicor/menulink/link6.htm
+
+
+3.3)  Mailing lists
+
+    Philips-News@InetBSystems.us.com - Email (not ftp)
+        - send Email with "subscribe" in the subject field to be put
+          on list for newsletter
+    Philips-archive@InetBSystems.us.com - Email (not ftp)
+        - send Email message with the word "help" in the subject line to
+          learn how to access the archive
+    Philips-forum-request@InetBSystems.us.com  - Email (not ftp)
+        - send an Email message with the word "subscribe" in the subject
+          line to participate in the forum, and receive usage
+          instructions and guidelines
+    Philips-Info@InetBSystems.us.com - Email (not ftp)
+        - send Email message to get information on all of Philips Email
+          services
+
+
+3.4)  BBSs
+
+    The following BBSs have 8051 information:
+    
+    ATMEL Corporation's BBS
+        -support and application files related to their line of
+         flash-based microcontrollers
+        -(408)436-4309 (up to 28.8 Kbaud) 
+        
+    Blue Earth Research
+        - support for their line of microcontroller boards
+        - (507)387-4007
+
+    Circuit Cellar, Inc.
+        - contains code from their magazine articles and from the
+          original Circuit Cellar articles in Byte magazine, also
+          contains many other interesting items
+        - GOOD STUFF HERE!
+        - The BBS is mentioned in the masthead of each issue (on the
+          table of contents page).  Excerpts from the BBS appear in Ken
+          Davidson's ConnecTime column in every issue with a description
+          of how to access the system at the end of every column.
+        - (203)871-1988
+        - Voice: (203)875-2751
+        - Fax: (203)872-2204
+
+    The Computer Journal - TCJ/DIBs BBS
+        - 8051 code and assembler(s), lots of sample code
+        - Forth section also with Camel51
+        - 916-722-5799
+
+    Dallas Semiconductor
+        - Support for their line of innovative products
+
+    Dunfield Development Systems
+        - support for their Micro-C compiler and development tools
+        - includes a lot of nice goodies - CHECK THIS OUT!
+        - (613) 256-6289
+
+    Electronics Now
+        - contains code from their magazine articles
+        - (516)293-2283
+        - 1200/2400, 8N1
+
+    Intel American Marketing Applications Support Bulletin Board System
+        - 16 lines, hi-speed modems (14.4K)
+        - Lots of useful info and files (including design examples)!
+        - Full ANSI-BBS with color is recommended, but support for just
+          about all terminal types is provided
+        - (916)356-3600 (24 hours)
+          Auto config: 1200 thru 14.4K Baud
+          8 data bits, no parity, 1 stop
+
+    Hi-Tech Software
+        - +61 7 3300 5235 (Australia)
+
+    Iota Systems, Inc.
+        - Support for their line of hardware and software products
+        - 15 application notes which show how to hook up such things as
+          clocks, A/D, D/A, and special chips to the 8051
+        - (702)831-4732
+
+    Jens Holm's electronics BBS:
+        - one of a number of BBSs that are networked over most of the
+          industrial part of Europe
+        - +45-86-510356 (Denmark)
+        - distributes all shareware and freeware software which
+          relates to electronics
+        - system administrator - Jens Holm
+          jholm@bjarke.nrg.dtu.dk or Jens.holm@asgaard.dk
+
+    Massilia Underground BBS (Marseille, France)
+        - +33-91794120
+        - fidonet 2:323/25
+        - not a commercial BBS
+        - microcontroller related stuff (assemblers, debuggers,
+          boards, etc), some 8051 stuff
+        - everything coming in is tested
+
+    Micro Computer Control Corporation
+        - (609)466-4117
+
+    Philips Semiconductor - Europe
+        - support for: standard logic, programmable logic,
+          in-car electronics (now open), 8 and 16 bit microcontrollers,
+          I2C software, third party software, discrete semiconductors,
+          cross assemblers (general), RF (planned)
+        - PHIBBS is located in the Netherlands: +31-40-721102
+        - maximum 21600 baud / V42bis / HST/Vterbo
+        - 24 hours a day available
+        - Help desk: +31-40-722749  (9.00 AM - 16.00 PM CET)
+
+    Philips Semiconductor - North America
+        - support for their 8051 variants
+        - contains many good source code items
+        - partially mirrored on ftp.pppl.gov and nic.funet.fi
+        - (800)451-6644 or (408)991-2406
+
+    PseudoCorp
+        - support for their line of simulators and assemblers
+        - (804)873-4838
+
+    Realtime Control & Forth Board (RCFB)
+        - Forth and assembly for the 8051
+        - 300 through 14.4 baud
+        - (303)278-0364 (24 hours)
+
+    Systronix Inc.
+        - support for their line of development tools
+        - (801)487-2778
+
+
+3.5)  Help available!
+
+    Listed here are individuals who have expressed interest in helping
+    others with hardware and software problems for 8051 systems.
+
+    Does any one else out there think that they can help?  Just let me
+    know what your areas of specialization are and I'll add your name to
+    the list.  Thanks!
+
+    Dick Barnett <barnettr@mace.cc.purdue.edu>
+       Specializes in 8051 (core processors), 80C552, and 87C751
+       applications.
+
+    Mark Hopkins <mark@omnifest.uwm.edu>
+       Mark is the author of the CAS assembler and of the 8051.ZIP
+       programs.  He's now working on JOLT, a code generator with a
+       C-like syntax.  His areas of specialization include:
+       multitasking, interrupts, basic stuff (like addressing, memory
+       spaces), the 8052 BASIC chip, interfacing the chip with external
+       inputs and outputs
+
+    Hans Schou <chlor@biocat.ruc.dk>
+       Hans is offering his assistance to users of the Standard
+       Microsystems Corp. COM20051.  He's not an expert, but he has some
+       experience with it.
+
+    Neville Miles <nevm@scitec.com.au or nmes@ozemail.com.au>
+       Applications and programming the Intel 8051.  He's also using
+       Atmel parts if you need help with these.
+
+    Steve <paxit@inetnebr.com>
+       Steve has designed hardware and written software for the Atmel
+       AT89C1051, Intel 87C52, and Philips 87C751, and has also built a
+       programmer for the Atmel AT89C1051. He knows both hardware and
+       software.
+
+
+4)  8051 PRODUCTS
+
+    This section includes descriptions and references to free and
+    commercial software for the 8051.  FTP sites and BBSs contain many
+    quality packages and code samples for free.  For heavy duty use, you
+    might prefer the many commercial packages that are available.  With
+    the public domain (or free) stuff, you're usually on your own.  The
+    commercial packages usually provide extensive documentation and
+    support.
+
+
+4.1)  Free languages and development tools
+
+    The following is a list of the languages and development tools that I
+    could find on the net.  Nearly all of them include source code,
+    however not all are public domain.
+
+    Assembler
+
+      Program: asem5112.zip
+      Description: 8051 cross assembler for MS-DOS, freeware
+      Author: W.W. Heinz
+      Location: ftp.ix.de : /pub/elrad/023
+                oak.oakland.edu : /SimTel/msdos/crossasm
+                garbo.uwasa.fi : /pc/assembler
+
+      Program: ML-ASM51.ZIP
+      Description: MetaLink's 8051 family macro assembler
+      Location:  ftp.pppl.gov : /pub/8051/signetics-bbs
+                 ftp.funet.fi : /pub/microprocs/MCS-51/signetics-bbs
+                 http://www.psyber.com/~tcj/tcjtools/ml-asm51.zip
+
+      Program: A51.ZIP
+      Description: PseudoSam 8051 Cross Assembler
+      Location:  ftp.pppl.gov : /pub/8051/signetics-bbs
+                 ftp.funet.fi : /pub/microprocs/MCS-51/signetics-bbs
+
+      Program: AS31.ZIP
+      Description:  C source for an 8051 assembler, and a simple monitor
+      Author:  Ken Stauffer
+      Location:  ftp.pppl.gov : /pub/8051/signetics-bbs
+                 ftp.funet.fi : /pub/microprocs/MCS-51/signetics-bbs
+                 ftp.uu.net
+                 oak.oakland.edu : /pub/msdos/crossasm/as31.zip
+                 many other locations (use Archie to find)
+
+      Program: CUG292WK.ZIP
+      Description:  C source for a cross assembler, includes 8051
+      Author:  Alan R. Baldwin
+      Location:  oak.oakland.edu : /pub/msdos/crossasm
+                 pc.usl.edu : /pub/msdos/systools
+                 many other locations (use Archie to find)
+
+      Program: Frankenstein
+      Description:  C source for a cross assembler, includes 8051
+      Author:  Mark Zenier
+      Location:  ftp.njit.edu : /pub/msdos/frankasm/FRANKASM.ZOO
+                 lth.se : /pub/netnews/alt.sources/volume90/dec
+                 ftp.uni-kl.de : /pub1/unix/languages/frankenstein.tar.Z
+                 many other locations (use Archie to find)
+
+      Program:  CAS 8051 assembler
+      Description:  Experimental one-pass assembler for the 8051
+                    with C-like syntax.  Includes assembler, linker
+                    and disassembler.
+      Author:  Mark Hopkins
+      Location:  ftp.pppl.gov : /pub/8051/assem
+                 ftp.funet.fi : /pub/microprocs/MCS-51/csd4-archive/assem
+
+      Program:  a51
+      Description:  Portable cross assembler (source in C), other
+                    processors available
+      Author:  William C. Colley, III
+      Location:  hpcsos.col.hp.com : /misc/ns32k/beowulf/a-8051
+
+      Program:  TASM
+      Description:  Table driven cross-assembler for DOS, supports
+                    many different microcontrollers and microprocessors
+      Author:  Speech Technology Inc.
+      Location:  various different places
+
+      Program: HASM, HSIM
+      Description: A configurable Makroassembler/Simulator
+      Comment:  Only for private, educational, and evaluation use
+                Only available in German
+      Author: Dipl.- Ing. H.P. Hohe
+      Location: ftp.ix.de:pub/elrad/022/hasm18.zip
+                ftp.ix.de:pub/elrad/022/hasm18.txt
+                  and mirrors of ftp.ix.de
+
+      Program:  as
+      Description:  Portable cross assembler (source in C), other
+                    processors available (TMS, PIC, DSP5600, 68hc11)
+      Comments:  German language only
+      Author:  Alfred Juelich
+      Location:  ftp.uni-stuttgart.de : pub/systems/pc/lang/as
+
+
+    Basic
+
+      Program:  BASIC52.ZIP (BASIC-52.ZIP)
+      Description:  Source files for original BASIC 52 interpreter
+      Author:  Intel Corporation, Embedded Controller Operations
+      Location:  ftp.intel.com : /pub/mcs51
+                 ftp.pppl.gov : /pub/8051/signetics-bbs
+                 ftp.funet.fi : /pub/microprocs/MCS-51/signetics-bbs
+
+      Program:  BAS051.ZIP
+      Description:  Converts IBM BASIC to 8051 assembly (compiler)
+      Author:  Winefred Washington
+      Location:  ftp.pppl.gov : /pub/8051/signetics-bbs
+                 ftp.funet.fi : /pub/8051/signetics-bbs
+
+      Program:  BASIC31.ZIP
+      Description:  BASIC-52 interpreter for 8031/8051 in external EPROM
+      Author:  Intel w/ changes by Dan Karmann
+      Location:  ftp.pppl.gov : /pub/8051/signetics-bbs
+                 ftp.funet.fi : /pub/microprocs/MCS-51/signetics-bbs
+
+      Program:  TB-51.ZIP
+      Description:  TinyBASIC for 8031
+      Author:  JHW (from Intel InSite library) w/ fixes by Tom Schotland
+      Location:  ftp.pppl.gov : /pub/8051/signetics-bbs
+                 ftp.funet.fi : /pub/microprocs/MCS-51/signetics-bbs
+
+      Program:  TB51ML23.ZIP
+      Description:  MetaLink ASM compatible tiny BASIC
+      Author:  adapted for MetaLink assembler by Jim Lum
+      Location:  ftp.pppl.gov : /pub/8051/signetics-bbs
+                 ftp.funet.fi : /pub/microprocs/MCS-51/signetics-bbs
+
+
+    Forth
+
+      Program:  EFORTH51.ZIP
+      Description:  eFORTH environment for the 8051
+      Author:  C. H. Ting
+      Location:  ftp.pppl.gov : /pub/8051/signetics-bbs
+                 ftp.funet.fi : /pub/microprocs/MCS-51/signetics-bbs
+                 asterix.inescn.pt : /pub/forth/8051
+                 hpcsos.col.hp.com : /mirrors/.hpib0/forth/eForth
+
+      Program:  FORTH51.ZIP (FORTH86.ZIP used as host)
+      Description:  FORTH development system for 8051 with PC host
+      Author:  William H. Payne, the author of "Embedded Controller
+               Forth for the 8051 Family"
+      Location:  ftp.pppl.gov : /pub/8051/signetics-bbs
+                 ftp.funet.fi : /pub/microprocs/MCS-51/signetics-bbs
+                 asterix.inescn.pt : /pub/forth/8051
+                 hpcsos.col.hp.com : /mirrors/.hpib0/forth/8051
+
+      Program:  XD8051.ZIP
+      Description:  Development environment for use with F-PC Forth
+      Author:  Paulo A.D. Ferreira
+      Location:  ftp.pppl.gov : /pub/8051/signetics-bbs
+                 ftp.funet.fi : /pub/microprocs/MCS-51/signetics-bbs
+
+      Program:  51FORTH.ZIP
+      Description:  Subroutine threaded Forth
+      Author:  Scott Gehmlich
+      Location:  hpcsos.col.hp.com : /mirrors/.hpib0/forth/8051
+                 130.123.96.9 : /giovanni/51forth.zip
+
+      Program:  FORTH552.ZIP
+      Description:  A Non-Standard Forth System for the Signetics 80C552
+      Author:  Alberto Pasquale
+      Location:  asterix.inescn.pt : /pub/forth/8051
+                 hpcsos.col.hp.com : /mirrors/.hpib0/forth/8051
+
+      Program:  CamelForth/51
+      Description:  ANSI Standard Forth for the 8051 family
+      Author:  Brad Rodriquez
+                  email: bj@headwaters.com
+                  amateur packet radio: VE3RHJ@VE3IJD.#CON.ON.CAN.NA
+      Location: ftp://ftp.taygeta.com/pub/Forth/Camel/cam51-13.zip
+
+      Program:  8051 eForth
+      Description:  Public Domain optimized eForth for 8051 and 68HC11,
+                    written in native UCASM assemblers.
+      Comments:  Most of the documentation is in German.  Supplied with
+                 EFTERM terminal emulator.
+      Author:  W. Schemmer
+      Location:  Available for $25 from:
+                 Offete Enterprises, 1306 South B Street
+                 San Mateo CA 94402
+                 (415)574-8250
+
+
+    Development systems
+
+      Program:  8051.zip
+      Description:  Many development tools including: debugger, monitor,
+                    LCD and stepper moter driver, communications, host
+                    client, and much more.  This is a great collection of
+                    tools.
+      Author:  Mark Hopkins
+      Location:  ftp.pppl.gov : /pub/8051/signetics-bbs
+                 ftp.funet.fi : /pub/microprocs/MCS-51/csd4-archive
+
+      Program:  RISM and IECM51.EXE compatible host system
+      Description:  RISM is a reduced instruction set monitor and
+                    IECM51.EXE is its compatible host system for a PC
+      Comments:  These two programs together constitute a bare-bones
+                 method of developing 80C51 system code without an
+                 emulator.  RISM51X is installed in the target system
+                 and connected to a host PC system through a serial port.
+                 The host PC runs the debugger IECM51.EXE.  Once the
+                 system has been debugged, RISM can be removed and the
+                 target can be run in stand-alone mode.
+      Author:  Intel
+      Location:  ftp.intel.com : /pub/mcs51/tools
+
+      Program:  ApBUILDER 2.0
+      Description:  Development system for the Intel MCS-51(R) family
+                    (also for the MCS-96(R) family, 80x186, and 80x386
+                    embedded microcontrollers).
+      Comments:  Requires Windows 3.1
+                 APBUILDR.TXT - description in ASCII
+                 APBDISK1.EXE - binary self-extracting file for disk 1
+                 APBDISK2.EXE - binary self-extracting file for disk 2
+      Author:  Intel
+      Location:  ftp.intel.com : /pub/mcs51 and /pub/mcs96
+
+      Program:  FXDSMAN.EXE
+      Description:  8xC51Fx data sheets and manual in Windows 3.1
+                    hypertext style
+      Comments:  binary self-extracting file for one diskette
+      Author:  Intel
+      Location:  ftp.intel.com : /pub/mcs51/80c51
+
+      Program: sim51d
+      Description:  Shareware Simulator in German
+                    DM 50 to register for full version
+      Author:  Werner Hennig-Roleff
+      Location:  ftp.pppl.gov : /pub/8051/hannover
+
+      Program: PDS51.ZIP or EXE or
+               PDSxxx.ZIP where xxx represents the version number
+      Description: This is the IDE for the Philips PDS51 system. It
+                   contains a simulation engine and can therefore be run
+                   in a standalone mode. Great for evaluating the PDS51
+                   product or just as a full environment simulator.
+      Location: Philips North America BBS (800)451-6644, (408)991-2406
+                http://www.he.net/~adr
+                CompuServe:
+                   Software Development Forum, Embedded Systems Section
+                     (GO CLMFOR)
+                   PC Programming Forum, Tools/Debuggers forum
+                     (GO PCPROG)
+
+      Program: NoICE
+      Description:  PC-hosted debugger (NOT a simulator) for use with a
+                    variety of microprocessor targets (Z80/Z180, Z8,
+                    8051, 80(1)96, 6809, 68HC11, 65(C)02, M50740/M38000,
+                    TMS370, and H8/300). The debugger consists of a
+                    target-specific DOS program, NOICExxx.EXE, and a
+                    target-resident monitor program (about 1K code).
+      Comments:  Shareware.  The distributed version is fully functional.
+                 Registration is $25 in the US, $30 elsewhere.
+      Author:  John Hartman <102203.1513@compuserve.com>
+      Location: any Simtel archive/mirror
+                    or
+                CompuServe:
+                   GO SDFORUM, library section 12, embedded systems
+                   GO IBMFF, do keyword search for "NoICE"
+                    or
+                The Circuit Cellar BBS at 860-871-1988
+
+      Program: sim552vq.zip
+      Description:  8051/80C552 simulator (Freeware)
+      Comments:  Program is capable of reading .HEX and .S19 records, or
+                 saving memory to a file.  It supports both code and
+                 data.  Written in Turbo Pascal for XT and upwards.
+      Author:  Brian Brown
+      Location:  cscnt.cit.ac.nz : /pub/intel/sim552v1.zip
+
+      Program: HASM, HSIM
+      Description: A configurable Makroassembler/Simulator
+      Comments: Only available in German
+      Author: Dipl.- Ing. H.P. Hohe
+      Copyright: Only private , Education and evalutation use
+      Location: ftp.ix.de:pub/elrad/022/hasm18.zip
+                ftp.ix.de:pub/elrad/022/hasm18.txt
+                  and mirrors of ftp.ix.de
+
+      Program: Emily52
+      Description:  simulator
+      Comments:  Shareware.
+      Author:  Dunfield Development Systems
+      Location: any Simtel archive/mirror
+
+
+    Real-Time Operating Systems (RTOS)
+
+      Program:  TERSE
+      Description:  - Signature-Scheduled dataflow operating system
+                    (RTOS) developed for embedded single-processor and
+                    distributed microcontroller systems.  Easy to use,
+                    very compact, and encourages totally deterministic
+                    and safe performance.
+                    - The first implementation is for the 8051 family,
+                    and occupies from 260 to 450 bytes, the latter
+                    offering network support.
+                    - public domain
+      Comments:  Also available is a new type of "terse-Case" development
+                 methodology, particularly suited to embedded distributed
+                 systems.
+      Author: Barry Kauler
+              Department of C & C Engineering
+              Edith Cowan University, Joondalup Drive
+              Joondalup, WA 6027, Australia.
+              Email: b.kauler@cowan.edu.au
+      Location:  WWW - ftp://scorpion.cowan.edu.au/pub/terse/terse.htm
+
+
+4.2)  Free C compilers
+
+    Several commercial C compilers have evaluation versions available.
+    These are not too useful (even for hobbyist projects) since they
+    usually don't include libraries.  However, they do afford the user
+    the chance to inspect the quality of the code generated.  Among those
+    currently available:
+
+        Franklin Softwares evaluation package is available at:
+           http://www.fsinc.com
+        The assembler permits you to make modules up to 1K of code, the
+        compiler up to 2K, and the linker will link those together and
+        generate a program up to 4K in size. The package is fully
+        Windows, Win95, and NT compliant. It includes libraries (with
+        strings, math, even floating point), a debugger/simulator,
+        project manager, built-in make, assembler, linker, compiler, and
+        object to HEX converter.
+
+        Many of the other software manufacturers also offer evaluation
+        versions of their C compilers. Check out their web sites and see
+        what you can find.
+
+    There were a couple of freeware 8051 compilers in the works, but it
+    seems as if they didn't pan out.  At least for now, you'll have to
+    pay to get an 8051 C compiler.
+
+    In most cases, it makes more sense to invest a bit, and get something
+    serious.  Also, by buying a commercial package, you have the
+    advantage of having the documentation, and being able to get
+    technical support.  As Hershel Roberson says about the Dunfield
+    package, "It is certainly worth the money. It is probably 3/4 as good
+    as compilers that cost 10 times as much!"
+
+    There are two low-cost C compilers currently available for 8051
+    development:
+
+    I've been using the Dunfield Development System, and its really quite
+    nice.  I've also heard many good things about it from others.  For
+    $100 you get a near ANSI-C compiler, run-time library with source,
+    assembler, ROM debugger, integrated development environment, monitor
+    with source, utilities, and other extras.  A high quality simulator
+    for only $50 is also available separately.  The simulator has an
+    option allowing you to interface to your target by using an on-chip
+    monitor.  Although not freeware, the low price, the features, all of
+    the extra goodies, and the good reviews make this a package worth
+    looking at.  Also, if you're interested in working on more than one
+    family of microcontroller, Dunfield supports a wide range.  This
+    means only needing to learn one system, instead of many.
+
+    Another low priced ($100) C compiler comes from Micro Computer
+    Control.  This package was unavailable for review, but according to
+    the manufacturer, it features:  Cross compilers running under DOS are
+    available for the 8051 and the Z8 (including Super-8).  This package
+    includes a C compiler, assembler, linker, librarian, and extensive
+    printed documentation.  A simulator/source code debugger is available
+    for an additional $79.95.  The simulator is completely configurable,
+    so much so that you don't even need the target hardware to test with.
+    You can configure all I/O and other features of your target chip or
+    environment.
+          Micro Computer Control Corporation
+          PO Box 275, 17 Model Ave., Hopewell, NJ  08525
+          (609)466-1751   Fax: (609)466-4116   BBS: (609)466-4117
+          Email: 73062.3336@compuserve.com
+
+
+4.3)  Commercially available products
+
+    Many firms (large and small) offer a variety of 8051 microcontroller
+    variants, programming languages, support packages, and development
+    systems.
+
+    No endorsement is implied by inclusion in this list.  I apologize to
+    anyone I left out;  It's only because I didn't know about you.  If
+    you want to be included in this list, just drop me a line - please.
+    Any corrections and additions appreciated.
+
+    C compilers ($$$ - high, $$ - medium, $ - low priced)
+        - 2500 A.D.
+        - Archimedes Software  $$$ & $$
+             same as Keil Electronics C
+             Archimedes is introducing StartRight, a low cost 8051 C
+                compiler for $700
+        - Avocet Systems  $$
+             repackaging of the Hi-Tech Software C compiler
+        - BSO/Tasking  $$
+        - Crossware Products
+        - Dunfield Development Systems  $
+             Complete C compiler development system for MS-DOS
+             includes: compiler, run-time library with source, assembler,
+                ROM debugger, integrated development environment, monitor
+                with source, utilities, and other extras
+             low price:  $100
+             good reputation and good support
+             works well with the Dallas DS5000/DS2250
+        - Franklin Software  $$ ? (new prices)
+             now marketing their own C compiler
+             includes: PC-Lint and an IDE
+        - IAR Systems
+             IAR tool kit comes with a C-Cross compiler, assembler,
+                Xlink linker, Xlib librarian, C-SPY simulator, editor,
+                make utility and a real-time kernel
+             formerly licensed for distribution in the US and Canada
+                under the Archimedes brand name
+        - Hi-Tech Software  $$
+             assembler, C compiler, linker, library, serial port
+                debugger, and Windows style integrated development
+                environment
+             ANSI C and IEEE 32 float compatable with some very useful
+                extensions
+             $900US
+        - Intermetrics Microsystems Software, Inc.
+             Whitesmith's compiler, assembler, and C source level
+             debugger
+        - Keil Electronics  $$$
+             compiler, assembler, debugger, real-time kernel, ROM
+                monitor, libraries for special 8051's to set SFR,
+                embedded I/O devices, A/D, etc.
+        - Mandeno Granville Electronics, Ltd
+             SYS51C - ANSI C Cross Compiler
+        - Micro Computer Control  $
+             Developer's kit includes "C"-like compiler, assembler,
+                linker, librarian, extensive printed documentation
+             low cost ($99.95)
+        - Okapi Systems
+        - Production Languages Corporation
+             DOS- and Windows- based compilers
+             Integrated development environment includes ANSI C compiler,
+                assembler, linker, librarian, debugger
+        - Signum Systems
+
+    Basic interpreters/compilers
+        - Binary Technology, Inc.
+        - Iota Systems, Inc.
+             Basic-752 interpreter (simulator also available)
+             Basic-52 Plus interpreter
+        - Micro Future
+             Basic-52 development system
+        - Systronix Inc. (Basic compiler)
+
+    Pascal
+        - Mandeno Granville Electronics, Ltd
+             PASCAL51 - Advanced Turbo PASCAL compliant cross compiler
+        - Scientific Engineering Labs
+
+    Modula-2
+        - Mandeno Granville Electronics, Ltd
+             Mod51 - optimizing Modula-2 Compiler, smallest program is 14
+             bytes, ideal for both very tight/fast projects and very
+             large ones with multiple modules, produces smaller/tighter
+             code than C, has extensive libraries and working examples
+        - Vail Silicon Tools, Inc.
+
+    PL/M
+        - BSO/Tasking
+
+    Board level products
+        - Ackerman Computers Sciences (ACS)
+        - AM Research
+             complete FORTH based system with PC based host system
+        - Binary Technology, Inc.
+        - Blue Earth Research
+        - Blue Ridge Micros (8031 and 8052-BASIC based boards)
+        - Circuit Cellar Inc.
+        - DataCraft International
+        - Dunfield Development Systems
+        - EE Systems
+        - Forth, Inc.
+        - HiTech Equipment Corp.
+        - Iota Systems, Inc. (line of development packages, boards,
+             peripherals, and components)
+        - J & M Microtek, Inc.
+        - L.S. Electronic Systems Design
+        - Mandeno Granville Electronics, Ltd
+        - Parallax, Inc.
+        - Prologic Designs
+        - Rigel Corporation
+        - Software Science
+             nice boards with prototyping area
+        - Suncoast Technologies
+        - URDA, Inc.
+
+    Assemblers
+        - 2500 A.D.
+        - Archimedes Software
+             same as Keil Electronics
+             Archimedes is introducing StartRight, a low cost 8051
+                assembler for $200
+        - BSO/Tasking
+        - Crossware Products
+        - Custom Computer Consultants
+        - Cybernetics Microsystems
+        - Dunfield Development Systems
+             Supports both Intel and Motorola style syntax
+        - Emulation Technology, Inc.
+        - Intel Corporation
+        - Keil Electronics
+        - Lear Com Company
+        - Metalink
+        - Micro Computer Control
+        - Microtek Research
+        - Nohau Corporation
+        - Okapi Systems
+        - Onset Computer Corporation (8051 Assember for MAC)
+        - Parallax, Inc.
+        - PseudoCorp
+        - Raven Computer Systems
+        - Signum Systems
+        - Speech Technology Inc.
+             TASM (table driven cross assembler supports many different
+             microcontrollers and microprocessors)
+        - Universal Cross Assemblers
+             CROSS32 supports 40-50 different processors
+
+    Forth
+        - AM Research
+             Development system, features kernel of less than 700 bytes
+        - Forth, Inc.
+             A cross-development product for the 8051 family
+                which includes a board and extensive documentation.
+        - Forth Systeme
+        - MPE: MicroProcessor Engineering Ltd.
+             A cross-development system for the 8051 family
+                extensive documentation
+             interactive single chip development, multitasking,
+                bank switching for more than 64k code
+        - Offete Enterprises
+             8051 eForth (C. H. Ting -- $25.00).  "A small ROM based
+                Forth system ... Source code is in MASM IBM 5.25 disk
+                with 8051 eForth Implementation Note."
+
+    ROM Monitor-based Debuggers
+        - ChipTools (ChipView-51 looks like turbo debugger)
+        - Dunfield Development Systems
+             Can be used with DS5000 for single-chip in-circuit
+                emulation
+
+    Simulators
+        - 2500 A.D.
+        - Avocet Systems
+        - ChipTools
+             on a 33 MHz 486 matches the speed of a 12 MHz 8051
+        - Crossware (simulator running under Windows)
+        - Cybernetic Micro Systems
+        - Dunfield Development Systems
+             Low cost $50.00
+             500,000+ instructions/second on 486/33
+             Can interface to target system for physical I/O
+             Includes PC hosted "on chip" debugger with identical user
+                interface
+        - HiTech Equipment Corp.
+        - Hitex
+        - Iota Systems, Inc.
+        - J & M Microtek, Inc.
+        - Keil Electronics
+        - Lear Com Company
+        - Mandeno Granville Electronics, Ltd
+        - Micro Computer Control Corporation
+             Simulator/source code debugger ($79.95)
+        - Microtek Research
+        - Production Languages Corp.
+        - PseudoCorp
+
+    Emulators ($$$ - high, $$ - medium, $ - low priced)
+      <Thanks to Alistair George for this bit of important advice...
+      Potential customers of emulators should check to make sure that the
+      emulator supports the required external hardware (ports,
+      interrupts, etc) before they buy - its probably the most
+      important spec, but one easily missed. Some emulators only offer
+      very minimal support, which sometimes hardly makes it worthwhile to
+      bother.>
+        - Advanced Micro Solutions  $$
+        - Advanced Microcomputer Systems, Inc.  $
+        - Applied Digital Research Ltd.  $$
+        - American Automation  $$$  $$
+        - Applied Microsystems  $$
+        - ChipTools (front end for Nohau's emulator)
+        - Cybernetic Micro Systems  $
+        - Dunfield Development Systems $
+             plans for pseudo-ice using Dallas DS5000/DS2250
+             used together with their resident monitor and host debugger
+        - Emulation Technology, Inc. $$
+             OpenEmulator in-circuit emulators adaptable for over a
+                hundred microcontrollers/microprocessors
+        - HBI Limited  $
+        - Hewlett-Packard  $$$
+        - HiTech Equipment Corp.
+        - Hitex  $$
+        - Huntsville Microsystems  $$
+        - Intel Corporation  $$$
+        - Kontron Electronics  $$$
+        - Lauterbach Datentechnik GmbH
+             8051 In-Circuit Emulators based on a universal high-
+                performance emulation system called TRACE32.
+        - Mandeno Granville Electronics, Ltd
+             full line covering everything from the Atmel flash to the
+                Siemens powerhouse 80c517a
+        - MetaLink Corporation  $$  $
+        - Nohau Corporation  $$
+        - Orion Instruments  $$$
+        - Philips $$ $
+             DS-750 pseudo-ICE developed by Philips and CEIBO
+                real-time emulation and simulator debug mode
+                source-level debugging for C, PL/M, and assembler
+                programs 8xC75x parts
+                low cost - only $100 from Philips ($250 from CEIBO)
+                DOS and Windows versions available
+             PDS51 board level In-Circuit Emulation system
+                no stolen resources
+                Daughter boards support wide range of Philips derivatives
+                approximately $US1000 to $US1200 depending on daughter
+                  board
+        - Signum Systems  $$
+        - Sophia Systems  $$$
+        - Zax Corporation
+        - Zitek Corporation  $$$
+
+    Real-time
+        - Byte-BOS Integrated Systems
+             small, prioritized, preemptive real-time kernel
+        - Embedded System Products (formerly A.T. Barrett and Associates)
+             ROMable embedded-system kernel: source provided.  Provides
+             programming interface identical on all target platforms.
+             Basic, advanced, and extended library packages available.
+        - Intellimap Engineering
+             DCE51 real time operating system
+        - JMI Software Systems, Inc.
+             small, prioritized, preemptive real-time kernel
+        - StarCom
+             CRTX, embedded real-time micro kernel primarily intended for
+             embedded 8-bit applications using 8051, 68HC11, 80188 etc.
+             Simple, low cost, and includes ANSI C source for
+             portability.
+        - U S Software
+             SuperTask! - multitasking executive
+
+    Trainers
+        - Advanced Educational Systems (AES)
+             complete learning system (board, LCD, keypad, A/D, D/A, etc)
+        - Sun Equipment Corp.
+             trainers
+
+    Miscellaneous
+        - Creative Applications Engineering, Inc
+             CheepTools (integrated environment)
+        - Dallas Semiconductor
+             evaluation/development kit for their DS5000 (very nice)
+        - Data Sync Engineering (disassembler)
+        - Datarescue
+             IDA - an interactive, multi-os disassembler supporting:
+             OS/2, Win95, Win NT, Win, NLMs and more. Unlike other
+             disassemblers, IDA works with you, allowing you to modify
+             the disassembled code "on the fly". It supports many
+             processors, various input file formats, and can produce
+             various output files etc.  IDA has a built-in C-like
+             language and sports a TVision user interface.
+        - Educational Laboratories
+             development courses:
+               8051 Microcontroller Based Computer Design
+               Programming 8051 Based Computers
+             each course $19.95, both $29.95
+        - Electronic Product Design, Inc.
+             development system (integrated package with assembler,
+             project manager, text editor, programmer)
+        - Exor Inc. (ladder logic compiler)
+        - Feger + Co.
+             offers a series of German language 8051 related books they
+             call `MC-Tools' describing the processors and/or projects
+             for PC-addin boards:
+             MC-Tools 1 - 80c535 project for DM 119; includes 260 page
+               book, an empty PCB, and a diskette with assembler,
+               debugger, PC-Oscilloscope
+             MC-Tools 4 - same as above but based on 80c537
+             MC-Tools 3 - Die 8051-Microcontroller Familie vom 8051 zum
+               80C517A; text book on the 8051 and Siemens derivatives,
+               360 pages.
+             MC-Tools 5 - handbook on the 80C517 and 80C517A, 360 pages
+        - Iota Systems, Inc.
+             integrated environment system
+        - Mandeno Granville Electronics, Ltd
+             PIC to 8051 conversion program
+        - Parallax, Inc.
+             programmers
+        - Philips
+             87C51 programmers
+               LCPx5x - 24 and 28 pin DIL and 68 pin PLCC Philips parts
+                      - 748, 749, 750, 751, 752, 451, 453, 552
+               LCPx5x40 - 40 pin DIL or 44 pin PLCC Philips parts
+               Range further expanded by adaptors
+               Low cost, board level
+        - Quantasm Corp.
+             ASMFLOW - produces flowchart and tree diagrams from source
+                code, register usage analysis, Xref, timing info
+        - U S Software
+             USNET - TCP/IP networking suite
+             USFiles - file system
+             GOFAST - floating point library
+        - Xicor
+             SLIC2E microperipherals - wires up directly to an 8051 and
+               needs no glue logic, contains:
+                  - 8K x 8 EEPROM in individual 4K segments
+                  - 2 8-BIT I/O ports
+                  - 16 8-BIT RAM registers
+                  - Integrated Interrupt Controller Module
+                  - Internal programmable address decoding
+                  - code loaded at the factory allowing users to
+                    download programs into EEPROM
+             Development Support package includes a DATA BOOK, a
+               SAMPLE of the CHIP (PDIP or PLCC, your choice) and PC
+               compatible software for downloading and testing your
+               programs. $15
+             Development system includes a populated board. $180
+
+
+    2500 A.D.       109 Brookdale Ave., Box 480, Buena Vista, CO  81211
+                    (719)395-8683
+
+    Ackerman Computer Sciences (ACS)
+                    4276 Lago Way, Sarasota, FL  34241
+                    (813)377-5775   Fax: (813)378-4226
+
+    Advanced Educational Systems (AES)
+                    1407 North Batavia Street, Orange, CA  92677
+                    (800)730-3232   (714)744-0981   Fax: (714)744-2693
+
+    Advanced Micro Devices
+                    901 Thompson Place, PO Box 3453
+                    Sunnyvale, CA  94088-3000
+                    (408)732-2400
+
+    Advanced Microcomputer Systems, Inc.
+                    1321 NW 65th Place, Fort Lauderdale, FL 33309
+                    (305)975-9515  Fax: (305)975-9698
+
+    Advanced Micro Solutions
+                    1033 S Imperial Dr., Hartland, WI 53029
+                    (414)367-3577
+
+    American Automation
+                    2651 Dow Avenue, Tustin, CA  92680
+                    (714)731-1661
+
+    AM Research     4600 Hidden Oaks Lane, Loomis, CA  95650
+                    (800)949-8051   (916)652-7472   Fax: (916)6642
+                    BBS: (916)652-7117
+                    Email: support@amresearch.com
+                    http://www.amresearch.com
+
+    Applied Digital Research Ltd.
+                    P.O. Box 6480, Wellesley St, Auckland, NEW ZEALAND
+                    +64 9 480-8827
+                    Email: rossmcm@adr.co.nz
+                    Compuserve: 100351,716
+                    WWW: http://www.he.net/~adr/
+
+
+
+    Applied Microsystems
+                    5020 148th Ave. N.E., PO Box 97002
+                    Redmond, WA  98073-9702
+
+    Archimedes Software
+                    2159 Union St., San Francisco, CA  94123
+                    (415)567-4010
+                    WWW: http://www.archimedes.com/devtools
+
+    Ashling Microsystems Ltd
+    Ireland         Plessey Technological Park
+                    Limerick, Ireland
+                    +353 61 334466   Fax:  +353 61 334477
+    United Kingdom  Butler House
+                    19-23 Market Street
+                    Maidenhead, Berkshire,  UK
+                    +0628 773070   Fax: 0628 773009
+
+    Atmel           2125 O'Nel Drive, San Jose, CA  95131
+                    (800)365-3375  (408)441-0311   Fax: (408)436-4300
+
+    Avocet Systems  120 Union St., Rockport, ME  04856
+                    (800)448-8500  (207)236-9055   Fax: (207)236-6713
+
+    Binary Technology, Inc.
+                    PO Box 541, Carlisle, MA  01741
+                    (508)369-9556   Fax: (508)369-9549
+
+    Blue Earth Research
+                    165 W. Lind Ct., Mankato, MN  56001-0400
+                    (507)387-4001   Fax: (507)387-4008
+                    BBS: (507)387-4007
+
+    Blue Ridge Micros
+                    2505 Plymouth Rd., Johnson City, TN  37601
+                    (615)335-6696   Fax: (615)929-3164
+
+    BSO/Tasking
+    International   333 Elm Street, Dedham, MA  02026-4530
+                    (800)458-8276  (617)320-9400  Fax: (617)320-9212
+    Europe          Tasking Software BV
+                    P O Box 899, 3800 AW Amersfoort, Netherlands
+                    +31 33 558584   Fax: +31 33 550033
+
+    Business Data Computers
+                    P.O. Box 1549, Chester, CA  96020
+
+    Byte-BOS Integrated Systems
+                    P.O. Box 3067, Del Mar, CA 92014
+                    (800)788-7288   (619)755-8836
+
+    ChipTools Inc   (905)274-6244   Fax: (905)891-2715
+                    Email: chiptool@hookup.net
+                    Web: http://www.chiptools.com/
+
+    Circuit Cellar Inc.
+                    4 Park St., Vernon, CT  06066
+                    (203)875-2751   Fax: (203)872-2204
+
+    Creative Applications Engineering, Inc
+                    Ed Carryer
+                    (415)494-2363   BBS: (415)494-8463
+
+    Crossware Products
+                    St John's Innovation Centre
+                    Cowley Road, Cambridge, CB4 4WS, UK
+                    +44 1223 421263  Fax: +44 1223 421006
+                    Email: sales@crossware.com
+                    Web: http://www.crossware.com
+
+    Custom Computer Consultants
+                    1807 Huron River Drive, Ypsilanti, MI 48197
+
+    Cybernetic Micro Systems
+                    Box 3000, San Gregorio, CA  94074
+                    (415)726-3000
+
+    Dallas Semiconductor
+                    4401 S. Beltwood Parkway, Dallas, TX  75244-3292
+                    (214)450-0448   Fax: (214)450-3715
+                    International:  (214)450-5351
+                    Orders:  (800)336-6933
+                    Email: micro.support@dalsemi.com
+                    Web: www.dalsemi.com
+
+    DataCraft International
+                    2828 Ione Dr., San Jose, CA  95132
+                    (800)873-3709   (408)259-4866
+
+    Data Sync Engineering
+                    40 Trinity St., Newton, NJ 07860
+                    (201)383-1355   Fax: (201)383-9382
+                    Email: sales@datasynceng.com
+                    Web: http://www.datasynceng.com
+
+    DataRescue sprl
+                    110 route du Condroz, 4121 Neupre  Belgium
+                    Web: http://www.datarescue.com
+
+    Dunfield Development Systems
+                    P.O. Box 31044, Nepean, Ontario Canada   K2B 8S8
+                    (613)256-5820   Fax: (613)256-5821
+                    BBS: (613)256-6289
+                    Web:   http://www.dunfield.com
+                    Email: General information:      info@dunfield.com
+                    Sales inquiries/Administration: sales@dunfield.com
+                    Technical inquiries/Support      tech@dunfield.com
+                    Old Email address:  ddunfield@bix.com
+
+    EE Systems      50935 Hill Dr., Elkhart, IN  46514
+                    (219)296-1754   Fax: (219)522-4271
+
+    Electronic Product Design, Inc.
+                    6963 Bluebelle Way, Springfield, OR  97478
+                    (503)741-0778
+
+    Embedded System Products (formerly A.T. Barrett and Associates)
+                    11501 Chimney Rock, Houston, TX  77035-2900
+                    (800)525-4302   (713)728-9688   Fax: (713)728-1049
+
+    Emulation Technology, Inc.
+                    2344 Walsh Avenue, Bldg. F, Santa Clara, CA  95051
+                    (408)982-0660   Fax: (408)982-0664
+                    Email: et@pmail.emulation.com
+                    WWW: http://www.emulation.com
+                    FTP: ftp.emulation.com
+
+    Exor Inc.
+                    4740T Interstate Dr., Cincinnati, OH 45246
+                    (513)874-4665   Fax: (513)874-3684
+
+    Feger + Co., Hardware + Software Verlags OHG
+                    Marienstrasse 1, D-83301 Traunreut, Germany
+
+    Forth, Inc.     1-800-55FORTH
+                    http://www.earthlink.net/~forth
+
+    Forth Systeme   P.O. Box 1103, Breisach, Germany
+                    7767-551
+
+    Franklin Software
+                    (408)296-8051
+
+    HBI Limited
+                    6F, 1 Fleming Road, Hong Kong
+                    852-891-3673  Fax: 852-834-9748
+
+    Hewlett-Packard 1501 Page Mill Rd., Palo Alto, CA  94304
+
+    HiTech Equipment Corp.
+                    9400 Activity Rd., San Diego, CA  92126
+                    (619)566-1892   Fax: (619)530-1458
+                    Email: info@hte.com   ftp: ftp.hte.com
+
+    Hi-Tech Software
+                    PO Box 103, Alderly QLD 4051, Australia
+                    (+61-7) 300 5011   Fax: (+61-7) 300 5246
+                    BBS: +61 7 3300 5235
+                    Email: hitech@hitech.com.au
+                    WWW: http://www.hitech.com.au/
+
+    Hitex
+    North America   HiTOOLS Inc., 2055 Gateway Place, Suite 400
+                    San Jose, CA 95110
+                    (408) 451 3986   Fax: (408) 441 9486
+                    http://www.hitex.com  info@hitex.com
+    Germany         Greschbachstr 12, 76229 Karlsruhe
+                    0721/9628-0      Fax: 0721/9628-149
+                    info@hitex.ti.ba-karlsruhe.de
+                    http://www.ba-karlsruhe.de/BA/firmen/hitex
+    United Kingdom  Sir William Lyons Road, Science Park
+                    Coventry CV4 7EX
+                    +0203 692066     Fax: +0203 692131
+
+    Huntsville Microsystems
+                    4040 S. Memorial Parkway, PO Box 12415
+                    Huntsville, AL  35802
+
+    IAR Systems Software
+    North America   One Maritime Plaza, Suite 1770
+                    San Fransisco, CA 94111  USA
+                    (415)765-5500   Fax: (415)765-5503
+    Sweden          IAR Systems AB
+                    Box 23051
+                    S-750 23 Uppsala, Sweden
+                    +46 18 16 7800   Fax: +46 18 16 7838
+    Germany         IAR Systems GmbH
+                    Brucknerstrasse 27
+                    D-81677 Munchen, Germany
+                    +49 89 470 6022   Fax: +49 89 470 9565
+    United Kingdom  IAR Systems Ltd
+                    9 Spice Court
+                    Plantation Wharf, York Rd
+                    London SWII 3UE, England
+                    +44 71 924 3334   Fax: +44 71 924 5341
+
+    Intel Corporation
+                    3065 Bowers Ave., Santa Clara, CA  95051
+                    Technical Help: (800)628-8686 (USA/Canada only)
+                       5 am to 5 pm PST
+                    Email: james_sampson@ccm.hf.intel.com
+                    Faxback support: (800)628-2283 (USA/Canada)
+                       touch tone phones only
+                       Will only FAX to USA/Canada locations
+                       English or Japanese support is available
+                    BBS: (916)356-3600  24 Hr.
+                       Auto config: 1200 thru 14.4K Baud
+
+    Intellimap Engineering
+                    1140 Morrison Dr., Suite 222
+                    Ottawa Ontario Canada K2H 8S9
+                    (613)829-3196   Fax: (613)820-1773
+
+    Intermetrics Microsystems Software, Inc.
+                    733 Concord Ave., Cambridge, MA  02138
+                    (617)661-0072   Fax: (617)868-2843
+
+    Iota Systems, Inc.
+                    924 Incline Way, Suite N / POB 8987
+                    Incline Village, NV  89452-8987
+                    (702)831-6302   Fax: (702)831-4629
+
+    J & M Microtek, Inc.
+                    83 Seaman Rd., W Orange, NJ  07052
+                    (201)325-1892   Fax: (201)736-4567
+
+    JMI Software Systems, Inc.
+                    P.O. Box 481, 904 Sheble Lane, Spring House, PA 19477
+                    (215)628-0840   Fax: (215)628-0353
+
+    KC Automation GmbH (support for Sysoft products)
+                    Alfredo Knecht
+                    CH-6991 Neggio, Switzerland
+                    Fax: ++41-91591149
+                    Email: akne@tinet.ch
+
+    Keil Elektronik GmbH
+    Europe          Bretonischer Ring 15
+                    D-85630 Grasbrunn b. Muenchen, Germany
+                    49 89 / 46 50 57   Fax: 49 89 / 46 81 62
+    North America   Keil Software
+                    16990 Dallas Parkway, Suit 120, Dallas, TX  75248
+                    (800)348-8051 (sales and tech support)
+                    (214)735-8052   Fax: (214)735-8055
+                    CompuServe: 71715,1604
+                    BBS: (214)713-9883
+                    Web: http://www.keil.com/
+                    FTP: ftp://ftp.keil.com/
+
+    Kontron Electronics
+                    D-8057 Eching/Munich
+                    Oskar von Miller Str. 1, Germany
+                    (0 81 65) 77-0
+
+    Lakeview Research (Jan Axelson)
+                    2209 Winnebago St., Madison, WI  53704
+                    (608)241-5824
+                    Email: jaxelson@lvr.com
+                    WWW: http://www.lvr.com/
+
+    Lauterbach Datentechnik GmbH
+    Europe          Fichtenstr. 27, D-85649 Hofolding, Germany
+                    ++49 (0)8104 8943 31   Fax: ++49 (0)8104 8943 49
+                    Compuserve: 100272,507
+                    Email: sales@lauterbach.com
+                    WWW: http://www.lauterbach.com
+    USA             Lauterbach Inc.
+                    945 Concord Street, Framingham,MA 01701
+                    (508)620-4521   Fax: (508)620-4522
+
+    Lear Com Company
+                    2440 Kipling St. Suite 206, Lakewood, CO  80215
+                    (303)232-2226   Fax: (303)232-8721
+
+    Logical Systems Corporation (Disassembler, Simulator)
+    Micro Dialects, Inc.
+                    POB 30014, Cincinnati, OH  45230
+                    (513)271-9100
+
+    Logisoft        Box 61929, Sunnyvale CA  94086
+                    (408)773-8465  Fax: (408)773-8466
+
+    L.S. Electronic Systems Design
+                    2280 Camilla Rd., Mississauga, Ontario
+                    Canada  L5A 2J8
+                    (905)277-4893   Fax: (905)277-0047
+
+    Lumino B.V
+                    Web: http://www.lumino.nl/lumino/
+
+    Mandeno Granville Electronics, Ltd
+                    128 Grange Rd., Auckland 3, New Zealand
+                    +64 9 6300 558   Fax: +64 9 6301 720
+
+    Matra Semiconductor
+                    2840-100 San Tomas Expressway, Santa Clara, CA  95051
+                    (408)986-9000
+
+    MetaLink Corporation
+    North America   325 E. Elliot Road, Chandler, AZ  85255
+                    (800)638-2423   (602)926-0797
+                    Fax:  (602)926-1198
+    Europe          MetaLink Europe GmbH
+                    Westring 2, 8011<85614>
+                    Kirchseeon-Eglharting, Germany
+                    (08091)2046   Fax: (08091)2386
+
+    Micro Computer Control Corporation
+                    PO Box 275, 17 Model Ave., Hopewell, NJ  08525
+                    (609)466-1751   Fax: (609)466-4116
+                    BBS: (609)466-4117
+                    Email: 73062.3336@compuserve.com
+
+    Micro Future    40944 Cascado Place, Fremont, CA  94539
+                    (510)657-0264   Fax: (510)657-5441
+                    BBS: (510)657-5442
+
+    MicroMint       4 Park St., Vernon, CT  06066
+                    (203)875-2751   Fax: (203)872-2204
+
+    Microtek International, Inc.
+    North America   Microtek International, Inc.
+                    3300 N.W. 211th Terrace, Hillsboro, OR  97124
+                    (503)645-7333   Fax: (503)629-8460
+    Europe          Microtek Electronics Europe GmbH
+                    Starnberger Strasse 22, 82131 Gauting bei Munchen
+                    Germany
+                    +49(89)893139-30    Fax: +49(89)893139-50
+
+    MPE: MicroProcessor Engineering Ltd.
+                    133 Hill Lane, Shirley, Southampton SO1 5AF U.K.
+                    +44 1703 631441   Fax: +44 1703 339691
+                    Email: mpe@mpeltd.demon.co.uk
+                           sales@mpeltd.demon.co.uk
+                           70730.3576@compuserve.com
+
+    Nohau Corporation
+                    51 E. Campbell Ave., Campbell, CA  95008
+                    (408)866-1820
+                    (408)378-2912 (24 hr. information center)
+                    Fax: (408)378-7869
+                    Email: nohau@shell.portal.com
+                    WWW: http://www.nohau.com/nohau
+
+    Offete Enterprises, Inc.
+                    1306 South B Street, San Mateo, CA  94402
+                    (415) 574-8250
+
+    Okapi Systems   (206)258-1163
+
+    Onset Computer Corporation
+                    199 Main St.,  P.O. Bos 1030
+                    North Falmouth, MA 02556-1030
+                    (508)563-9000   Fax: (508)563-9477
+
+    Orion Instruments, Inc.
+                    1376 Borregas Avenue, Sunnyvale, CA  94089
+                    (408)747-0440  Fax: (408)747-0688
+                    Email: info@oritools.com
+                    http://www.oritools.com
+
+    Orion Instruments
+                    180 Independence Drive, Menlo Park, CA  94025
+                    (800)729-7700   Fax: (415)327-9881
+
+    Parallax, Inc.  6200 Desimone Lane, #69A, Citrus Heights, CA  95621
+                    (916)721-8217
+
+    Philips Microcontroller Product Group
+                    811 East Arques Ave. / POB 3409
+                    Sunnvale, CA  94088-3409
+                    Technical documentation:
+                        Sunnyvale, CA - (800)447-1500  Fax: (408)991-3773
+                        Eindhoven, Netherlands - Fax: 31-40-724825
+                    Technical questions:
+                        Sunnyvale, CA - (408)991-3518
+
+    Production Languages Corporation
+                    P.O. Box 109, Weatherford, TX  76086
+                    (800)525-6289   (817)599-8365   Fax: (817)599-5098
+
+    Prologic Designs
+                    PO Box 19026, Baltimore, MD  21204
+                    (410)661-5950   Fax: (410)661-5950
+
+    PseudoCorp      2597 Potter St., Eugene, OR 97405
+                    (541)683-9173   Fax: (541)683-9186
+                    Email: rhowden@teleport.com
+                    Web: http://www.teleport.com/~rhowden
+
+    Quantasm Corporation
+                    19672 Stevens Creek Blvd.
+                    Cupertino, CA  95014
+                    (800)765-8086   (408)244-6826   Fax: (408)244-7268
+
+    Raven Computer Systems
+                    PO Box 12116, St. Paul, MN  55112
+                    (612)636-0365
+
+    Rigel Corporation
+                    P.O. Box 90040, Gainesville, FL  32607
+
+    Scientific Engineering Labs
+                    255 Beacon St., Suite 3D, Somerville, MA  02143
+                    (617)625-0288
+
+    Siemens Components, Inc.
+                    Integrated Circuit Division, 10950 N. Tantau Ave.
+                    Cupertino, CA  95014
+                    (800)777-4363  Fax: (708)296-4805
+
+    Signetics Corporation (see Philips Microcontroller Product Group)
+
+    Signum Systems  Mountain View, CA     (415)903-2220
+                    Thousand Oaks, CA     (805)371-4608
+
+    Software Science
+                    3570 Roundbottom Rd., Cincinnati, OH  45244
+                    (513)561-2060  Fax: (513)271-3181
+                    Email: pbarnes@iglou.com
+
+    Sophia Systems  NS Bldg. 2-4-1, Nishishinjuku, Shinuku-ku
+                    Tokyo 160, Japan
+                    03-348-7000
+
+    Speech Technology Inc., Software Division
+                    837 Front Street South, Issaquah, WA  98027
+                    (206)392-8150
+
+    Standard Microsystems Corporation
+                    80 Arkay Dr.,  Hauppage, NY  11788
+                    (516)435-6000    Fax: (516)231-6004
+                    WWW: http://www.smc.com
+                    Email: techsupport@smc.com
+
+    StarCom         WWW: http://www.n2.net/starcom
+
+    Sun Equipment Corporation
+    Lodestar Electronics Corp.
+                    616 Hawick Rd., Raleigh, NC  27615
+                    (800)870-1955   (919)881-2141   Fax: (919)870-5720
+
+    Suncoast Technologies
+                    P.O. Box 5835, Spring Hill FL 34606
+                    Voice/FAX (352)596-7599
+                    Email: suncoast@earthlink.net
+                    WWW: http://home.earthlink.net/~suncoast/
+
+    Sysoft SA       (closed as of 1989 - see KC Automation GmbH)
+
+    Systronix Inc.  555 S. 300 E., Salt Lake City, UT  84111
+                    (801)534-1017  Fax: (801)534-1019
+                    BBS: (801)487-2778
+
+    URDA, Inc.      (800)338-0517   (412)683-8732
+
+    US Software     14215 N.W. Science Park Drive, Portland, OR  97229
+                    (800)356-7097   (503)641-8446   Fax: (503)644-2413
+                    Product information available by ftp -
+                       ftp.netcom.com : pub/ussw
+
+    Universal Cross Assemblers
+                    Canada
+                    (506)849-8952   Fax: (506)847-0681
+
+    Vail Silicon Tools, Inc.
+                    Box 165, Pompano Beach FL  33069
+                    (305)491-7443   Fax: (305)974-8531
+
+    Xicor
+                    1511 Buckeye Dr., Milpitas, CA
+                    (408)432-8888   Fax: (408)432-0640
+                    Email: info@smtpgat.xicor.com
+                    http//www.xicor.com
+                    BBS: (800)258-8864
+
+    Zax Corporation
+                    2572 White Road, Irving, CA 92714
+                    (800)421-0982   (714)474-1170
+
+    Zitek Corporation
+                    1651 East Edinger Ave., Santa Ana, Ca  92705
+                    (714)541-2931
+
+
+5)  8051 DOCUMENTATION
+
+
+5.1) Periodicals that cover the 8051
+
+    Various magazines and journals (journals seems to be THE popular name
+    for magazines these days) provide articles from time to time on the
+    8051 family of microcontrollers:
+
+    The Computer Applications Journal (Circuit Cellar Ink)
+        - programming and construction articles
+        - POB 7694, Riverton, NJ  08077-8784
+        - FAX: (203)872-2204
+        - Voice orders: (609)786-0409
+        - Email orders: ken.davidson@circellar.com
+        - BBS: (203)871-1988
+          WWW: http://www.circellar.com
+        - $21.95, $31.95 surface Canada and Mexico,
+          $49.95 air all other countries
+
+    Computer Design
+        - industry announcements and trends
+        - One Technology Park Drive, P.O. Box 990, Westford, MA  01886
+        - (508)692-0700
+
+    The Computer Journal
+        - programming and construction articles, specializing in 8-bit
+          and older computers (Z80-CP/M, TRS-80, Xerox, microcontrollers,
+          etc)
+        - programming and construction articles, specializing in old
+          computers (S-100, CP/M, TRS-80, Xerox, Adam, etc)
+        - P.O. Box 3900, Citrus Heights, CA 95611-3900
+        - (800)424-8825 or (916) 722-4970   FAX: (916) 722-7480
+        - BBS: (916) 722-5799
+        - Web: http://www.psyber.com/~tcj
+        - Email: tcj@psyber.com
+                 Dave Baldwin: dibald@netcom.com
+                 Bill Kibler: kibler@psyber.com
+        - USENET newsgroup alt.tcj
+
+    Dr. Dobbs Journal
+        - programming articles, concepts, and designs
+        - 411 Borel Ave., San Mateo, CA  94402
+        - (415)358-9500
+
+    Electronic Engineering Times
+        - industry announcements and trends
+        - FREE to qualified engineers and managers involved in
+          engineering decisions
+        - Fulfillment Dept., PO Box 9055, Jericho, NY  11753-8955
+        - FAX: (516)733-6960
+
+    Electronics Now
+        - construction articles
+        - Box 55115, Boulder, CO  80321-5115
+        - $19.97 one year
+
+    Elektor Electronics
+        - programming and construction articles
+        - World Wide Subscription Service Ltd
+          Unit 4, Gibbs Reed Farm, Pashley Road
+          Ticehurst TN5 7HE, England
+        - 27 UK pounds
+     or
+        - Old Colony Sound Lab, P.O. Box 243, Peterborough, NH 03458
+        - Tel. (603)924-6371, 924-6526
+        - Fax: (603)924-9467
+        - $57 USA and Canada per year
+
+    Embedded Systems Programming
+        - programming and systems design articles
+        - Miller Freeman Publications
+        - 500 Howard St., San Francisco, CA  94105
+        - Miller Freeman: (415)905-2200
+        - Embedded Systems Programming phone: (800)829-5537
+
+    Forth Dimensions
+        - monthly magazine on Forth
+        - Forth Interest Group, P.O. Box 2154, Oakland, California 94621
+        - (510)893-6784   Fax: (510)535-1295
+        - Email: johnhall@aol.com
+        - Forth Interest Group home page:
+             http://taygeta.oc.nps.navy.mil/fig_home.html
+
+    Inquisitor Magazine
+        - If you're the type that watched Gilligan's Island for its
+          socio-political insights, then you'll love a new 'zine that
+          just crossed my desk - Inquisitor Magazine.  It's general
+          philosophy seems to be ... well, it seems to be ... uh, yeah!
+          Technical in nature, bizarre, tongue in cheek, eclectic,
+          electric, did I mention bizarre(?), and lots of fun.  Worth
+          looking at if you like the out of the ordinary.  The moving
+          force behind this magazine is Daniel Drennan, who seems to have
+          suffered from an overdose of radiation from his computer
+          monitor ;-).
+        - Dan is offering issue 1 of Inquisitor for free except for
+          postage ($1.00 in the United States; $2.00 for Canada and
+          overseas surface mail; and $3.00 for overseas airmail).  This
+          issue contains plans, schematics, and troubleshooting tips for
+          putting together a 8052-based microcontroller.  If you're
+          thinking of putting together an 8051 system, you might want to
+          check this out.
+        - Planetarium Station, P.O.Box 132, New York, NY  10024-0132
+        - (212)595-8370
+        - Email: inquisitor@echonyc.com
+        - $16 per year (4 issues)
+
+    Microcomputer Journal
+        - programming and construction articles
+        - Midnight Engineering, 1700 Washington Av., Rocky Ford, CO 81067
+        - (719)254-4558  Fax: (719)254-4517
+
+    Midnight Engineering
+        - 1700 Washington Ave., Rocky Road, CO  81067
+          (719)254-4558   Fax: (719)254-4517
+
+    MW Media - Product Directories
+        - 8051 Product Directory
+          (survey of various 8051 products)
+        - Intel Development Tools Handbook
+          (survey of commercial development tools for the 8051, 8096,
+          and 80186 lines of Intel microprocessors)
+        - This documents could very well be a "must" if you're into
+          serious development using one of these chips.  If you are
+          "just" a hobbyist, see how the "other half" lives.
+        - other guides on Intel development tools, Embedded Intel 386,
+          Intel 486/Pentium, 8051 products, Hitachi microcontroller
+          development tools, AMD FusionE86, AMD 29K; low power products,
+          DSP, multimedia CD
+        - FREE to qualified developers
+        - MW Media
+        - Fairmont Plaza, 50 W. San Fernando, #675, San Jose, CA  95113
+        - (408)288-4721 and (408)286-4200
+        - FAX: (408)288-4728
+
+    Nuts & Volts Magazine
+        - A National Publication for the Buying and Selling of
+          Electronic Equipment
+        - 430 Princeland Court, Corona, CA  91719
+        - Mailed third class, USA only:  $17.00 one year
+                                         $31.00 two years
+        - Mailed first class, one year only:  $34.00-USA
+                                              $35.00-Canada/Mexico
+        - Foreign/Air Mail - $70.00;  Foreign/Surface - $39.00
+        - (800)783-4624
+        - Email:  74262.3664@compuserve.com
+
+
+5.2)  Books on the 8051
+
+5.2.1)  List of books
+
+    I don't have information on all of these, only that they exist.  I
+    would greatly appreciate it if someone could provide a short synopsis
+    and the complete book name if you are familiar with any of these
+    titles.
+
+    Object Oriented Flow Design for Embedded Systems: a new simple
+    unified approach"
+        - Barry Kauler
+        - Karda Prints - http://www.icenet.com.au/~karda
+        - ISBN 0-646-28332-4
+        - (in Barry's words) "Software Engineering for the guys at the
+          bottom end" - embedded systems using microcontrollers.
+        - Chapter headings:
+            Programming philosophies
+            Structured programming
+            Real-time systems
+            Unified object oriented design
+            Tiny real-time operating system
+            Implementation
+                A: The 8051 microcontroller
+                B: Uniprocessor-TERSE
+                C: Dunfield C with TERSE
+                D: Distributed TERSE with MESS scheduling
+                E: K-Flow user's manual
+        - bundled with a sophisticated graphical diagrammer and CASE
+          tool, K-Flow diagrammer, that runs on Windows 3.1 or 95, at no
+          extra cost.
+        - Source code for the TERSE RTOS is supplied.
+        - Price is US$39.95 available directly from the publisher
+
+    The 8051 Family of Microcontrollers
+        - Richard H. Barnett
+        - Prentice-Hall, 1995
+        - ISBN 0-02-306281-9
+
+    8051 Interfacing and Applications
+        - Applied Logic Engineering
+        - 13008 93rd Place North, Maple Grove, MN  55369
+        - (612)494-3704
+
+    The 8051 Microcontroller
+        - I. Scott MacKenzie
+        - Prentice Hall
+        - 2nd edition, 1995
+        - ISBN 0-02-373660-7
+        - includes schematics for a single-board computer,
+          assembly-language source code for a monitor program, and
+          interfaces to a keypad, LEDs, and loudspeaker
+
+    The 8051 Microcontroller
+        - James W. Stewart
+        - Regents/Prentice-Hall, 1993
+        - $27.50, 273 pages
+        - includes many interfacing examples (switches, solenoids,
+          relays, shaft encoders, displays, motors, and A/D converters)
+          and a chapter on top-down design method
+
+    The 8051 Microcontroller: Architecture, Programming and Applications
+        - Kenneth J. Ayala
+        - 241 pages, soft cover
+        - 5.25" diskette with assembler and simulator
+        - ISBN 0-314-77278-2, Dewey 004.165-dc20
+        - West Publishing Company
+        - P.O. Box 64526, St. Paul, MN  55164
+        - (800)328-9352
+        - see review in next section
+
+    Assembly Language Programming (for the MCS-51 family)
+        - F. A. Lyn
+        - L. S. Electronic Systems Design
+
+    Basic-52 Programmer's Guide
+        - Systronix, Inc. (they also sell a Basic compiler)
+
+    Beginner's Guide
+        - Suncoast Technologies
+
+    C and the 8051
+        - Thomas W. Schultz
+        - Prentice Hall
+        - ISBN 0-13-753815-4
+
+    Data book / Handbook / Users' Guide
+        - Advanced Micro Devices
+        - Dallas (User's guide for the DS5000)
+        - Intel
+        - Philips
+        - Siemens
+
+    Embedded Controller Forth for the 8051 Family
+        - Academic Press (I think)
+        - William H. Payne
+        - uses a Forth development system available on the Internet
+          (see above in the Forth software section)
+
+    Embedded Systems Programming in C and Assembler
+        - John Forrest Brown
+        - Van Nostrand Reinhold, 1994
+        - 304 pages, $49.95
+        - ISBN 0-442-01817-7
+        - covers Motorola and Intel processors
+        - includes diskette with code from the book
+        - book review in Dr. Dobb's Journal, November 1994, page 121
+
+    Experimenter's guide
+        - Rigel Corporation
+
+    Introduction to Microcontroller Design, Based on the 8051 family of
+    Processors
+        - Business Data Computers
+        - P.O. Box 1549, Chester, CA  96020
+
+    The Microcontroller Idea Book
+        - Jan Axelson (of Microcomputer Journal fame)
+        - features the 8052-BASIC microcontroller
+        - hands-on guide with complete plans (schematics, design theory,
+          program listings, construction details, etc)
+        - explains how to use sensors, relays, displays, clock/calendars,
+          keypads, wireless links, and more
+        - 1994, 273 pages, $31.95 + shipping
+        - Lakeview Research, 2209 Winnebago St., Madison, WI  53704
+          (608)241-5824
+        - contact the author at jaxelson@lvr.com
+        - WWW: http://www.lvr.com/
+        - Lakeview Research's microcontroller page (resources for
+          8052-Basic projects): http://www.lvr.com/microc.htm
+
+    Programming and Interfacing the 8051 Microcontroller
+        - Sencer Yeralan and Ashutosh Ahluwalia
+        - wealth of information, including: 8051 architecture,
+          programming basics and techniques, on-chip features, building
+          your own 8051 system, and interfacing to various peripherals
+        - hardware experiments contains plans and code for:  scanning a
+          keypad, stepper motor control, a frequency generator, measuring
+          light and temperature intensity (analog to digital), digital to
+          analog conversion, DC motor speed regulation, interfacing to
+          intelligent Liquid Crystal Displays, and implementing a
+          multi-drop RS-485 network
+        - accompanying diskette has an 8051 simulator and all source code
+          for the projects in the book
+        - must have book for the hobbyist or professional
+        - $34.38, 352 pages, paperback, ISBN 0-201-63365-5
+        - Addison-Wesley
+
+
+5.2.2)  Book reviews
+
+    My review of the book:
+    Programming and Interfacing the 8051 Microcontroller
+    by Sencer Yeralan and Ashutosh Ahluwalia
+
+       Addison-Wesley has just released a GREAT new book, "Programming
+       and Interfacing the 8051 Microcontroller" by Sencer Yeralan and
+       Ashutosh Ahluwalia.  I had actually reviewed the manuscript some
+       time back, and the book has now finally been released.  This book
+       contains a wealth of information - it answers a lot of Frequently
+       Asked Questions that often appear in comp.robotics,
+       sci.electronics, and comp.arch.embedded.
+
+       Among the some of the basic subjects covered include: 8051
+       architecture, programming basics and techniques, on-chip features,
+       building your own 8051 system, and interfacing to various
+       peripherals.  A section on hardware experiments contains plans and
+       code for:  scanning a keypad, stepper motor control, a frequency
+       generator, measuring light and temperature intensity (analog to
+       digital), digital to analog conversion, DC motor speed regulation,
+       interfacing to intelligent Liquid Crystal Displays, and
+       implementing a multi-drop RS-485 network.
+
+       The book comes with a diskette containing an 8051 simulator and
+       all source code for the projects in the book.  This is a must have
+       book for the hobbyist or professional.  Available for $34.38, 352
+       pages, paperback, ISBN 0-201-63365-5.  Run, don't walk, to your
+       bookstore and get one now.  I mean it, this is a great book.
+
+
+    My review of the book:
+    The Microcontroller Idea Book
+    by Jan Axelson
+
+       This book is loosely based on a series of articles Jan wrote for
+       ComputerCraft magazine (now the Microcomputer Journal).  If you
+       are at all familiar with her work, you already realize that you're
+       wasting your time by reading this review and you might as well
+       just order your copy now.
+
+       This is an excellent book for hobbyists and tinkerers, as it
+       includes complete circuit schematics and parts lists, design
+       theory, example program listings, construction and debugging tips,
+       and vendor listings.  The example circuits and programs are based
+       on the 8052-BASIC chip (a favorite with hobbyists due to its ease
+       of use), and there is a lot of material on programming in BASIC52.
+       The book is [very] useful even if you use a standard 8051 part.
+       Lots of different interfacing ideas including: sensors, motors,
+       LEDs, LCDs, wireless links, and a LOT more.
+
+       Chapter titles:  microcontroller basics, inside the 8052-
+       BASIC, powering up, saving programs, programming, inputs and
+       outputs, switches and keypads, displays, using sensors to
+       detect and measure, clocks and calendars, control circuits,
+       wireless links, calling assembly-language routines, running
+       BASIC-52 from external memory, related products
+
+       If you are just starting out with microcontrollers, and don't have
+       a clue where to start or what to control, this book is just what
+       you need.  As the title of the book says, it's an idea book.
+
+            The Microcontroller Idea Book
+            Jan Axelson
+            1994, 273 pages, $31.95 + shipping
+            Lakeview Research, 2209 Winnebago St., Madison, WI  53704
+               (608)241-5824
+               Email: jaxelson@lvr.com
+               Web: http://www.lvr.com/
+
+
+    My review of the book:
+    The 8051 Family of Microcontrollers
+    by Richard H. Barnett
+
+       This book VERY thoroughly discusses the design and implementation
+       of controllers using the 8051.  Dick says his book is "lots of
+       meat, very little filler", but he's a bit off the mark here.  What
+       he means to say is this book is many large chunks of meat, no
+       vegetables, and no potatoes - we are NOT talking Hamburger Helper
+       here gang.  The introduction alone contains circuits for 3
+       controllers (one 8085 design used as a comparison).  Many hardware
+       and softare examples are included.  Everywhere you turn in this
+       book, you'll find circuit diagrams and sample code, including
+       complete designs for three different microcontroller projects in
+       the last chapter.  Clear and in-depth coverage of interfacing and
+       peripheral use leaves very little to the imagination.
+
+       This is a good book for both students and professionals who are
+       trying to figure out how to start designing there own
+       microcontroller.  Experienced hobbyists will also appreciate the
+       many examples.  Novices might be a bit overwhelmed by this book.
+
+            The 8051 Family of Microcontrollers
+            Richard H. Barnett
+            Prentice-Hall, 1995
+            ISBN 0-02-306281-9
+
+       For more info contact the author - rbarnett@purdue.edu
+
+
+    Richard Kendrick's review of the book:
+    8051 Interfacing and Applications
+    from Applied Logic Engineering
+
+       IN BRIEF
+
+       An excellent collection of interfacing circuits and well commented
+       source code in assembly.  This is not a book for beginners as it
+       assumes the user is very familiar with the architecture of the
+       8051 and its registers.  A disk of assembly source code listings
+       is included.
+
+       CHAPTERS
+
+             1    - 8051 Interfacing and Applications
+             1.1  - Introduction
+             1.2  - Main System Core
+             1.3  - Simple Methods of User Input
+             1.4  - Interfacing a 16 digit keypad to the 8031
+             1.5  - Centronics Parallel Input Port
+             1.6  - Centronics Parallel Output Port
+             1.7  - Interfacing to the built-in Serial Port
+             1.8  - Interfacing to a Dual Channel UART
+             1.9  - Interfacing to an LCD
+             1.10 - Bank Selection of Memory
+                  - Appendix A: List of Vendors
+                  - Appendix B: Connection to an External Computer
+                     0.1 RS-232 Serial Connection
+                     0.2 Centronics Interface Cabling
+
+       COMMENTS
+
+       This spiral bound book is thin (74 pages) but manages to cover a
+       lot of information.  All of the sub-chapters have excellent code
+       listings with full comments, partial schematic diagrams, and an
+       occasional timing diagram.  The chapter on using the serial port
+       is based on the MAX232 chip becoming so popular.  A table of timer
+       reload values is provided to get standard baud rates but the book
+       only mentions the required clock frequency of 11.0592 mHz in the
+       first chapter.  It also doesn't explain why a seemingly
+       non-standard crystal frequency was chosen.  The dual UART channel
+       features the 2681 chip.  The LCD chapter gives a small but
+       adequate explaination of the Hitachi controller chip usage on LCD
+       displays and a tiny fragment of data on display characteristics of
+       LCDs.  The bank selection of memory is useful showing code and
+       schematic using five 62256 chips for 160K bytes of read/write
+       memory.
+
+
+    Richard Kendrick's review of the book:
+    Microprocessor/Controller Design
+    by Wayne P. Lichti of Business Data Computers
+
+       A lame little book better bypassed.  As an introductory text,
+       Kenneth Ayala's book is the winner hands down.  This book is a
+       poor rehash of the same information in Intel's or AMD's data book.
+       There is one code listing in the book and does little more than
+       tell the reader that the 8051 family of processors exist.
+
+       This book is 134 pages of wasted time.  The schematics were
+       printed on a dot matrix printer and poorly reproduced.  Many of
+       the sections are just a table or a paragraph with two or three
+       sentences.  Use Ayala's book, you'll learn a lot more useful
+       information.
+
+
+    John Little's review of the book:
+    The 8051 Microcontroller: Architecture, Programming and Applications
+    by Kenneth J. Ayala
+
+       IN BRIEF
+
+       A good book for those who are already moderately familiar with
+       assembly language programming and wish to learn more about 8051
+       specifics.  Has many example listings, all of which are very well
+       documented in terms of comments and explanations in the text. NOT
+       a book for absolute beginners OR hardware hackers looking for
+       circuits and applications.
+
+
+       CHAPTERS
+
+          1 - Microprocessors and Microcontrollers.
+          2 - The 8051 Architecture.
+          3 - Moving Data.
+          4 - Logical Operations.
+          5 - Arithmetic Operations.
+          6 - Jump and Call Opcodes.
+          7 - An 8051 Microcontroller Design.
+          8 - Applications.
+          9 - Serial Data Communication.
+          A - 8051 Operational Code Mnemonics.
+          B - How to Use the Assembler.
+          C - how to Use the Simulator.
+          D - The 8255 Programmable I/O Port.
+          E - Control Registers.
+
+
+       COMMENTS
+
+       In his preface to the book, Mr Ayala states that that it is
+       intended for "... a diverse audience. It is meant for use
+       primarily by those who work in the area of electronic design and
+       assembly language programming of small, dedicated computers".
+       Later, he goes on to refer the reader to the manufacturer's data
+       books for more information on hardware issues. This sets the tone
+       for the whole book, which is very much software orientated.
+
+       Anyone buying the book expecting to find reams of circuit diagrams
+       and details on how to build their own 8051 driven, automated car
+       assembly plant will be disappointed. In fact, most of the circuits
+       and applications shown are very much conceptual, with generic,
+       black-box outlines for most of the components. The single
+       exception to this is a fairly complete system (8031, EPROM & RAM,
+       jumper selectable memory sizes) in the chapter on microcontroller
+       design.  Even then, there's no I/O shown (the txd/rxd are
+       unconnected).
+
+       Having said that, Mr Ayala does do a fairly thorough job of
+       working through the peculiarities of the 8051, with detailed
+       coverage of memory organisation, bit/byte level operations,
+       timers, interrupts and, at the end of the book, a complete chapter
+       on 8051 communication modes. Each area has relevant assembly
+       language listings, along with a detailed explanation of the
+       workings of the code.
+
+       Each section also has highlighted "comment" passages which point
+       out common pitfalls and reinforce critical points. Each chapter
+       ends with a summary of the important points covered and a series
+       of ten to twenty pertinent problems for the reader to solve. For
+       the most part, the answers to the problems can be found in the
+       text.  In later chapters though, the reader is asked to elaborate
+       on various programming themes and to write assembly language
+       programs of their own to perform various tasks. The problems range
+       from the bland "Name twenty items which have a built in
+       microcontroller" (Chapter 1), to the more esoteric "Compose a
+       40-value lookup table that will generate a sawtooth wave using a
+       D/A converter" (Chapter 8).
+
+       It should be noted that the book is not aimed at the complete
+       novice. For instance, although assembly language listings are used
+       throughout, it is not until Appendix B that the reader finds out
+       what the assembler actually does and how the listings relate to
+       machine code. Even then, the complete neophyte will be left with a
+       rather empty feeling, as there are pages and pages of code, the
+       schematic for a (more or less) complete system and instructions on
+       how to use the assembler, but no information at all on how the
+       object code should be utilised (other than with the included
+       simulator - see below). If you don't already know how to blow an
+       EPROM, you're in trouble.
+
+       The diskette which accompanies the book contains the PseudoSam
+       assembler (which is used throughout) and an 8051 simulator. Both
+       being intended for use on a PC (it's a measure of how fast the
+       computer industry is evolving that a 5.25 inch diskette seems a
+       little archaic just three years after the publication date of the
+       book).  The PseudoSam assembler ran fine on my system and I was
+       able to assemble several of the examples from the book and
+       successfully run them on a small, home-brew 8031 system. I was
+       totally unable to get the simulator to run. However, as it failed
+       on several different systems I'm prepared to believe that my
+       particular copy of the diskette was at fault.
+
+
+       SUMMARY
+
+       All in all, a recommended book for those who have previous
+       assembly language experience and wish to get to know details
+       relating to the 8051 microcontroller. While the internal
+       architecture of the chip is covered in detail, external hardware
+       and peripheral interfacing is not.  Only the basic 8051/31 is
+       covered, with little mention of the other variants available.
+       There are extensive listings in the text, covering routines for
+       handling keyboards and displays, as well as timing loops and
+       communications. A large, clear typeface ensures that all of the
+       listings are completely legible. The layout and presentation of
+       the book is excellent, with a consistent, unambiguous style used
+       throughout.
+
+
+    Tim McDonough's review of the book:
+    C and the 8051: Programming for Multitasking
+    by Thomas W. Schultz
+
+       Schultz's book provides a brief overview of the 8051 architecture
+       but is primarily a discussion of multi-tasking software in an 8051
+       environment.  He presents quite a few code examples.  The examples
+       and the accompanying text show comparisons of how to accomplish
+       things in assembler, PLM, and C.  The C examples presented are
+       based on Version 3 of the Franklin compiler but should be easily
+       understandable by anyone already familiar with C.
+
+       Later chapters in the book deal with more advanced topics.
+       Chapters are devoted to Real-Time Ideas, Timing and Scheduling,
+       Communications and Synchronization, Interrupts, Priority, and
+       Context, and Distributed Systems.  The Real-Time Ideas chapter
+       briefly discusses six Real Time Operating System (RTOS) kernels
+       offered by several vendors.  Later in the book some examples are
+       given to simple applications with and without using a RTOS.
+
+       All in all, a useful addition to my technical library.  It is one
+       of the few 8051 books that goes beyond the basics and would be
+       particularly of interest to those contemplating their first
+       non-trivial 8051 design.
+
+
+5.3)  Miscellaneous documentation on the 8051
+
+    Advanced Micro Devices
+        - application notes
+
+    Intel Corporation
+        - application notes
+
+    L.S. Electronic Systems Design
+        - application notes (source code on diskette and schematics)
+
+    Philips Semiconductors (Signetics)
+        - application notes
+
+    Software Science
+        - application notes
+
+
+__________________________________________________________
+
+I disclaim everything.  The contents of this article might be totally
+inaccurate, inappropriate, misguided, or otherwise perverse - except for
+my name (hopefully I got that right).
+
+Copyright (c) 1997 by Russ Hersch, all rights reserved.
+This FAQ may be posted to any USENET newsgroup, on-line service, or BBS
+  as long as it is posted in its entirety and includes this copyright
+  statement.
+This FAQ may not be distributed for financial gain.
+This FAQ may not be included in commercial collections or compilations
+   without express permission from the author.
+
+-----------------------------------
+Russ Hersch - russ@shani.net
+</XMP></BODY></HTML>

@@ -1,0 +1,137 @@
+BL51 BANKED LINKER/LOCATER V5.02                                                        03/20/2003  18:52:37  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.02, INVOKED BY:
+C:\PROGRAM FILES\KEIL\C51\BIN\BL51.EXE function.obj TO function
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  function.obj (FUNCTION)
+  C:\PROGRAM FILES\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  function (FUNCTION)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000AH     UNIT         _DATA_GROUP_
+            IDATA   0012H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0036H     UNIT         ?PR?MAIN?FUNCTION
+            CODE    0039H     0011H     UNIT         ?PR?_FUNCTION4?FUNCTION
+            CODE    004AH     000CH     UNIT         ?C_C51STARTUP
+            CODE    0056H     0009H     UNIT         ?PR?_FUNCTION3?FUNCTION
+            CODE    005FH     0005H     UNIT         ?PR?_FUNCTION2?FUNCTION
+            CODE    0064H     0001H     UNIT         ?PR?FUNCTION1?FUNCTION
+
+
+
+OVERLAY MAP OF MODULE:   function (FUNCTION)
+
+
+SEGMENT                           DATA_GROUP 
+  +--> CALLED SEGMENT           START    LENGTH
+-----------------------------------------------
+?C_C51STARTUP                   -----    -----
+  +--> ?PR?MAIN?FUNCTION
+
+?PR?MAIN?FUNCTION               0008H    0006H
+  +--> ?PR?FUNCTION1?FUNCTION
+  +--> ?PR?_FUNCTION2?FUNCTION
+  +--> ?PR?_FUNCTION3?FUNCTION
+  +--> ?PR?_FUNCTION4?FUNCTION
+
+?PR?_FUNCTION2?FUNCTION         000EH    0002H
+
+?PR?_FUNCTION3?FUNCTION         000EH    0004H
+
+?PR?_FUNCTION4?FUNCTION         000EH    0002H
+
+
+
+SYMBOL TABLE OF MODULE:  function (FUNCTION)
+BL51 BANKED LINKER/LOCATER V5.02                                                      03/20/2003  18:52:37  PAGE 2
+
+
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        FUNCTION
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0056H         PUBLIC        _function3
+  C:0039H         PUBLIC        _function4
+  C:0064H         PUBLIC        function1
+  C:0003H         PUBLIC        main
+  C:005FH         PUBLIC        _function2
+  -------         PROC          MAIN
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0008H         SYMBOL        j
+  D:000AH         SYMBOL        k
+  D:000CH         SYMBOL        l
+  -------         ENDDO         
+  C:0003H         LINE#         10
+  C:0003H         LINE#         11
+  C:0003H         LINE#         12
+  C:0015H         LINE#         14
+  C:0018H         LINE#         15
+  C:001FH         LINE#         16
+  C:002AH         LINE#         17
+  -------         ENDPROC       MAIN
+  -------         PROC          FUNCTION1
+  C:0064H         LINE#         20
+  -------         ENDPROC       FUNCTION1
+  -------         PROC          _FUNCTION2
+  D:0006H         SYMBOL        a
+  -------         DO            
+  D:000EH         SYMBOL        x
+  -------         ENDDO         
+  C:005FH         LINE#         22
+  C:005FH         LINE#         24
+  C:0063H         LINE#         25
+  -------         ENDPROC       _FUNCTION2
+  -------         PROC          _FUNCTION3
+  D:0006H         SYMBOL        a
+  D:0004H         SYMBOL        b
+  -------         DO            
+  D:000EH         SYMBOL        x
+  D:0010H         SYMBOL        y
+  -------         ENDDO         
+  C:0056H         LINE#         27
+  C:0056H         LINE#         29
+  C:005AH         LINE#         30
+  C:005EH         LINE#         31
+  -------         ENDPROC       _FUNCTION3
+  -------         PROC          _FUNCTION4
+  D:0006H         SYMBOL        a
+  D:0004H         SYMBOL        b
+  D:0002H         SYMBOL        c
+  -------         DO            
+  D:000EH         SYMBOL        x
+  D:0004H         SYMBOL        y
+BL51 BANKED LINKER/LOCATER V5.02                                                      03/20/2003  18:52:37  PAGE 3
+
+
+  D:0002H         SYMBOL        z
+  -------         ENDDO         
+  C:0039H         LINE#         33
+  C:0039H         LINE#         35
+  C:003DH         LINE#         36
+  C:003DH         LINE#         37
+  C:003DH         LINE#         38
+  C:0049H         LINE#         39
+  -------         ENDPROC       _FUNCTION4
+  -------         ENDMOD        FUNCTION
+
+Program Size: data=19.0 xdata=0 code=101
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

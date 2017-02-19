@@ -1,0 +1,207 @@
+C51 COMPILER V6.20c  MAINFILE                                                              07/03/2002 08:51:27 PAGE 1   
+
+
+C51 COMPILER V6.20c, COMPILATION OF MODULE MAINFILE
+OBJECT MODULE PLACED IN ..\out\mainfile.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE mainfile.C LARGE ROM(COMPACT) OPTIMIZE(9,SIZE) REGFILE(..\out\EXEc51.ORC) B
+                    -ROWSE INCDIR(.) DEBUG OBJECTEXTEND PRINT(..\out\mainfile.lst) OBJECT(..\out\mainfile.obj) 
+
+stmt level    source
+
+   1          /*
+   2          *********************************************************************************************************
+   3          *                                                uC/OS-II
+   4          *                                          The Real-Time Kernel
+   5          *
+   6          *                        (c) Copyright 1992-1998, Jean J. Labrosse, Plantation, FL
+   7          *                                           All Rights Reserved
+   8          *
+   9          *                                                 V2.00
+  10          *
+  11          *                                              
+  12          *********************************************************************************************************
+  13          */
+  14          /*
+  15          *********************************************************************************************************
+  16          * Example file . 
+  17          * By:   Junmin Zheng(zhengjunm@263.net) .
+  18          * You can run the file and see executing in "Serial #1 window" 
+  19          * of dScope51 which has integrated to Keil C51 V6.20
+  20          * 
+  21          *********************************************************************************************************
+  22          */
+  23          
+  24          #include "includes.h"
+  25          
+  26          #ifdef MONITOR51                         /* Debugging with Monitor-51 needs   */
+              char code reserve [3] _at_ 0x23;         /* space for serial interrupt if     */
+              #endif                                   /* Stop Exection with Serial Intr.   */
+  29                                                   /* is enabled                        */
+  30          /*
+  31          *********************************************************************************************************
+  32          *                                               CONSTANTS
+  33          *********************************************************************************************************
+  34          */
+  35          
+  36          #define  TASKSTART_STK_SIZE            128      
+  37          #define  TASK_STK_SIZE                  64       /* Size of each task's stacks (# of WORDs)            */
+  38          #define  N_TASKS                       2      /* Number of identical tasks                          */
+  39          
+  40          /*
+  41          *********************************************************************************************************
+  42          *                                               VARIABLES
+  43          *********************************************************************************************************
+  44          */
+  45          
+  46          OS_STK           TaskStk[N_TASKS][TASK_STK_SIZE];     /* Tasks stacks                                  */
+  47          OS_STK           TaskStartStk[TASKSTART_STK_SIZE];
+  48          char             TaskData[N_TASKS];                   /* Parameters to pass to each task               */
+  49          OS_EVENT         *MySem;
+  50          OS_EVENT         *AckMbox;
+  51          OS_EVENT         *TxMbox;
+  52          INT8U            err;
+  53          /*
+  54          *********************************************************************************************************
+C51 COMPILER V6.20c  MAINFILE                                                              07/03/2002 08:51:27 PAGE 2   
+
+  55          *                                           FUNCTION PROTOTYPES
+  56          *********************************************************************************************************
+  57          */
+  58          extern void EnablePrintf(unsigned char Crystal,unsigned int BaudRate );
+  59          extern void TimerInitiate(unsigned char Crystal,unsigned char Frequence);
+  60          void   TaskStart(void *dataa) KCREENTRANT;  /* Function prototypes of Startup task           */
+  61          void   Tasksecond(void *dataa) KCREENTRANT;      /* Function prototypes of tasks                  */
+  62          void   Taskthird(void *dataa) KCREENTRANT;    
+  63          /*$PAGE*/
+  64          /*
+  65          *********************************************************************************************************
+  66          *                                                MAIN
+  67          *********************************************************************************************************
+  68          */
+  69          float a=1024;
+  70          int *first=10;
+  71          int *second=20;
+  72          int *third=30; 
+  73          void main (void) 
+  74          {
+  75   1         IE=0;
+  76   1         OSInit();   /* Initialize uC/OS-II*/
+  77   1         EnablePrintf(12,1200);      
+  78   1           		    
+  79   1         printf ("This is the test programme\n"); 
+  80   1         printf ("The port to 8051 made by Junmin Zheng \n");  
+  81   1         printf ("\n");
+  82   1         MySem   =OSSemCreate(1);
+  83   1         AckMbox =OSMboxCreate((void *)0);
+  84   1         TxMbox  =OSMboxCreate((void *)0);
+  85   1         OSTaskCreate(TaskStart, (void *)first, (void *)&TaskStartStk[TASKSTART_STK_SIZE], 0);
+  86   1         OSTaskCreate(Tasksecond, (void *)second, (void *)&TaskStk[0][TASK_STK_SIZE], 1);
+  87   1         OSTaskCreate(Taskthird, (void *)third, (void *)&TaskStk[1][TASK_STK_SIZE], 2);
+  88   1         OSStart(); /* Start multitasking    */
+  89   1      }
+  90          
+  91          /*$PAGE*/
+  92          /*
+  93          *********************************************************************************************************
+  94          *                                              STARTUP TASK
+  95          *********************************************************************************************************
+  96          */
+  97          
+  98          void TaskStart (void *dataa) KCREENTRANT
+  99          {  
+ 100   1          int *t=0,f=0;
+ 101   1          TimerInitiate(12,OS_TICKS_PER_SEC);   
+ 102   1      	t=(int *)dataa;
+ 103   1      	f=t;
+ 104   1           /* Prevent compiler warning  */
+ 105   1      
+ 106   1      for(;;)
+ 107   1      {         a=a/2;
+ 108   2                OSSemPend(MySem,0,&err);
+ 109   2                printf("this is the first task function\n");
+ 110   2                printf("f=%d  ",f); 
+ 111   2                printf("a=%f\n",a);
+ 112   2      		  printf ("\n");
+ 113   2      		  OSSemPost(MySem);
+ 114   2                //OSTimeDlyHMSM(0, 0, 10, 0);                         
+ 115   2                OSTimeDly(30);
+ 116   2          }
+C51 COMPILER V6.20c  MAINFILE                                                              07/03/2002 08:51:27 PAGE 3   
+
+ 117   1      }
+ 118          /*$PAGE*/
+ 119          /*
+ 120          *********************************************************************************************************
+ 121          *                                                  TASKS
+ 122          *********************************************************************************************************
+ 123          */
+ 124          
+ 125          void Tasksecond (void * pvdata) KCREENTRANT
+ 126          {   
+ 127   1        char txmsg=0;/*must be initiated at the first place,if you don't do that,you will crash*/
+ 128   1        pvdata=pvdata;
+ 129   1        txmsg='A';
+ 130   1          for (;;) {
+ 131   2      
+ 132   2      		while(txmsg<='Z'){
+ 133   3      		  OSMboxPost(TxMbox,(void *)&txmsg);
+ 134   3                  
+ 135   3      		    OSSemPend(MySem,0,&err);
+ 136   3      			printf("this is the second task function\n");
+ 137   3      	        printf("the second task send message %c to the third task\n",txmsg);
+ 138   3      		    printf("\n");
+ 139   3                  OSSemPost(MySem);
+ 140   3      
+ 141   3      		  OSMboxPend(AckMbox,0,&err);
+ 142   3      		  txmsg++;
+ 143   3      		}
+ 144   2      		  txmsg='A';
+ 145   2      		 // OSTimeDly(0);                            
+ 146   2                
+ 147   2         } 
+ 148   1         
+ 149   1      }
+ 150          
+ 151          
+ 152          void Taskthird(void * pvdata) KCREENTRANT
+ 153          {
+ 154   1          char *rxmsg=0;
+ 155   1      	int b=0;
+ 156   1      	pvdata=pvdata;
+ 157   1          for (;;) {
+ 158   2      	        b=b+1;  
+ 159   2      	        rxmsg=(char*)OSMboxPend(TxMbox,0,&err);
+ 160   2      
+ 161   2                  OSSemPend(MySem,0,&err);
+ 162   2      			printf("this is the third task function\n");
+ 163   2                  printf("a=%f  ",a);
+ 164   2                  printf("b=%d\n",b);
+ 165   2      			printf("the third task receive message %c from the second task\n",*rxmsg);            
+ 166   2      			printf ("\n");
+ 167   2      		    OSSemPost(MySem);
+ 168   2        	        
+ 169   2      			
+ 170   2      			OSMboxPost(AckMbox,(void *)1);
+ 171   2      	        
+ 172   2                  //OSTimeDlyHMSM(0, 0, 1, 0);
+ 173   2      			//OSTimeDly(200);                            /* Delay 2 clock tick */
+ 174   2                   
+ 175   2      	}
+ 176   1      }
+ 177          
+
+C51 COMPILER V6.20c  MAINFILE                                                              07/03/2002 08:51:27 PAGE 4   
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    703    ----
+   CONSTANT SIZE    =    303    ----
+   XDATA SIZE       =    281    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
