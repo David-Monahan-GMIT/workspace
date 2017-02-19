@@ -15,21 +15,30 @@ class Matrix {
 	private:
 		unsigned int rows;
 		unsigned int cols;
-		//double matrix[10][10];
 		double **mat;
+		static int matrix_cnt;
 		
 	public:
 	//constructors
 		Matrix();
 		Matrix(double num);
 		Matrix(unsigned int row, unsigned int col);
-		Matrix(Matrix&);
+		Matrix(const Matrix&);
 		~Matrix();
 	// Functions
-		unsigned int getRows();
-		unsigned int getCols();
-		double getElement(unsigned int row, unsigned int col);
-		friend std::ostream &operator<<(std::ostream &, Matrix &);	
-		void operator=(Matrix &matrix);
-		};
+		unsigned int getRows() const;
+		unsigned int getCols() const;
+		double getElement(unsigned int row, unsigned int col) const;
+		void setElement(unsigned int row, unsigned int col, double i);
+		friend std::ostream &operator<<(std::ostream &, const Matrix &);
+		Matrix& operator=(const Matrix &matrix);
+		void operator+=(const Matrix &matrix);
+		void operator-=(const Matrix &matrix);
+		const bool operator==(const Matrix &matrix);
+		const bool operator!=(const Matrix &matrix);
+		const Matrix operator+(const Matrix &matrix) const;
+		const Matrix operator-(const Matrix &matrix) const;
+		const Matrix operator*(const Matrix &matrix) const;
+		const double operator()(unsigned int, unsigned int);
+	};
 #endif /* SRC_MATRIX_H_ */

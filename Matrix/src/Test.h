@@ -10,7 +10,10 @@
 
 void testConstructors();
 void testAssignment();
-
+void testOperatorsPlusMinus();
+void testOperatorsBool();
+void testOperatorsPlusMinusAssignment();
+void testMultiplication();
 
 
 #endif /* SRC_TEST_H_ */

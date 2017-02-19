@@ -9,13 +9,14 @@
 #include "Matrix.h"
 #include "Test.h"
 
-void testConstructors();
-void testAssignment();
-
 int main(int argc, char *argv[]) {
 
 	testConstructors();
 	testAssignment();
+	testOperatorsPlusMinusAssignment();
+	testOperatorsBool();
+	testOperatorsPlusMinus();
+	testMultiplication();
 
 	return 0;
 }
