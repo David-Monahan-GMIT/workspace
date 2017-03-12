@@ -1,0 +1,260 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        02/17/2017  11:57:46  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\bin\obj\OS_TIME.obj, .\bin\obj\OS_FLAG.obj, .\bin\obj\OS_MBOX.obj, .\bin\obj\OS_MEM.obj, .\bi
+>> n\obj\OS_MUTEX.obj, .\bin\obj\OS_Q.obj, .\bin\obj\OS_SEM.obj, .\bin\obj\OS_TASK.obj, .\bin\obj\OS_CORE.obj, .\bin\obj
+>> \OS_CPU_A.obj, .\bin\obj\OS_CPU_C.obj, .\bin\obj\TASKS.obj, .\bin\obj\STARTUP.obj TO .\bin\obj\kernel REGFILE (.\bin\
+>> obj\kernel.ORC) PRINT (.\bin\lst\kernel.m51) NOLINES, NOSYMBOLS, NOPUBLICS RAMSIZE (256) DISABLEWARNING (16) CODE (0X
+>> 0000-0XFFFE) XDATA (0X0000-0X7FFF)
+
+
+MEMORY MODEL: LARGE
+
+
+INPUT MODULES INCLUDED:
+  .\bin\obj\OS_TIME.obj (OS_TIME)
+  .\bin\obj\OS_FLAG.obj (OS_FLAG)
+  .\bin\obj\OS_MBOX.obj (OS_MBOX)
+  .\bin\obj\OS_MEM.obj (OS_MEM)
+  .\bin\obj\OS_MUTEX.obj (OS_MUTEX)
+  .\bin\obj\OS_Q.obj (OS_Q)
+  .\bin\obj\OS_SEM.obj (OS_SEM)
+  .\bin\obj\OS_TASK.obj (OS_TASK)
+  .\bin\obj\OS_CORE.obj (OS_CORE)
+  .\bin\obj\OS_CPU_A.obj (OS_CPU_A_ASM)
+  .\bin\obj\OS_CPU_C.obj (OS_CPU_C)
+  .\bin\obj\TASKS.obj (TASKS)
+  .\bin\obj\STARTUP.obj (?C_STARTUP)
+  C:\KEIL\C51\LIB\C51L.LIB (?C_INIT)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?CLDPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?CLDOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?CSTPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?CSTOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?IILDX)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?ILDOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?IILDOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?ISTPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?ISTOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LADD)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LMUL)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?ULDIV)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?SLCMP)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LLDXDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LSTXDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LSTKXDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?OFFXADD)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?PLDXDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?PLDIXDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?PILDXDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?PSTXDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?PLDPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?PSTPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?PLDOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?PSTOPTR)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?ADDXBP)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?XBPOFF)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?LIMUL)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?PLDIDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?PSTIDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?PLDPDATA)
+  C:\KEIL\C51\LIB\C51L.LIB (?C?PSTPDATA)
+BL51 BANKED LINKER/LOCATER V6.22                                                      02/17/2017  11:57:46  PAGE 2
+
+
+  C:\KEIL\C51\LIB\C51L.LIB (?C?PLDCODE)
+
+
+LINK MAP OF MODULE:  .\bin\obj\kernel (OS_TIME)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0002H     UNIT         DT?C_XBP
+            DATA    000AH     0002H     UNIT         ?DT?OS_CPU_C
+            IDATA   000CH     0001H     UNIT         ?STACK
+
+            * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
+            XDATA   0000H     0282H     UNIT         ?XD?OS_CORE
+            XDATA   0282H     015FH     UNIT         ?XD?TASKS
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0005H     UNIT         ?PR?_?OSVERSION?OS_CORE
+            CODE    0008H     0001H     UNIT         ?PR?_?OSINITHOOKBEGIN?OS_CPU_C
+            CODE    0009H     0001H     UNIT         ?PR?_?OSINITHOOKEND?OS_CPU_C
+            CODE    000AH     0001H     UNIT         ?PR?_?OSTASKSWHOOK?OS_CPU_C
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     0015H     UNIT         ?PR?_?INITSYSTEM?OS_CPU_C
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     04BCH     UNIT         ?C?LIB_CODE
+            CODE    04E2H     034AH     UNIT         ?PR?_?OSTASKCHANGEPRIO?OS_TASK
+            CODE    082CH     0293H     UNIT         ?PR?_?OSINIT?OS_CORE
+            CODE    0ABFH     028CH     UNIT         ?PR?_?OS_TCBINIT?OS_CORE
+            CODE    0D4BH     01D5H     UNIT         ?PR?_?OSTASKSTKINIT?OS_CPU_C
+            CODE    0F20H     01B6H     UNIT         ?PR?_?OSTIMEDLYHMSM?OS_TIME
+            CODE    10D6H     01A3H     UNIT         ?PR?_?OS_EVENTTASKRDY?OS_CORE
+            CODE    1279H     019BH     UNIT         ?PR?_?OSMBOXPEND?OS_MBOX
+            CODE    1414H     0145H     UNIT         ?PR?_?OSTASKCREATE?OS_TASK
+            CODE    1559H     0134H     UNIT         ?PR?_?OSSEMPEND?OS_SEM
+            CODE    168DH     0125H     UNIT         ?PR?_?INITTASK?TASKS
+            CODE    17B2H     0117H     UNIT         ?C_INITSEG
+            CODE    18C9H     00F7H     UNIT         ?PR?_?OS_EVENTTASKWAIT?OS_CORE
+            CODE    19C0H     00D0H     UNIT         ?PR?_?OSTIMETICK?OS_CORE
+            CODE    1A90H     00C2H     UNIT         ?PR?_?OSMBOXPOST?OS_MBOX
+            CODE    1B52H     00C0H     UNIT         ?PR?_?OS_EVENTTO?OS_CORE
+            CODE    1C12H     00B3H     UNIT         ?PR?_?TASK2?TASKS
+            CODE    1CC5H     00AFH     UNIT         ?PR?_?TASK1?TASKS
+            CODE    1D74H     00ABH     UNIT         ?PR?_?OSSEMPOST?OS_SEM
+            CODE    1E1FH     00A9H     UNIT         ?PR?_?OSMBOXCREATE?OS_MBOX
+            CODE    1EC8H     009FH     UNIT         ?PR?SERIAL_ISR?OS_CPU_C
+            CODE    1F67H     009DH     UNIT         ?PR?_?OSSEMCREATE?OS_SEM
+            CODE    2004H     0097H     UNIT         ?PR?MAIN?TASKS
+            CODE    209BH     0093H     UNIT         ?PR?OSTICKISR?OS_CPU_C
+            CODE    212EH     0092H     UNIT         ?C_C51STARTUP
+            CODE    21C0H     0091H     UNIT         ?PR?_?OS_SCHED?OS_CORE
+            CODE    2251H     008FH     UNIT         ?PR?_?OSINTEXIT?OS_CORE
+            CODE    22E0H     008BH     UNIT         PR?LOADCTX
+            CODE    236BH     007FH     UNIT         ?PR?_?OSTIMEDLY?OS_TIME
+BL51 BANKED LINKER/LOCATER V6.22                                                      02/17/2017  11:57:46  PAGE 3
+
+
+            CODE    23EAH     007CH     UNIT         ?PR?_?OSSTART?OS_CORE
+            CODE    2466H     0056H     UNIT         ?PR?_?OS_EVENTWAITLISTINIT?OS_CORE
+            CODE    24BCH     0052H     UNIT         ?PR?_?SENDSTRING?OS_CPU_C
+            CODE    250EH     004CH     UNIT         ?PR?_?SENDCHAR?OS_CPU_C
+            CODE    255AH     003DH     UNIT         ?PR?_?OS_TASKIDLE?OS_CORE
+            CODE    2597H     003CH     UNIT         ?PR?_?C_OSCTXSW?OS_CPU_C
+            CODE    25D3H     002AH     UNIT         ?PR?_?OSSCHEDUNLOCK?OS_CORE
+            CODE    25FDH     0021H     UNIT         ?PR?_?OSTASKCREATEHOOK?OS_CPU_C
+            CODE    261EH     0021H     UNIT         ?PR?_?OSTASKDELHOOK?OS_CPU_C
+            CODE    263FH     0021H     UNIT         ?PR?_?OSTCBINITHOOK?OS_CPU_C
+            CODE    2660H     001FH     UNIT         ?PR?_?OSINTCTXSW?OS_CPU_C
+            CODE    267FH     001CH     UNIT         ?PR?_?OSSTARTHIGHRDY?OS_CPU_C
+            CODE    269BH     0018H     UNIT         ?PR?_?OSSCHEDLOCK?OS_CORE
+            CODE    26B3H     0011H     UNIT         ?PR?_?OSINTENTER?OS_CORE
+            CODE    26C4H     000EH     UNIT         ?PR?_?SETUPCOMMS?OS_CPU_C
+            CODE    26D2H     0001H     UNIT         ?PR?_?OSTASKSTATHOOK?OS_CPU_C
+            CODE    26D3H     0001H     UNIT         ?PR?_?OSTIMETICKHOOK?OS_CPU_C
+            CODE    26D4H     0001H     UNIT         ?PR?_?OSTASKIDLEHOOK?OS_CPU_C
+
+
+
+OVERLAY MAP OF MODULE:   .\bin\obj\kernel (OS_TIME)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?PR?OSTICKISR?OS_CPU_C
+  +--> ?PR?_?OSINTENTER?OS_CORE
+  +--> ?PR?_?OSTIMETICK?OS_CORE
+  +--> ?PR?_?OSINTEXIT?OS_CORE
+
+?PR?_?OSTIMETICK?OS_CORE
+  +--> ?PR?_?OSTIMETICKHOOK?OS_CPU_C
+
+?PR?_?OSINTEXIT?OS_CORE
+  +--> ?PR?_?OSINTCTXSW?OS_CPU_C
+
+*** NEW ROOT ***************************************************
+
+?PR?SERIAL_ISR?OS_CPU_C
+  +--> ?PR?_?OSINTENTER?OS_CORE
+  +--> ?PR?_?OSINTEXIT?OS_CORE
+
+*** NEW ROOT ***************************************************
+
+?C_C51STARTUP
+  +--> ?PR?MAIN?TASKS
+  +--> ?C_INITSEG
+
+?PR?MAIN?TASKS
+  +--> ?PR?_?OSINIT?OS_CORE
+  +--> ?PR?_?OSSEMCREATE?OS_SEM
+  +--> ?PR?_?INITTASK?TASKS
+  +--> ?PR?_?OSTASKCREATE?OS_TASK
+  +--> ?PR?_?OSSTART?OS_CORE
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      02/17/2017  11:57:46  PAGE 4
+
+
+?PR?_?OSINIT?OS_CORE
+  +--> ?PR?_?OSINITHOOKBEGIN?OS_CPU_C
+  +--> ?PR?_?OS_TASKIDLE?OS_CORE
+  +--> ?PR?_?OSTASKCREATE?OS_TASK
+  +--> ?PR?_?OSINITHOOKEND?OS_CPU_C
+
+?PR?_?OS_TASKIDLE?OS_CORE
+  +--> ?PR?_?OSTASKIDLEHOOK?OS_CPU_C
+
+?PR?_?OSTASKCREATE?OS_TASK
+  +--> ?PR?_?OSTASKSTKINIT?OS_CPU_C
+  +--> ?PR?_?OS_TCBINIT?OS_CORE
+  +--> ?PR?_?OS_SCHED?OS_CORE
+
+?PR?_?OS_TCBINIT?OS_CORE
+  +--> ?PR?_?OSTCBINITHOOK?OS_CPU_C
+  +--> ?PR?_?OSTASKCREATEHOOK?OS_CPU_C
+
+?PR?_?OSSEMCREATE?OS_SEM
+  +--> ?PR?_?OS_EVENTWAITLISTINIT?OS_CORE
+
+?PR?_?INITTASK?TASKS
+  +--> ?PR?_?INITSYSTEM?OS_CPU_C
+  +--> ?PR?_?SETUPCOMMS?OS_CPU_C
+  +--> ?PR?_?TASK1?TASKS
+  +--> ?PR?_?OSTASKCREATE?OS_TASK
+  +--> ?PR?_?TASK2?TASKS
+  +--> ?PR?_?OSTIMEDLYHMSM?OS_TIME
+
+?PR?_?TASK1?TASKS
+  +--> ?PR?_?OSSEMPEND?OS_SEM
+  +--> ?PR?_?SENDCHAR?OS_CPU_C
+  +--> ?PR?_?OSTIMEDLY?OS_TIME
+
+?PR?_?OSSEMPEND?OS_SEM
+  +--> ?PR?_?OS_EVENTTASKWAIT?OS_CORE
+  +--> ?PR?_?OS_SCHED?OS_CORE
+  +--> ?PR?_?OS_EVENTTO?OS_CORE
+
+?PR?_?OSTIMEDLY?OS_TIME
+  +--> ?PR?_?OS_SCHED?OS_CORE
+
+?PR?_?TASK2?TASKS
+  +--> ?PR?_?OSSEMPOST?OS_SEM
+  +--> ?PR?_?OSTIMEDLY?OS_TIME
+
+?PR?_?OSSEMPOST?OS_SEM
+  +--> ?PR?_?OS_EVENTTASKRDY?OS_CORE
+  +--> ?PR?_?OS_SCHED?OS_CORE
+
+?PR?_?OSTIMEDLYHMSM?OS_TIME
+  +--> ?PR?_?OSTIMEDLY?OS_TIME
+
+?PR?_?OSSTART?OS_CORE
+  +--> ?PR?_?OSSTARTHIGHRDY?OS_CPU_C
+
+?PR?_?OSSTARTHIGHRDY?OS_CPU_C
+BL51 BANKED LINKER/LOCATER V6.22                                                      02/17/2017  11:57:46  PAGE 5
+
+
+  +--> ?PR?_?OSTASKSWHOOK?OS_CPU_C
+
+
+
+FUNCTION REGISTER MASKS
+
+
+FUNCTION . . . . . . . . . REG MASK
+-----------------------------------
+
+_?OSINTENTER . . . . . . . @0xf300
+_?OSSCHEDLOCK. . . . . . . @0xf300
+_?OSVERSION. . . . . . . . @0x8003
+
+Program Size: data=13.0 xdata=993 code=9941
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

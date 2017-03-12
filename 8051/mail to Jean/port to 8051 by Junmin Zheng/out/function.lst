@@ -1,0 +1,83 @@
+C51 COMPILER V6.20c  FUNCTION                                                              07/03/2002 08:51:27 PAGE 1   
+
+
+C51 COMPILER V6.20c, COMPILATION OF MODULE FUNCTION
+OBJECT MODULE PLACED IN ..\out\function.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\function\function.C LARGE ROM(COMPACT) OPTIMIZE(9,SIZE) REGFILE(..\out\E
+                    -XEc51.ORC) BROWSE INCDIR(.) DEBUG OBJECTEXTEND PRINT(..\out\function.lst) OBJECT(..\out\function.obj) 
+
+stmt level    source
+
+   1          /*
+   2          *********************************************************************************************************
+   3          *                                         OTHER FUNCTIONS
+   4          *                               You can define any functions that you need
+   5          *                        
+   6          *                                          
+   7          *
+   8          * File : function.c
+   9          * By   :  Junmin Zheng (zhengjunm@263.net)
+  10          *********************************************************************************************************
+  11          */
+  12          
+  13          #include "..\mainfile\includes.h"
+  14          #include "os_kcdef.h"
+  15          
+  16          #define interrupt
+  17          #define far	xdata
+  18          
+  19          
+  20          
+  21          data INT16U TickCount;
+  22          
+  23          void UserTickTimer(void) KCREENTRANT
+  24          {
+  25   1      	TickCount++;
+  26   1      }
+  27          
+  28          void EnablePrintf(unsigned char Crystal,unsigned int BaudRate )
+  29          {
+  30   1        unsigned long temparory=0;
+  31   1        temparory=Crystal*1000000/BaudRate;
+  32   1        temparory=temparory/(32*12);
+  33   1        temparory=256-temparory;
+  34   1       #ifndef MONITOR51
+  35   1          SCON  = 0x50;		              /* SCON: mode 1, 8-bit UART, enable rcvr      */
+  36   1          TMOD |= 0x20;                     /* TMOD: timer 1, mode 2, 8-bit reload        */
+  37   1          TH1   = (unsigned char)temparory; /* TH1:  load value*/
+  38   1          TR1   = 1;                        /* TR1:  timer 1 run                          */
+  39   1          TI    = 1;                        /* TI:   set TI to send first char of UART    */
+  40   1      #endif	
+  41   1         P1 ^= 0x01; /* Toggle P1.0 each time we print */
+  42   1      }
+  43          
+  44          
+  45          void TimerInitiate(unsigned char Crystal,unsigned char Frequence)
+  46          {
+  47   1          unsigned long temporary=0;
+  48   1          temporary=1000000/(12*Frequence);
+  49   1      	temporary=65535-Crystal*temporary;
+  50   1          TMOD=(TMOD & 0XF0) | 0X01;	/* Timer 0 working in MODE 1 */
+  51   1      	TL0=(unsigned char )temporary;				
+  52   1      	TH0=(unsigned char )(temporary>>8);
+  53   1      	TR0=1;
+  54   1          ET0=1;
+C51 COMPILER V6.20c  FUNCTION                                                              07/03/2002 08:51:27 PAGE 2   
+
+  55   1      }
+  56          
+  57          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    263    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----      11
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

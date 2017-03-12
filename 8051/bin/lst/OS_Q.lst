@@ -1,0 +1,44 @@
+C51 COMPILER V9.02   OS_Q                                                                  02/16/2017 12:44:24 PAGE 1   
+
+
+C51 COMPILER V9.02, COMPILATION OF MODULE OS_Q
+OBJECT MODULE PLACED IN .\bin\obj\OS_Q.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE src\kernel\OS_Q.C LARGE WARNINGLEVEL(0) OPTIMIZE(SIZE) REGFILE(.\bin\obj\ke
+                    -rnel.ORC) BROWSE ORDER NOAREGS INCDIR(src\include) DEBUG OBJECTEXTEND NOCOND PRINT(.\bin\lst\OS_Q.lst) OBJECT(.\bin\obj\
+                    -OS_Q.obj)
+
+line level    source
+
+   1          /*
+   2          *********************************************************************************************************
+   3          *                                                uC/OS-II
+   4          *                                          The Real-Time Kernel
+   5          *                                        MESSAGE QUEUE MANAGEMENT
+   6          *
+   7          *                          (c) Copyright 1992-2001, Jean J. Labrosse, Weston, FL
+   8          *                                           All Rights Reserved
+   9          *
+  10          * File : OS_Q.C
+  11          * By   : Jean J. Labrosse
+  12          *********************************************************************************************************
+  13          */
+  14          
+  15          #ifndef  OS_MASTER_FILE
+  16          #include "includes.h"
+  17          #endif
+  18          
+  19          #if (OS_Q_EN > 0) && (OS_MAX_QS > 0)
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

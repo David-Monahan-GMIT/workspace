@@ -1,0 +1,195 @@
+BL51 BANKED LINKER/LOCATER V5.02                                                        03/20/2003  20:07:50  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.02, INVOKED BY:
+C:\PROGRAM FILES\KEIL\C51\BIN\BL51.EXE .\STARTUP.obj, functionreent.obj TO functionreent
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\STARTUP.obj (?C_STARTUP)
+  functionreent.obj (FUNCTIONREENT)
+  C:\PROGRAM FILES\KEIL\C51\LIB\C51S.LIB (?C_XBP)
+  C:\PROGRAM FILES\KEIL\C51\LIB\C51S.LIB (?C?ADDXBP)
+  C:\PROGRAM FILES\KEIL\C51\LIB\C51S.LIB (?C?XBPOFF)
+
+
+LINK MAP OF MODULE:  functionreent (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0006H     UNIT         _DATA_GROUP_
+            DATA    000EH     0002H     UNIT         ?C?LIB_DATA
+            IDATA   0010H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     009AH     UNIT         ?PR?_?FUNCTION4?FUNCTIONREENT
+            CODE    009DH     004EH     UNIT         ?PR?_?FUNCTION3?FUNCTIONREENT
+            CODE    00EBH     0036H     UNIT         ?PR?MAIN?FUNCTIONREENT
+            CODE    0121H     0031H     UNIT         ?C?LIB_CODE
+            CODE    0152H     002EH     UNIT         ?PR?_?FUNCTION2?FUNCTIONREENT
+            CODE    0180H     0012H     UNIT         ?C_C51STARTUP
+            CODE    0192H     0001H     UNIT         ?PR?_?FUNCTION1?FUNCTIONREENT
+
+
+
+OVERLAY MAP OF MODULE:   functionreent (?C_STARTUP)
+
+
+SEGMENT                                 DATA_GROUP 
+  +--> CALLED SEGMENT                 START    LENGTH
+-----------------------------------------------------
+?C_C51STARTUP                         -----    -----
+  +--> ?PR?MAIN?FUNCTIONREENT
+
+?PR?MAIN?FUNCTIONREENT                0008H    0006H
+  +--> ?PR?_?FUNCTION1?FUNCTIONREENT
+  +--> ?PR?_?FUNCTION2?FUNCTIONREENT
+  +--> ?PR?_?FUNCTION3?FUNCTIONREENT
+  +--> ?PR?_?FUNCTION4?FUNCTIONREENT
+
+
+
+SYMBOL TABLE OF MODULE:  functionreent (?C_STARTUP)
+
+BL51 BANKED LINKER/LOCATER V5.02                                                      03/20/2003  20:07:50  PAGE 2
+
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0180H         SEGMENT       ?C_C51STARTUP
+  I:0010H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0183H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0000H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0180H         SYMBOL        STARTUP1
+  N:0001H         SYMBOL        XBPSTACK
+  N:9000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         92
+  C:0180H         LINE#         99
+  C:0182H         LINE#         100
+  C:0183H         LINE#         101
+  C:0184H         LINE#         102
+  C:0186H         LINE#         142
+  C:0189H         LINE#         143
+  C:018CH         LINE#         151
+  C:018FH         LINE#         155
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        FUNCTIONREENT
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:00EBH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0192H         PUBLIC        _?function1
+  C:0152H         PUBLIC        _?function2
+  C:009DH         PUBLIC        _?function3
+  C:0003H         PUBLIC        _?function4
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  -------         DO            
+  D:0006H         SYMBOL        i
+BL51 BANKED LINKER/LOCATER V5.02                                                      03/20/2003  20:07:50  PAGE 3
+
+
+  D:0008H         SYMBOL        j
+  D:000AH         SYMBOL        k
+  D:000CH         SYMBOL        l
+  -------         ENDDO         
+  C:00EBH         LINE#         12
+  C:00EBH         LINE#         13
+  C:00EBH         LINE#         14
+  C:00FDH         LINE#         16
+  C:0100H         LINE#         17
+  C:0107H         LINE#         18
+  C:0112H         LINE#         19
+  -------         ENDPROC       MAIN
+  -------         PROC          _?FUNCTION1
+  C:0192H         LINE#         22
+  -------         ENDPROC       _?FUNCTION1
+  -------         PROC          _?FUNCTION2
+  x:0002H         SYMBOL        a
+  -------         DO            
+  x:0000H         SYMBOL        x
+  -------         ENDDO         
+  C:0152H         LINE#         24
+  C:0163H         LINE#         26
+  C:017AH         LINE#         27
+  -------         ENDPROC       _?FUNCTION2
+  -------         PROC          _?FUNCTION3
+  x:0004H         SYMBOL        a
+  x:0006H         SYMBOL        b
+  -------         DO            
+  x:0000H         SYMBOL        x
+  x:0002H         SYMBOL        y
+  -------         ENDDO         
+  C:009DH         LINE#         29
+  C:00B9H         LINE#         31
+  C:00CEH         LINE#         32
+  C:00E5H         LINE#         33
+  -------         ENDPROC       _?FUNCTION3
+  -------         PROC          _?FUNCTION4
+  x:0006H         SYMBOL        a
+  x:0008H         SYMBOL        b
+  x:000AH         SYMBOL        c
+  -------         DO            
+  x:0000H         SYMBOL        x
+  x:0002H         SYMBOL        y
+  x:0004H         SYMBOL        z
+  -------         ENDDO         
+  C:0003H         LINE#         35
+  C:002AH         LINE#         37
+  C:003FH         LINE#         38
+  C:0056H         LINE#         39
+  C:006CH         LINE#         40
+  C:0097H         LINE#         41
+  -------         ENDPROC       _?FUNCTION4
+  -------         ENDMOD        FUNCTIONREENT
+
+  -------         MODULE        ?C_XBP
+  D:000EH         PUBLIC        ?C_XBP
+  -------         ENDMOD        ?C_XBP
+BL51 BANKED LINKER/LOCATER V5.02                                                      03/20/2003  20:07:50  PAGE 4
+
+
+
+  -------         MODULE        ?C?ADDXBP
+  C:0121H         PUBLIC        ?C?ADDXBP
+  -------         ENDMOD        ?C?ADDXBP
+
+  -------         MODULE        ?C?XBPOFF
+  C:0145H         PUBLIC        ?C?XBPOFF
+  -------         ENDMOD        ?C?XBPOFF
+
+Program Size: data=17.0 xdata=0 code=403
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

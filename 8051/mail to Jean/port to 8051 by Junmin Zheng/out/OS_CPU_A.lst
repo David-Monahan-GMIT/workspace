@@ -1,0 +1,277 @@
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             07/03/2002 08:51:27 PAGE     1
+
+
+MACRO ASSEMBLER A51 V6.20
+OBJECT MODULE PLACED IN ..\out\OS_CPU_A.obj
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE ..\port\OS_CPU_A.ASM INCDIR(.) SET(LARGE) DEBUG PRINT(..\out\OS_CPU_A.lst)
+                       OBJECT(..\out\OS_CPU_A.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; 
+                       2     ; Ported date:     MAY 29, 2002
+                       3     ; By:               Junmin Zheng, China, (zhengjunm@263.net)
+                       4     ; Target platform: Keil C51 V6.20, V6.21
+                       5     
+                       6     ; Revision:
+                       7     ;     Now uC/OS V2.00 has been supported by this port.
+                       8     ;     What I port is very similar to that of 80x86 in form.
+                       9     ;     Task switch functions are writen with assemble language.
+                      10     ;     The sequence of registers to save to hardware stack now has been re-arranged to confo
+                             rm to what Keil C does.
+                      11     ;     A decision was made that 
+                      12     
+                      13             NAME    OS_CPU_A_ASM
+                      14     
+                      15     ; ?C_XBP is the simulated external stack pointer in large mode, and I use four
+                      16     ;  bytes ?C_XBP to ?C_XBP+3 in this module ,so users can not use them in his functions.
+                      17             
+                      18             PUBLIC  ?C_XBP
+                      19             PUBLIC  _?OSIntCtxSw 
+                      20                 PUBLIC      Stack
+                      21                 PUBLIC  _?OSCtxSw
+                      22                 PUBLIC  _?OSStartHighRdy
+                      23             
+                      24                 EXTRN   CODE(_?OSTaskSwHook)
+                      25             EXTRN   XDATA(OSRunning)
+                      26             EXTRN   XDATA(OSTCBHighRdy)
+                      27                 EXTRN   XDATA(OSPrioHighRdy)
+                      28                 EXTRN   XDATA(OSPrioCur)
+                      29             EXTRN   XDATA(OSTCBCur)
+                      30     
+                      31     ; LoadStack MACRO is the assembly code to load the highest priority 
+                      32     ; task context  
+                      33           LoadStack MACRO
+                      34               LOCAL LOOPLS
+                      35               MOV   DPTR,#OSTCBHighRdy
+                      36               INC   DPTR
+                      37               MOVX  A,@DPTR
+                      38               MOV   ?C_XBP+2,A
+                      39               INC   DPTR
+                      40               MOVX  A,@DPTR
+                      41               MOV   ?C_XBP+3,A
+                      42               MOV   DPH,?C_XBP+2
+                      43               MOV   DPL,?C_XBP+3
+                      44               INC   DPTR
+                      45               MOVX  A,@DPTR
+                      46               MOV   ?C_XBP,A
+                      47               INC   DPTR
+                      48               MOVX  A,@DPTR
+                      49               MOV   ?C_XBP+1,A
+                      50               MOV   DPH,?C_XBP
+                      51               MOV   DPL,?C_XBP+1
+                      52               MOVX  A,@DPTR
+                      53               MOV   SP,A
+                      54               INC   DPTR
+                      55               MOV   R0,SP
+                      56               LOOPLS:
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             07/03/2002 08:51:27 PAGE     2
+
+                      57               MOVX  A,@DPTR
+                      58               MOV   @R0,A
+                      59               INC   DPTR
+                      60               DEC   R0
+                      61               CJNE  R0,#Stack-1,LOOPLS
+                      62               MOV   ?C_XBP,DPH
+                      63               MOV   ?C_XBP+1,DPL
+                      64               ENDM
+                      65     
+                      66     ; SaveStack MACRO is the assembly code to save the current priority 
+                      67     ; task context  
+                      68           SaveStack MACRO
+                      69                   LOCAL LOOPSS1,LOOPSS2
+                      70               MOV DPH,?C_XBP
+                      71               MOV DPL,?C_XBP+1                                      
+                      72                   MOV       A, SP                   
+                      73                   CLR       C                               
+                      74                   SUBB      A, #Stack-1             
+                      75                   MOV       R0, A                           
+                      76                   INC       A                               
+                      77                   CLR       C
+                      78               XCH    A, DPL                         
+                      79                   SUBB   A, DPL                             
+                      80                   JNC       LOOPSS1
+                      81                   DEC       DPH
+                      82           LOOPSS1:
+                      83               MOV   DPL,A                           
+                      84               MOV   ?C_XBP,   DPH
+                      85                   MOV       ?C_XBP+1, DPL                                   
+                      86                       MOV   A,SP
+                      87                   MOVX      @DPTR,  A                               
+                      88          LOOPSS2:
+                      89                   INC       DPTR                            
+                      90                   POP       ACC                             
+                      91                   MOVX      @DPTR, A                        
+                      92                   DJNZ  R0, LOOPSS2                 
+                      93               MOV   DPTR,#OSTCBCur
+                      94               INC   DPTR
+                      95               MOVX  A,@DPTR
+                      96               MOV   ?C_XBP+2,A
+                      97               INC   DPTR
+                      98               MOVX  A,@DPTR
+                      99               MOV   ?C_XBP+3,A
+                     100               MOV   DPH,?C_XBP+2
+                     101               MOV   DPL,?C_XBP+3
+                     102               INC   DPTR
+                     103               MOV   A,?C_XBP
+                     104               MOVX  @DPTR,A
+                     105               INC   DPTR
+                     106               MOV   A,?C_XBP+1
+                     107               MOVX  @DPTR,A
+                     108              ENDM
+                     109     
+                     110     ; LoadTCB MACRO is the assembly code to make OSTCBCur point to OSTCBHighRdy
+                     111          LoadTCB    MACRO   
+                     112             MOV   DPTR,#OSTCBHighRdy
+                     113             INC   DPTR
+                     114             MOVX  A,@DPTR
+                     115             MOV   ?C_XBP+2,A
+                     116             INC   DPTR
+                     117             MOVX  A,@DPTR
+                     118             MOV   ?C_XBP+3,A
+                     119             MOV   DPTR,#OSTCBCur
+                     120             INC   DPTR
+                     121             MOV   A,?C_XBP+2
+                     122             MOVX  @DPTR,A
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             07/03/2002 08:51:27 PAGE     3
+
+                     123             INC   DPTR
+                     124             MOV   A,?C_XBP+3
+                     125             MOVX  @DPTR,A 
+                     126             ENDM
+                     127     
+                     128     ; LoadTCB MACRO is the assembly code to make OSPrioCur equal to OSPrioHighRdy
+                     129       LoadPrio MACRO  
+                     130                MOV   DPTR,#OSPrioHighRdy
+                     131                MOVX  A,@DPTR
+                     132                MOV   DPTR,#OSPrioCur
+                     133                MOVX  @DPTR,A
+                     134        ENDM
+                     135     
+                     136     ; The PUSHA now emulates the pushing sequence what Keil C does.
+                     137        PUSHA        MACRO
+                     138                IRP  REG,    <ACC, B, DPH, DPL, PSW, 0, 1, 2, 3, 4, 5, 6, 7>
+                     139                PUSH REG
+                     140                ENDM
+                     141                ENDM
+                     142     
+                     143        POPA MACRO
+                     144                IRP  REG,    <7, 6, 5, 4, 3, 2, 1, 0, PSW, DPL, DPH, B, ACC>
+                     145                POP  REG
+                     146            ENDM
+                     147            ENDM
+                     148     
+                     149     
+                     150     ; Declare the external stack pointer by ourself.
+                     151     DT?C_XBP        SEGMENT DATA
+----                 152                     RSEG    DT?C_XBP
+0000                 153     ?C_XBP:                                 
+0000                 154             DS      4
+                     155     ; Declare a label 'Stack' in the hardware stack segment so that we know where it begins.
+                     156     ?STACK  SEGMENT IDATA
+----                 157             RSEG    ?STACK
+0000                 158     Stack:
+                     159     
+                     160     ; Task level context switch entry point, which is intended to be called by task gracefully.
+                              
+                     161     
+                     162     PR?OSCtxSw      SEGMENT CODE
+----                 163             RSEG    PR?OSCtxSw
+0000                 164     _?OSCtxSw:
+                     165                  PUSHA                              
+001A C0A8            182              PUSH  IE
+                     183              SaveStack       
+005C 120000   F      222              LCALL _?OSTaskSwHook
+                     223              LoadTCB         
+                     238              LoadPrio
+                     243              LoadStack
+00AF D0E0            273              POP   ACC
+00B1 33              274              RLC   A
+00B2 92AF            275              MOV   EA,C
+                     276              POPA
+00CE 22              293              RET            
+                     294     
+                     295     ; Interrupt level context switch entry point, which is intended to be called by task gracef
+                             ully. 
+                     296     PR?OSIntCtxSw      SEGMENT CODE
+----                 297             RSEG    PR?OSIntCtxSw
+0000                 298     _?OSIntCtxSw:
+0000 E581            299             MOV   A,SP
+0002 9405            300                 SUBB  A,#05H
+0004 F581            301             MOV   SP,A
+                     302             SaveStack
+0046 120000   F      341                 LCALL _?OSTaskSwHook
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             07/03/2002 08:51:27 PAGE     4
+
+                     342             LoadTCB
+                     357                 LoadPrio
+                     362             LoadStack
+0099 D0E0            392                 POP   ACC
+009B 33              393                 RLC   A
+009C 92AF            394                 MOV   EA,C
+                     395             POPA
+00B8 32              412             RETI    
+                     413     
+                     414      
+                     415     ;The first Task level context switch entry point.
+                     416     PR?OSStartHighRdy      SEGMENT CODE
+----                 417             RSEG    PR?OSStartHighRdy
+0000                 418     _?OSStartHighRdy:
+0000 120000   F      419             LCALL _?OSTaskSwHook
+                     420             
+0003 900000   F      421                 MOV   DPTR,#OSRunning
+0006 7401            422             MOV   A,#01H
+0008 F0              423             MOVX  @DPTR,A
+                     424             LoadStack
+003B D0E0            454             POP   ACC
+003D 33              455             RLC   A
+003E 92AF            456             MOV   EA,C
+                     457             POPA
+005A 22              474             RET     
+                     475     END
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             07/03/2002 08:51:27 PAGE     5
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+??0000 . . . . . .  C ADDR   0032H   R   SEG=PR?OSCTXSW
+??0001 . . . . . .  C ADDR   003DH   R   SEG=PR?OSCTXSW
+??0002 . . . . . .  C ADDR   00A2H   R   SEG=PR?OSCTXSW
+??0003 . . . . . .  C ADDR   001CH   R   SEG=PR?OSINTCTXSW
+??0004 . . . . . .  C ADDR   0027H   R   SEG=PR?OSINTCTXSW
+??0005 . . . . . .  C ADDR   008CH   R   SEG=PR?OSINTCTXSW
+??0006 . . . . . .  C ADDR   002EH   R   SEG=PR?OSSTARTHIGHRDY
+?C_XBP . . . . . .  D ADDR   0000H   R   SEG=DT?C_XBP
+?STACK . . . . . .  I SEG    0000H       REL=UNIT
+ACC. . . . . . . .  D ADDR   00E0H   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+DPH. . . . . . . .  D ADDR   0083H   A   
+DPL. . . . . . . .  D ADDR   0082H   A   
+DT?C_XBP . . . . .  D SEG    0004H       REL=UNIT
+EA . . . . . . . .  B ADDR   00A8H.7 A   
+IE . . . . . . . .  D ADDR   00A8H   A   
+OSPRIOCUR. . . . .  X ADDR   -----       EXT
+OSPRIOHIGHRDY. . .  X ADDR   -----       EXT
+OSRUNNING. . . . .  X ADDR   -----       EXT
+OSTCBCUR . . . . .  X ADDR   -----       EXT
+OSTCBHIGHRDY . . .  X ADDR   -----       EXT
+OS_CPU_A_ASM . . .  N NUMB   -----       
+PR?OSCTXSW . . . .  C SEG    00CFH       REL=UNIT
+PR?OSINTCTXSW. . .  C SEG    00B9H       REL=UNIT
+PR?OSSTARTHIGHRDY.  C SEG    005BH       REL=UNIT
+PSW. . . . . . . .  D ADDR   00D0H   A   
+SP . . . . . . . .  D ADDR   0081H   A   
+STACK. . . . . . .  I ADDR   0000H   R   SEG=?STACK
+_?OSCTXSW. . . . .  C ADDR   0000H   R   SEG=PR?OSCTXSW
+_?OSINTCTXSW . . .  C ADDR   0000H   R   SEG=PR?OSINTCTXSW
+_?OSSTARTHIGHRDY .  C ADDR   0000H   R   SEG=PR?OSSTARTHIGHRDY
+_?OSTASKSWHOOK . .  C ADDR   -----       EXT
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

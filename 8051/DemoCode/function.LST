@@ -1,0 +1,162 @@
+C51 COMPILER V7.03   FUNCTION                                                              03/20/2003 18:52:36 PAGE 1   
+
+
+C51 COMPILER V7.03, COMPILATION OF MODULE FUNCTION
+OBJECT MODULE PLACED IN function.OBJ
+COMPILER INVOKED BY: C:\program files\Keil\C51\BIN\C51.EXE function.c BROWSE DEBUG OBJECTEXTEND CODE
+
+stmt level    source
+
+   1          
+   2          void function1();
+   3          void function2(int);
+   4          void function3(int,int);
+   5          int function4(int,int,int);
+   6          
+   7          
+   8          
+   9          
+  10          int main(void)
+  11          {
+  12   1      int i=0,j=1,k=2,l=3;
+  13   1      
+  14   1      function1();
+  15   1      function2(j);
+  16   1      function3(j,k);
+  17   1      i=function4(j,k,l);
+  18   1      }
+  19          
+  20          void function1(){}
+  21          
+  22          void function2(int a){
+  23   1      int x;
+  24   1      x=a;
+  25   1      }
+  26          
+  27          void function3(int a, int b){
+  28   1      int x, y;
+  29   1      x=a;
+  30   1      y=b;
+  31   1      }
+  32          
+  33          int function4(int a, int b, int c){
+  34   1      int x,y,z;
+  35   1      x=a;
+  36   1      y=b;
+  37   1      z=c;
+  38   1      return (x+y+z);
+  39   1      }
+C51 COMPILER V7.03   FUNCTION                                                              03/20/2003 18:52:36 PAGE 2   
+
+ASSEMBLY LISTING OF GENERATED OBJECT CODE
+
+
+             ; FUNCTION main (BEGIN)
+                                           ; SOURCE LINE # 10
+                                           ; SOURCE LINE # 11
+                                           ; SOURCE LINE # 12
+;---- Variable 'i' assigned to Register 'R6/R7' ----
+0000 E4                CLR     A
+0001 FF                MOV     R7,A
+0002 FE                MOV     R6,A
+0003 F500        R     MOV     j,A
+0005 750001      R     MOV     j+01H,#01H
+0008 F500        R     MOV     k,A
+000A 750002      R     MOV     k+01H,#02H
+000D F500        R     MOV     l,A
+000F 750003      R     MOV     l+01H,#03H
+                                           ; SOURCE LINE # 14
+0012 120000      R     LCALL   function1
+                                           ; SOURCE LINE # 15
+0015 AF00        R     MOV     R7,j+01H
+0017 AE00        R     MOV     R6,j
+0019 120000      R     LCALL   _function2
+                                           ; SOURCE LINE # 16
+001C AD00        R     MOV     R5,k+01H
+001E AC00        R     MOV     R4,k
+0020 AF00        R     MOV     R7,j+01H
+0022 AE00        R     MOV     R6,j
+0024 120000      R     LCALL   _function3
+                                           ; SOURCE LINE # 17
+0027 AB00        R     MOV     R3,l+01H
+0029 AA00        R     MOV     R2,l
+002B AD00        R     MOV     R5,k+01H
+002D AC00        R     MOV     R4,k
+002F AF00        R     MOV     R7,j+01H
+0031 AE00        R     MOV     R6,j
+0033 020000      R     LJMP    _function4
+             ; FUNCTION main (END)
+
+             ; FUNCTION function1 (BEGIN)
+                                           ; SOURCE LINE # 20
+0000 22                RET     
+             ; FUNCTION function1 (END)
+
+             ; FUNCTION _function2 (BEGIN)
+                                           ; SOURCE LINE # 22
+;---- Variable 'a' assigned to Register 'R6/R7' ----
+                                           ; SOURCE LINE # 24
+0000 8E00        R     MOV     x,R6
+0002 8F00        R     MOV     x+01H,R7
+                                           ; SOURCE LINE # 25
+0004 22                RET     
+             ; FUNCTION _function2 (END)
+
+             ; FUNCTION _function3 (BEGIN)
+                                           ; SOURCE LINE # 27
+;---- Variable 'b' assigned to Register 'R4/R5' ----
+;---- Variable 'a' assigned to Register 'R6/R7' ----
+                                           ; SOURCE LINE # 29
+0000 8E00        R     MOV     x,R6
+0002 8F00        R     MOV     x+01H,R7
+                                           ; SOURCE LINE # 30
+C51 COMPILER V7.03   FUNCTION                                                              03/20/2003 18:52:36 PAGE 3   
+
+0004 8C00        R     MOV     y,R4
+0006 8D00        R     MOV     y+01H,R5
+                                           ; SOURCE LINE # 31
+0008 22                RET     
+             ; FUNCTION _function3 (END)
+
+             ; FUNCTION _function4 (BEGIN)
+                                           ; SOURCE LINE # 33
+;---- Variable 'a' assigned to Register 'R6/R7' ----
+;---- Variable 'c' assigned to Register 'R2/R3' ----
+;---- Variable 'b' assigned to Register 'R4/R5' ----
+                                           ; SOURCE LINE # 35
+0000 8E00        R     MOV     x,R6
+0002 8F00        R     MOV     x+01H,R7
+                                           ; SOURCE LINE # 36
+;---- Variable 'y' assigned to Register 'R4/R5' ----
+                                           ; SOURCE LINE # 37
+;---- Variable 'z' assigned to Register 'R2/R3' ----
+                                           ; SOURCE LINE # 38
+0004 E500        R     MOV     A,x+01H
+0006 2D                ADD     A,R5
+0007 CF                XCH     A,R7
+0008 E500        R     MOV     A,x
+000A 3C                ADDC    A,R4
+000B CF                XCH     A,R7
+000C 2B                ADD     A,R3
+000D CF                XCH     A,R7
+000E 3A                ADDC    A,R2
+000F FE                MOV     R6,A
+                                           ; SOURCE LINE # 39
+0010         ?C0005:
+0010 22                RET     
+             ; FUNCTION _function4 (END)
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     86    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      14
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

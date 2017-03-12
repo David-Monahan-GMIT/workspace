@@ -1,0 +1,52 @@
+C51 COMPILER V6.20c  UCOS_II                                                               07/03/2002 08:51:25 PAGE 1   
+
+
+C51 COMPILER V6.20c, COMPILATION OF MODULE UCOS_II
+OBJECT MODULE PLACED IN ..\SOURCE\UCOS_II.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\SOURCE\UCOS_II.C LARGE ROM(COMPACT) OPTIMIZE(9,SIZE) REGFILE(..\out\EXEc
+                    -51.ORC) BROWSE INCDIR(.) DEBUG OBJECTEXTEND PRINT(..\out\UCOS_II.lst) SRC(..\out\UCOS_II.SRC) 
+
+stmt level    source
+
+   1          /*
+   2          *********************************************************************************************************
+   3          *                                                uC/OS-II
+   4          *                                          The Real-Time Kernel
+   5          *
+   6          *                        (c) Copyright 1992-1998, Jean J. Labrosse, Plantation, FL
+   7          *                                           All Rights Reserved
+   8          *
+   9          *                                                  V2.00
+  10          *
+  11          * File : uCOS_II.C
+  12          * By   : Jean J. Labrosse
+  13          *********************************************************************************************************
+  14          */
+  15          
+  16          #define  OS_GLOBALS                           /* Declare GLOBAL variables                              */
+  17          #include "..\mainfile\includes.h"
+  18          
+  19          
+  20          #define  OS_MASTER_FILE                       /* Prevent the following files from including includes.h */
+  21          #include "os_core.c"
+  22          #include "os_mbox.c"
+  23          #include "os_mem.c"
+  24          #include "os_q.c"
+  25          #include "os_sem.c"
+  26          #include "os_task.c"
+  27          #include "os_time.c"
+  28          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   4830    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =    592    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

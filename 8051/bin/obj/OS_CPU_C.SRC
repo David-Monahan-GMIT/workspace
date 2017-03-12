@@ -1,0 +1,1440 @@
+; .\bin\obj\OS_CPU_C.SRC generated from: src\arch\OS_CPU_C.C
+; COMPILER INVOKED BY:
+;        C:\Keil\C51\BIN\C51.EXE src\arch\OS_CPU_C.C LARGE WARNINGLEVEL(0) OPTIMIZE(SIZE) REGFILE(.\bin\obj\kernel.ORC) BROWSE ORDER NOAREGS INCDIR(src\include) DEBUG OBJECTEXTEND NOCOND PRINT(.\bin\lst\OS_CPU_C.lst) SRC(.\bin\obj\OS_CPU_C.SRC)
+
+$NOMOD51
+
+NAME	OS_CPU_C
+
+P0	DATA	080H
+P1	DATA	090H
+P2	DATA	0A0H
+P3	DATA	0B0H
+PSW	DATA	0D0H
+ACC	DATA	0E0H
+B	DATA	0F0H
+SP	DATA	081H
+DPL	DATA	082H
+DPH	DATA	083H
+PCON	DATA	087H
+TCON	DATA	088H
+TMOD	DATA	089H
+TL0	DATA	08AH
+TL1	DATA	08BH
+TH0	DATA	08CH
+TH1	DATA	08DH
+IE	DATA	0A8H
+IP	DATA	0B8H
+SCON	DATA	098H
+SBUF	DATA	099H
+T2CON	DATA	0C8H
+RCAP2L	DATA	0CAH
+RCAP2H	DATA	0CBH
+TL2	DATA	0CCH
+TH2	DATA	0CDH
+CY	BIT	0D0H.7
+AC	BIT	0D0H.6
+F0	BIT	0D0H.5
+RS1	BIT	0D0H.4
+RS0	BIT	0D0H.3
+OV	BIT	0D0H.2
+P	BIT	0D0H.0
+TF1	BIT	088H.7
+TR1	BIT	088H.6
+TF0	BIT	088H.5
+TR0	BIT	088H.4
+IE1	BIT	088H.3
+IT1	BIT	088H.2
+IE0	BIT	088H.1
+IT0	BIT	088H.0
+EA	BIT	0A8H.7
+ET2	BIT	0A8H.5
+ES	BIT	0A8H.4
+ET1	BIT	0A8H.3
+EX1	BIT	0A8H.2
+ET0	BIT	0A8H.1
+EX0	BIT	0A8H.0
+PT2	BIT	0B8H.5
+PS	BIT	0B8H.4
+PT1	BIT	0B8H.3
+PX1	BIT	0B8H.2
+PT0	BIT	0B8H.1
+PX0	BIT	0B8H.0
+RD	BIT	0B0H.7
+WR	BIT	0B0H.6
+T1	BIT	0B0H.5
+T0	BIT	0B0H.4
+INT1	BIT	0B0H.3
+INT0	BIT	0B0H.2
+TXD	BIT	0B0H.1
+RXD	BIT	0B0H.0
+SM0	BIT	098H.7
+SM1	BIT	098H.6
+SM2	BIT	098H.5
+REN	BIT	098H.4
+TB8	BIT	098H.3
+RB8	BIT	098H.2
+TI	BIT	098H.1
+RI	BIT	098H.0
+T2EX	BIT	090H.1
+T2	BIT	090H.0
+TF2	BIT	0C8H.7
+EXF2	BIT	0C8H.6
+RCLK	BIT	0C8H.5
+TCLK	BIT	0C8H.4
+EXEN2	BIT	0C8H.3
+TR2	BIT	0C8H.2
+C_T2	BIT	0C8H.1
+CP_RL2	BIT	0C8H.0
+?PR?_?OSTaskStkInit?OS_CPU_C             SEGMENT CODE 
+?PR?_?OSStartHighRdy?OS_CPU_C            SEGMENT CODE 
+?PR?_?C_OSCtxSw?OS_CPU_C                 SEGMENT CODE 
+?PR?_?OSIntCtxSw?OS_CPU_C                SEGMENT CODE 
+?PR?OSTickISR?OS_CPU_C                   SEGMENT CODE 
+?PR?_?initSystem?OS_CPU_C                SEGMENT CODE 
+?PR?_?SetupComms?OS_CPU_C                SEGMENT CODE 
+?PR?_?SendChar?OS_CPU_C                  SEGMENT CODE 
+?PR?_?SendString?OS_CPU_C                SEGMENT CODE 
+?PR?Serial_ISR?OS_CPU_C                  SEGMENT CODE 
+?PR?_?OSInitHookBegin?OS_CPU_C           SEGMENT CODE 
+?PR?_?OSInitHookEnd?OS_CPU_C             SEGMENT CODE 
+?PR?_?OSTaskCreateHook?OS_CPU_C          SEGMENT CODE 
+?PR?_?OSTaskDelHook?OS_CPU_C             SEGMENT CODE 
+?PR?_?OSTaskSwHook?OS_CPU_C              SEGMENT CODE 
+?PR?_?OSTaskStatHook?OS_CPU_C            SEGMENT CODE 
+?PR?_?OSTCBInitHook?OS_CPU_C             SEGMENT CODE 
+?PR?_?OSTimeTickHook?OS_CPU_C            SEGMENT CODE 
+?PR?_?OSTaskIdleHook?OS_CPU_C            SEGMENT CODE 
+?C_INITSEG           SEGMENT CODE 
+?DT?OS_CPU_C         SEGMENT DATA 
+	EXTRN	XDATA (OSIntNesting)
+	EXTRN	XDATA (OSPrioCur)
+	EXTRN	XDATA (OSPrioHighRdy)
+	EXTRN	XDATA (OSRunning)
+	EXTRN	XDATA (OSTCBCur)
+	EXTRN	XDATA (OSTCBHighRdy)
+	EXTRN	CODE (_?OSTimeTick)
+	EXTRN	CODE (_?OSIntEnter)
+	EXTRN	CODE (_?OSIntExit)
+	EXTRN	IDATA (Stack)
+	EXTRN	DATA (C_XBP)
+	EXTRN	CODE (_?LoadCtx)
+	EXTRN	CODE (?C?ADDXBP)
+	EXTRN	CODE (?C?PSTXDATA)
+	EXTRN	CODE (?C?XBPOFF)
+	EXTRN	CODE (?C?PLDXDATA)
+	EXTRN	DATA (?C_XBP)
+	EXTRN	CODE (?C?IILDX)
+	EXTRN	CODE (?C?PSTPTR)
+	EXTRN	CODE (?C?ISTPTR)
+	EXTRN	CODE (?C?PILDXDATA)
+	EXTRN	CODE (?C?CSTPTR)
+	EXTRN	CODE (?C?PLDPTR)
+	EXTRN	CODE (?C?CLDPTR)
+	EXTRN	CODE (?C?PLDIXDATA)
+	PUBLIC	SaveSP
+	PUBLIC	RxBuffer
+	PUBLIC	_?OSTaskIdleHook
+	PUBLIC	_?OSTimeTickHook
+	PUBLIC	_?OSTCBInitHook
+	PUBLIC	_?OSTaskStatHook
+	PUBLIC	_?OSTaskSwHook
+	PUBLIC	_?OSTaskDelHook
+	PUBLIC	_?OSTaskCreateHook
+	PUBLIC	_?OSInitHookEnd
+	PUBLIC	_?OSInitHookBegin
+	PUBLIC	Serial_ISR
+	PUBLIC	_?SendString
+	PUBLIC	_?SendChar
+	PUBLIC	_?SetupComms
+	PUBLIC	_?initSystem
+	PUBLIC	OSTickISR
+	PUBLIC	_?OSIntCtxSw
+	PUBLIC	_?C_OSCtxSw
+	PUBLIC	_?OSStartHighRdy
+	PUBLIC	_?OSTaskStkInit
+
+	RSEG  ?DT?OS_CPU_C
+       RxBuffer:   DS   1
+         SaveSP:   DS   1
+
+	RSEG  ?C_INITSEG
+	DB	001H
+	DB	RxBuffer
+	DB	000H
+
+; /********************************************************************************************************
+; 
+; ********************************************************************************************************/
+; 
+; #define  OS_CPU_GLOBALS
+; #include "includes.h"
+; 
+; #undef data
+; #undef pdata
+; #undef xdata
+; #undef idata
+; 
+; 
+; /* Local variable definitions */
+; OS_EXT OS_TCB *OSTCBHighRdy;
+; data INT8U RxBuffer = 0;
+; INT8U data SaveSP;
+; 
+; /* External variable definitions */
+; extern idata INT8U Stack[1];
+; extern INT8U xdata * data C_XBP;
+; 
+; /* Local function definitions */
+; void LoadCtx() KCREENTRANT;
+; 
+; 
+; /********************************************************************************************************
+; *                                        INITIALIZE A TASK'S STACK
+; *
+; * Description: This function is called by either OSTaskCreate() or OSTaskCreateExt() to initialize the
+; *              stack frame of the task being created.  This function is highly processor specific.
+; *
+; * Arguments  : task          is a pointer to the task code
+; *
+; *              pdata         is a pointer to a user supplied data area that will be passed to the task
+; *                            when the task first executes.
+; *
+; *              ptos          is a pointer to the top of stack.  It is assumed that 'ptos' points to
+; *                            a 'free' entry on the task stack.  If OS_STK_GROWTH is set to 1 then 
+; *                            'ptos' will contain the HIGHEST valid address of the stack.  Similarly, if
+; *                            OS_STK_GROWTH is set to 0, the 'ptos' will contains the LOWEST valid address
+; *                            of the stack.
+; *
+; *              opt           specifies options that can be used to alter the behavior of OSTaskStkInit().
+; *                            (see uCOS_II.H for OS_TASK_OPT_???).
+; *
+; * Returns    : Always returns the location of the new top-of-stack' once the processor registers have
+; *              been placed on the stack in the proper order.
+; *
+; * Note(s)    : Interrupts are enabled when your task starts executing. You can change this by setting the
+; *              PSW to 0x0002 instead.  In this case, interrupts would be disabled upon task startup.  The
+; *              application code would be responsible for enabling interrupts at the beginning of the task
+; *              code.  You will need to modify OSTaskIdle() and OSTaskStat() so that they enable 
+; *              interrupts.  Failure to do this will make your system crash!
+; **********************************************************************************************************/
+; OS_STK *OSTaskStkInit (void (*task)(void *pd) KCREENTRANT, void *ptd, OS_STK *ptos, INT16U opt) KCREENTRANT
+
+	RSEG  ?PR?_?OSTaskStkInit?OS_CPU_C
+_?OSTaskStkInit:
+	USING	0
+			; SOURCE LINE # 56
+	MOV  	DPTR,#0FFFDH
+	LCALL	?C?ADDXBP
+	LCALL	?C?PSTXDATA
+	MOV  	DPTR,#0FFFDH
+	LCALL	?C?ADDXBP
+; {
+;   INT8U *stk;
+; 
+;   /* 'opt' is not used, prevent warning */
+;   opt = opt;
+			; SOURCE LINE # 61
+	MOV  	DPTR,#0CH
+	LCALL	?C?XBPOFF
+	MOVX 	A,@DPTR
+	MOV  	R6,A
+	INC  	DPTR
+	MOVX 	A,@DPTR
+	MOV  	R7,A
+	MOV  	DPTR,#0CH
+	LCALL	?C?XBPOFF
+	MOV  	A,R6
+	MOVX 	@DPTR,A
+	INC  	DPTR
+	MOV  	A,R7
+	MOVX 	@DPTR,A
+;   
+;   /* Get pointer to the top of the stack */                       
+;   stk = (INT8U *)(ptos);                
+			; SOURCE LINE # 64
+	MOV  	DPTR,#09H
+	LCALL	?C?XBPOFF
+	LCALL	?C?PLDXDATA
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	LCALL	?C?PSTXDATA
+; 
+;   /* Save the ptd to external stack */
+;   stk -= sizeof(void *);    
+			; SOURCE LINE # 67
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	INC  	DPTR
+	MOV  	A,#0FFH
+	MOV  	B,#0FDH
+	LCALL	?C?IILDX
+;   *(void**)stk = ptd;
+			; SOURCE LINE # 68
+	MOV  	DPTR,#06H
+	LCALL	?C?XBPOFF
+	LCALL	?C?PLDXDATA
+	MOV  	A,R3
+	PUSH 	ACC
+	MOV  	A,R2
+	PUSH 	ACC
+	MOV  	A,R1
+	PUSH 	ACC
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	LCALL	?C?PLDXDATA
+	LCALL	?C?PSTPTR
+; 
+;   /* The value should be loaded to PC next time when this task is running*/
+;   stk -= sizeof(INT16U);
+			; SOURCE LINE # 71
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	INC  	DPTR
+	MOV  	A,#0FFH
+	MOV  	B,#0FEH
+	LCALL	?C?IILDX
+;   *(INT16U*)(stk) = (INT16U)(task);
+			; SOURCE LINE # 72
+	MOV  	DPTR,#03H
+	LCALL	?C?XBPOFF
+	LCALL	?C?PLDXDATA
+	XCH  	A,R6
+	MOV  	A,R2
+	XCH  	A,R6
+	XCH  	A,R7
+	MOV  	A,R1
+	XCH  	A,R7
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	LCALL	?C?PLDXDATA
+	MOV  	A,R6
+	MOV  	B,R7
+	LCALL	?C?ISTPTR
+; 
+;     /* The value should be loaded to PC next time when this task is running*/
+;   stk -= sizeof(INT16U);
+			; SOURCE LINE # 75
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	INC  	DPTR
+	MOV  	A,#0FFH
+	MOV  	B,#0FEH
+	LCALL	?C?IILDX
+;   *(INT16U*)(stk) = (INT16U)(task);
+			; SOURCE LINE # 76
+	MOV  	DPTR,#03H
+	LCALL	?C?XBPOFF
+	LCALL	?C?PLDXDATA
+	XCH  	A,R6
+	MOV  	A,R2
+	XCH  	A,R6
+	XCH  	A,R7
+	MOV  	A,R1
+	XCH  	A,R7
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	LCALL	?C?PLDXDATA
+	MOV  	A,R6
+	MOV  	B,R7
+	LCALL	?C?ISTPTR
+; 
+;   /* Following is the registers pushed into hardware stack */
+;   *--stk = 'A';                 /* ACC */
+			; SOURCE LINE # 79
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	MOV  	A,#0FFH
+	MOV  	B,A
+	LCALL	?C?PILDXDATA
+	MOV  	A,#041H
+	LCALL	?C?CSTPTR
+;   *--stk = 'B';                 /* B   */
+			; SOURCE LINE # 80
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	MOV  	A,#0FFH
+	MOV  	B,A
+	LCALL	?C?PILDXDATA
+	MOV  	A,#042H
+	LCALL	?C?CSTPTR
+;   *--stk = 'H';                 /* DPH */
+			; SOURCE LINE # 81
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	MOV  	A,#0FFH
+	MOV  	B,A
+	LCALL	?C?PILDXDATA
+	MOV  	A,#048H
+	LCALL	?C?CSTPTR
+;   *--stk = 'L';                 /* DPL */
+			; SOURCE LINE # 82
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	MOV  	A,#0FFH
+	MOV  	B,A
+	LCALL	?C?PILDXDATA
+	MOV  	A,#04CH
+	LCALL	?C?CSTPTR
+;   *--stk = PSW;                 /* PSW */
+			; SOURCE LINE # 83
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	MOV  	A,#0FFH
+	MOV  	B,A
+	LCALL	?C?PILDXDATA
+	MOV  	A,PSW
+	LCALL	?C?CSTPTR
+;   *--stk = 0;                   /* R0  */
+			; SOURCE LINE # 84
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	MOV  	A,#0FFH
+	MOV  	B,A
+	LCALL	?C?PILDXDATA
+	CLR  	A
+	LCALL	?C?CSTPTR
+; 
+;   stk -= sizeof(void *);        /* R1,R2,R3 */
+			; SOURCE LINE # 86
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	INC  	DPTR
+	MOV  	A,#0FFH
+	MOV  	B,#0FDH
+	LCALL	?C?IILDX
+;   *(void**)stk = ptd;            /* functions args */       
+			; SOURCE LINE # 87
+	MOV  	DPTR,#06H
+	LCALL	?C?XBPOFF
+	LCALL	?C?PLDXDATA
+	MOV  	A,R3
+	PUSH 	ACC
+	MOV  	A,R2
+	PUSH 	ACC
+	MOV  	A,R1
+	PUSH 	ACC
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	LCALL	?C?PLDXDATA
+	LCALL	?C?PSTPTR
+; 
+;   *--stk = 0x04;                /* R4  */
+			; SOURCE LINE # 89
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	MOV  	A,#0FFH
+	MOV  	B,A
+	LCALL	?C?PILDXDATA
+	MOV  	A,#04H
+	LCALL	?C?CSTPTR
+;   *--stk = 0x05;                /* R5  */
+			; SOURCE LINE # 90
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	MOV  	A,#0FFH
+	MOV  	B,A
+	LCALL	?C?PILDXDATA
+	MOV  	A,#05H
+	LCALL	?C?CSTPTR
+;   *--stk = 0x06;                /* R6  */
+			; SOURCE LINE # 91
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	MOV  	A,#0FFH
+	MOV  	B,A
+	LCALL	?C?PILDXDATA
+	MOV  	A,#06H
+	LCALL	?C?CSTPTR
+;   *--stk = 0x07;                /* R7  */
+			; SOURCE LINE # 92
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	MOV  	A,#0FFH
+	MOV  	B,A
+	LCALL	?C?PILDXDATA
+	MOV  	A,#07H
+	LCALL	?C?CSTPTR
+;   *--stk = 0x80;                /* IE, EA is enabled  */
+			; SOURCE LINE # 93
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	MOV  	A,#0FFH
+	MOV  	B,A
+	LCALL	?C?PILDXDATA
+	MOV  	A,#080H
+	LCALL	?C?CSTPTR
+; 
+;   /* Next is calculating the hardware stack pointer */
+;   *--stk = (INT8U)(Stack-1) + 14 + sizeof(INT16U) + sizeof(INT16U);
+			; SOURCE LINE # 96
+	MOV  	A,#LOW (Stack+0FFFFH)
+	ADD  	A,#012H
+	MOV  	R7,A
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	MOV  	A,#0FFH
+	MOV  	B,A
+	LCALL	?C?PILDXDATA
+	MOV  	A,R7
+	LCALL	?C?CSTPTR
+; 
+;   /* Return the top-of-stack address */
+;   return ((void *)stk);
+			; SOURCE LINE # 99
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	LCALL	?C?PLDXDATA
+; }
+			; SOURCE LINE # 100
+?C0001:
+	MOV  	DPTR,#0EH
+	LJMP 	?C?ADDXBP
+; END OF _?OSTaskStkInit
+
+; 
+; 
+; /*
+; ***********************************************************************************************************
+; * OSStartHighRdy: START MULTITASKING
+; *     
+; * Duty:     a) Call OSTaskSwHook() then,
+; *           b) Set OSRunning to TRUE,
+; *           c) Switch to the highest priority task.
+; *
+; ***********************************************************************************************************
+; */
+; void OSStartHighRdy(void) KCREENTRANT
+
+	RSEG  ?PR?_?OSStartHighRdy?OS_CPU_C
+_?OSStartHighRdy:
+	USING	0
+			; SOURCE LINE # 113
+; {
+;   OSTaskSwHook();
+			; SOURCE LINE # 115
+	LCALL	_?OSTaskSwHook
+;   
+;   OSRunning = 1;
+			; SOURCE LINE # 117
+	MOV  	DPTR,#OSRunning
+	MOV  	A,#01H
+	MOVX 	@DPTR,A
+; 
+;   C_XBP = OSTCBHighRdy->OSTCBStkPtr;
+			; SOURCE LINE # 119
+	MOV  	DPTR,#OSTCBHighRdy
+	LCALL	?C?PLDXDATA
+	LCALL	?C?PLDPTR
+	XCH  	A,R7
+	MOV  	A,R1
+	XCH  	A,R7
+	MOV  	C_XBP,R2
+	MOV  	C_XBP+01H,R7
+; 
+;   LoadCtx();
+			; SOURCE LINE # 121
+	LJMP 	_?LoadCtx
+; END OF _?OSStartHighRdy
+
+; }
+; 
+; /**********************************************************************************************************
+; * C_OSCtxSw is the c part of OSCtxSw.
+; * When control passes to this function, the processor registers have been saved in external stack
+; ***********************************************************************************************************/
+; void C_OSCtxSw(void) KCREENTRANT
+
+	RSEG  ?PR?_?C_OSCtxSw?OS_CPU_C
+_?C_OSCtxSw:
+	USING	0
+			; SOURCE LINE # 128
+; {
+;   OSTCBCur -> OSTCBStkPtr = C_XBP;
+			; SOURCE LINE # 130
+	MOV  	R2,C_XBP
+	MOV  	R1,C_XBP+01H
+	MOV  	R3,#01H
+	MOV  	A,R3
+	PUSH 	ACC
+	MOV  	A,R2
+	PUSH 	ACC
+	MOV  	A,R1
+	PUSH 	ACC
+	MOV  	DPTR,#OSTCBCur
+	LCALL	?C?PLDXDATA
+	LCALL	?C?PSTPTR
+;   OSTaskSwHook();
+			; SOURCE LINE # 131
+	LCALL	_?OSTaskSwHook
+;   OSTCBCur = OSTCBHighRdy;
+			; SOURCE LINE # 132
+	MOV  	DPTR,#OSTCBHighRdy
+	LCALL	?C?PLDXDATA
+	MOV  	DPTR,#OSTCBCur
+	LCALL	?C?PSTXDATA
+;   OSPrioCur = OSPrioHighRdy;
+			; SOURCE LINE # 133
+	MOV  	DPTR,#OSPrioHighRdy
+	MOVX 	A,@DPTR
+	MOV  	DPTR,#OSPrioCur
+	MOVX 	@DPTR,A
+;   C_XBP = OSTCBCur -> OSTCBStkPtr;
+			; SOURCE LINE # 134
+	LCALL	?C?PLDPTR
+	XCH  	A,R7
+	MOV  	A,R1
+	XCH  	A,R7
+	MOV  	C_XBP,R2
+	MOV  	C_XBP+01H,R7
+;   LoadCtx();
+			; SOURCE LINE # 135
+	LJMP 	_?LoadCtx
+; END OF _?C_OSCtxSw
+
+; }
+; 
+; /**********************************************************************************************************
+; * void OSIntCtxSw(void)
+; * 
+; ***********************************************************************************************************/
+; void OSIntCtxSw(void) KCREENTRANT
+
+	RSEG  ?PR?_?OSIntCtxSw?OS_CPU_C
+_?OSIntCtxSw:
+	USING	0
+			; SOURCE LINE # 142
+; {
+; #pragma ASM
+;         CLR EA
+	  CLR EA
+;         MOV SP, SaveSP
+	  MOV SP, SaveSP
+; #pragma ENDASM
+; 
+;   C_XBP = OSTCBCur->OSTCBStkPtr;
+			; SOURCE LINE # 149
+	MOV  	DPTR,#OSTCBCur
+	LCALL	?C?PLDXDATA
+	LCALL	?C?PLDPTR
+	XCH  	A,R7
+	MOV  	A,R1
+	XCH  	A,R7
+	MOV  	C_XBP,R2
+	MOV  	C_XBP+01H,R7
+; 
+; #pragma ASM
+;         EXTRN   CODE(_?KCOSCtxSw)
+	  EXTRN   CODE(_?KCOSCtxSw)
+;         MOV   A, #LOW  _?KCOSCtxSw
+	  MOV   A, #LOW  _?KCOSCtxSw
+;         PUSH  ACC
+	  PUSH  ACC
+;         MOV   A, #HIGH _?KCOSCtxSw
+	  MOV   A, #HIGH _?KCOSCtxSw
+;         PUSH  ACC
+	  PUSH  ACC
+;         RETI
+	  RETI
+; #pragma ENDASM
+; }
+			; SOURCE LINE # 159
+	RET  	
+; END OF _?OSIntCtxSw
+
+CSEG	AT	0000BH
+	LJMP	OSTickISR
+
+; 
+; /**********************************************************************************************************
+; * void OSTickISR(void)
+; * 
+; **********************************************************************************************************/
+; void OSTickISR(void) interrupt 1
+
+	RSEG  ?PR?OSTickISR?OS_CPU_C
+	USING	0
+OSTickISR:
+	PUSH 	ACC
+	PUSH 	B
+	PUSH 	DPH
+	PUSH 	DPL
+	PUSH 	PSW
+	MOV  	A,R0
+	PUSH 	ACC
+	MOV  	A,R1
+	PUSH 	ACC
+	MOV  	A,R2
+	PUSH 	ACC
+	MOV  	A,R3
+	PUSH 	ACC
+	MOV  	A,R4
+	PUSH 	ACC
+	MOV  	A,R5
+	PUSH 	ACC
+	MOV  	A,R6
+	PUSH 	ACC
+	MOV  	A,R7
+	PUSH 	ACC
+	USING	0
+			; SOURCE LINE # 165
+; {
+;   /* Must be called first at every hardware interrupt entry point */
+;   OSIntEnter();
+			; SOURCE LINE # 168
+	LCALL	_?OSIntEnter
+;     
+;   if(OSIntNesting == 1)
+			; SOURCE LINE # 170
+	MOV  	DPTR,#OSIntNesting
+	MOVX 	A,@DPTR
+	CJNE 	A,#01H,?C0005
+;   {
+			; SOURCE LINE # 171
+;     #pragma ASM
+;             PUSH IE
+	  PUSH IE
+;             CLR  EA
+	  CLR  EA
+;             MOV  SaveSP, SP
+	  MOV  SaveSP, SP
+;     #pragma ENDASM
+; 
+;     EA = 0;
+			; SOURCE LINE # 178
+	CLR  	EA
+; 
+;     OSTCBCur->OSTCBStkPtr = C_XBP;
+			; SOURCE LINE # 180
+	MOV  	R2,C_XBP
+	MOV  	R1,C_XBP+01H
+	MOV  	R3,#01H
+	MOV  	A,R3
+	PUSH 	ACC
+	MOV  	A,R2
+	PUSH 	ACC
+	MOV  	A,R1
+	PUSH 	ACC
+	MOV  	DPTR,#OSTCBCur
+	LCALL	?C?PLDXDATA
+	LCALL	?C?PSTPTR
+;   }
+			; SOURCE LINE # 181
+?C0005:
+; 
+;   /* Must be called during tick isr */
+;   OSTimeTick();
+			; SOURCE LINE # 184
+	LCALL	_?OSTimeTick
+;   
+;   /* Must be called finally at every hardware interupt exit point */     
+;   OSIntExit();
+			; SOURCE LINE # 187
+	LCALL	_?OSIntExit
+; 
+;   if(OSIntNesting==0)
+			; SOURCE LINE # 189
+	MOV  	DPTR,#OSIntNesting
+	MOVX 	A,@DPTR
+	JNZ  	?C0007
+;   {
+			; SOURCE LINE # 190
+;     EA = 0;
+			; SOURCE LINE # 191
+	CLR  	EA
+; 
+;     C_XBP =OSTCBCur->OSTCBStkPtr;
+			; SOURCE LINE # 193
+	MOV  	DPTR,#OSTCBCur
+	LCALL	?C?PLDXDATA
+	LCALL	?C?PLDPTR
+	XCH  	A,R7
+	MOV  	A,R1
+	XCH  	A,R7
+	MOV  	C_XBP,R2
+	MOV  	C_XBP+01H,R7
+; 
+;     #pragma ASM
+;             MOV  SP, SaveSP
+	  MOV  SP, SaveSP
+;             POP  IE
+	  POP  IE
+;     #pragma ENDASM
+;   }
+			; SOURCE LINE # 199
+; }
+			; SOURCE LINE # 200
+?C0007:
+	POP  	ACC
+	MOV  	R7,A
+	POP  	ACC
+	MOV  	R6,A
+	POP  	ACC
+	MOV  	R5,A
+	POP  	ACC
+	MOV  	R4,A
+	POP  	ACC
+	MOV  	R3,A
+	POP  	ACC
+	MOV  	R2,A
+	POP  	ACC
+	MOV  	R1,A
+	POP  	ACC
+	MOV  	R0,A
+	POP  	PSW
+	POP  	DPL
+	POP  	DPH
+	POP  	B
+	POP  	ACC
+	RETI 	
+; END OF OSTickISR
+
+; 
+; /**********************************************************************************************************
+; * SetupComms(void)
+; * 
+; **********************************************************************************************************/
+; void initSystem(void) KCREENTRANT
+
+	RSEG  ?PR?_?initSystem?OS_CPU_C
+_?initSystem:
+			; SOURCE LINE # 206
+; {
+;   /* Setup Timer */
+; 	TMOD = (TMOD & 0xF0) | 0x21;
+			; SOURCE LINE # 209
+	MOV  	A,TMOD
+	ANL  	A,#0F0H
+	ORL  	A,#021H
+	MOV  	TMOD,A
+;   
+;   /* Freq=25Hz (Ticks per second) */
+; 	TL0  = 0xF0;	
+			; SOURCE LINE # 212
+	MOV  	TL0,#0F0H
+; 	TH0  = 0xF0;
+			; SOURCE LINE # 213
+	MOV  	TH0,#0F0H
+; 	TR0  = 1;
+			; SOURCE LINE # 214
+	SETB 	TR0
+; 	ET0  = 1;
+			; SOURCE LINE # 215
+	SETB 	ET0
+; 	EA   = 1;
+			; SOURCE LINE # 216
+	SETB 	EA
+; }
+			; SOURCE LINE # 217
+	RET  	
+; END OF _?initSystem
+
+; 
+; /**********************************************************************************************************
+; * SetupComms(void)
+; * 
+; **********************************************************************************************************/
+; void SetupComms(void) KCREENTRANT
+
+	RSEG  ?PR?_?SetupComms?OS_CPU_C
+_?SetupComms:
+			; SOURCE LINE # 223
+; {
+;   /* Set for 8,No parity,19200 baud */
+;   SCON  = 0x50;
+			; SOURCE LINE # 226
+	MOV  	SCON,#050H
+; 
+;   /* T1 as baud generator TH1=253=FD=9600  */
+;   TH1   = 0xFD;
+			; SOURCE LINE # 229
+	MOV  	TH1,#0FDH
+; 
+;   /* Double the baud rate approx. 19200 */
+;   PCON |= 0x80;
+			; SOURCE LINE # 232
+	ORL  	PCON,#080H
+; 
+;   /* Enable the serial interrupt */ 
+;   ES    = 1;
+			; SOURCE LINE # 235
+	SETB 	ES
+; 
+;   /* Start running the timer */     
+;   TR1   = 1;
+			; SOURCE LINE # 238
+	SETB 	TR1
+; }
+			; SOURCE LINE # 239
+	RET  	
+; END OF _?SetupComms
+
+; 
+; /**********************************************************************************************************
+; * void SendChar()
+; * 
+; **********************************************************************************************************/
+; void SendChar(unsigned char c) KCREENTRANT
+
+	RSEG  ?PR?_?SendChar?OS_CPU_C
+_?SendChar:
+	USING	0
+			; SOURCE LINE # 245
+	MOV  	DPTR,#0FFFFH
+	LCALL	?C?ADDXBP
+	MOV  	A,R7
+	MOVX 	@DPTR,A
+	MOV  	DPTR,#0FFFEH
+	LCALL	?C?ADDXBP
+; {
+; //  TI = 1;
+;   int i;
+;   SBUF = c;
+			; SOURCE LINE # 249
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	INC  	DPTR
+	INC  	DPTR
+	MOVX 	A,@DPTR
+	MOV  	SBUF,A
+;   for(i = 0; i < 30; i++);
+			; SOURCE LINE # 250
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	CLR  	A
+	MOVX 	@DPTR,A
+	INC  	DPTR
+	MOVX 	@DPTR,A
+?C0010:
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	MOVX 	A,@DPTR
+	MOV  	R6,A
+	INC  	DPTR
+	MOVX 	A,@DPTR
+	CLR  	C
+	SUBB 	A,#01EH
+	MOV  	A,R6
+	XRL  	A,#080H
+	SUBB 	A,#080H
+	JNC  	?C0013
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	CLR  	A
+	MOV  	B,#01H
+	LCALL	?C?IILDX
+	SJMP 	?C0010
+; }
+			; SOURCE LINE # 251
+?C0013:
+	MOV  	DPTR,#03H
+	LJMP 	?C?ADDXBP
+; END OF _?SendChar
+
+; /**********************************************************************************************************
+; * void SendChar()
+; * New function to send a string of text 
+; *
+; **********************************************************************************************************/
+; void SendString(char *s) KCREENTRANT {
+
+	RSEG  ?PR?_?SendString?OS_CPU_C
+_?SendString:
+	USING	0
+			; SOURCE LINE # 257
+	MOV  	DPTR,#0FFFDH
+	LCALL	?C?ADDXBP
+	LCALL	?C?PSTXDATA
+	MOV  	DPTR,#0FFFFH
+	LCALL	?C?ADDXBP
+?C0014:
+; 
+; INT8U i;
+;    while(*s != '\0') {
+			; SOURCE LINE # 260
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	INC  	DPTR
+	LCALL	?C?PLDXDATA
+	LCALL	?C?CLDPTR
+	JZ   	?C0019
+;       SendChar(*s++);
+			; SOURCE LINE # 261
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	INC  	DPTR
+	CLR  	A
+	MOV  	B,#01H
+	LCALL	?C?PLDIXDATA
+	LCALL	?C?CLDPTR
+	MOV  	R7,A
+	LCALL	_?SendChar
+;       for(i = 0; i < 30; i++);
+			; SOURCE LINE # 262
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	CLR  	A
+	MOVX 	@DPTR,A
+?C0016:
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	MOVX 	A,@DPTR
+	CLR  	C
+	SUBB 	A,#01EH
+	JNC  	?C0014
+	MOVX 	A,@DPTR
+	INC  	A
+	MOVX 	@DPTR,A
+	SJMP 	?C0016
+;       }
+			; SOURCE LINE # 263
+; }
+			; SOURCE LINE # 264
+?C0019:
+	MOV  	DPTR,#04H
+	LJMP 	?C?ADDXBP
+; END OF _?SendString
+
+CSEG	AT	00023H
+	LJMP	Serial_ISR
+
+; 
+; /**********************************************************************************************************
+; * void Serial_ISR(void)
+; * Sample user ISR: Serial communication
+; **********************************************************************************************************/
+; void Serial_ISR(void) interrupt 4
+
+	RSEG  ?PR?Serial_ISR?OS_CPU_C
+	USING	0
+Serial_ISR:
+	PUSH 	ACC
+	PUSH 	B
+	PUSH 	DPH
+	PUSH 	DPL
+	PUSH 	PSW
+	MOV  	A,R0
+	PUSH 	ACC
+	MOV  	A,R1
+	PUSH 	ACC
+	MOV  	A,R2
+	PUSH 	ACC
+	MOV  	A,R3
+	PUSH 	ACC
+	MOV  	A,R4
+	PUSH 	ACC
+	MOV  	A,R5
+	PUSH 	ACC
+	MOV  	A,R6
+	PUSH 	ACC
+	MOV  	A,R7
+	PUSH 	ACC
+	USING	0
+			; SOURCE LINE # 270
+; {
+;   /* Do this first */
+;   /* Must be called first at every hardware interrupt entry point */
+;   OSIntEnter();
+			; SOURCE LINE # 274
+	LCALL	_?OSIntEnter
+; 
+;   /* Only at the outerest interrupt we do these. */
+;   if(OSIntNesting == 1)
+			; SOURCE LINE # 277
+	MOV  	DPTR,#OSIntNesting
+	MOVX 	A,@DPTR
+	CJNE 	A,#01H,?C0020
+;   {
+			; SOURCE LINE # 278
+;     #pragma ASM
+;             PUSH IE
+	  PUSH IE
+;             CLR  EA
+	  CLR  EA
+;             MOV  SaveSP, SP
+	  MOV  SaveSP, SP
+;     #pragma ENDASM
+; 
+;     EA = 0;
+			; SOURCE LINE # 285
+	CLR  	EA
+; 
+;     OSTCBCur->OSTCBStkPtr = C_XBP;  
+			; SOURCE LINE # 287
+	MOV  	R2,C_XBP
+	MOV  	R1,C_XBP+01H
+	MOV  	R3,#01H
+	MOV  	A,R3
+	PUSH 	ACC
+	MOV  	A,R2
+	PUSH 	ACC
+	MOV  	A,R1
+	PUSH 	ACC
+	MOV  	DPTR,#OSTCBCur
+	LCALL	?C?PLDXDATA
+	LCALL	?C?PSTPTR
+;   }
+			; SOURCE LINE # 288
+?C0020:
+; 
+; 
+;   /* Deal with the type of Serial Interrupt */
+;   if(TI)
+			; SOURCE LINE # 292
+	JNB  	TI,?C0021
+;   {
+			; SOURCE LINE # 293
+;     TI = 0;
+			; SOURCE LINE # 294
+	CLR  	TI
+;   }
+			; SOURCE LINE # 295
+	SJMP 	?C0022
+?C0021:
+;   else if(RI)
+			; SOURCE LINE # 296
+	JNB  	RI,?C0022
+;   {
+			; SOURCE LINE # 297
+;     RI = 0;
+			; SOURCE LINE # 298
+	CLR  	RI
+;     RxBuffer = SBUF;
+			; SOURCE LINE # 299
+	MOV  	RxBuffer,SBUF
+;   }
+			; SOURCE LINE # 300
+?C0022:
+; 
+; 
+;   /* Finally, before exit from ISR, must do as following. */
+;   /* Must be called finally at every hardware interupt exit point */
+;   OSIntExit();
+			; SOURCE LINE # 305
+	LCALL	_?OSIntExit
+;   
+;   if(OSIntNesting == 0)
+			; SOURCE LINE # 307
+	MOV  	DPTR,#OSIntNesting
+	MOVX 	A,@DPTR
+	JNZ  	?C0025
+;   {
+			; SOURCE LINE # 308
+;     EA = 0;
+			; SOURCE LINE # 309
+	CLR  	EA
+; 
+;     C_XBP = OSTCBCur->OSTCBStkPtr;
+			; SOURCE LINE # 311
+	MOV  	DPTR,#OSTCBCur
+	LCALL	?C?PLDXDATA
+	LCALL	?C?PLDPTR
+	XCH  	A,R7
+	MOV  	A,R1
+	XCH  	A,R7
+	MOV  	C_XBP,R2
+	MOV  	C_XBP+01H,R7
+; 
+;     #pragma ASM
+;             MOV  SP, SaveSP
+	  MOV  SP, SaveSP
+;             POP  IE
+	  POP  IE
+;     #pragma ENDASM
+; 
+;   }
+			; SOURCE LINE # 318
+; }
+			; SOURCE LINE # 319
+?C0025:
+	POP  	ACC
+	MOV  	R7,A
+	POP  	ACC
+	MOV  	R6,A
+	POP  	ACC
+	MOV  	R5,A
+	POP  	ACC
+	MOV  	R4,A
+	POP  	ACC
+	MOV  	R3,A
+	POP  	ACC
+	MOV  	R2,A
+	POP  	ACC
+	MOV  	R1,A
+	POP  	ACC
+	MOV  	R0,A
+	POP  	PSW
+	POP  	DPL
+	POP  	DPH
+	POP  	B
+	POP  	ACC
+	RETI 	
+; END OF Serial_ISR
+
+; 
+; 
+; /*$PAGE*/
+; #if OS_CPU_HOOKS_EN
+; /*
+; *********************************************************************************************************
+; *                                       OS INITIALIZATION HOOK
+; *                                            (BEGINNING)
+; *
+; * Description: This function is called by OSInit() at the beginning of OSInit().
+; *
+; * Arguments  : none
+; *
+; * Note(s)    : 1) Interrupts should be disabled during this call.
+; *********************************************************************************************************
+; */
+; #if OS_VERSION > 203
+; void OSInitHookBegin (void) KCREENTRANT
+
+	RSEG  ?PR?_?OSInitHookBegin?OS_CPU_C
+_?OSInitHookBegin:
+			; SOURCE LINE # 337
+; {
+; }
+			; SOURCE LINE # 339
+	RET  	
+; END OF _?OSInitHookBegin
+
+; #endif
+; 
+; /*
+; *********************************************************************************************************
+; *                                       OS INITIALIZATION HOOK
+; *                                               (END)
+; *
+; * Description: This function is called by OSInit() at the end of OSInit().
+; *
+; * Arguments  : none
+; *
+; * Note(s)    : 1) Interrupts should be disabled during this call.
+; *********************************************************************************************************
+; */
+; #if OS_VERSION > 203
+; void OSInitHookEnd (void) KCREENTRANT
+
+	RSEG  ?PR?_?OSInitHookEnd?OS_CPU_C
+_?OSInitHookEnd:
+			; SOURCE LINE # 355
+; {
+; }
+			; SOURCE LINE # 357
+	RET  	
+; END OF _?OSInitHookEnd
+
+; #endif
+; 
+; 
+; /*
+; *********************************************************************************************************
+; *                                          TASK CREATION HOOK
+; *
+; * Description: This function is called when a task is created.
+; *
+; * Arguments  : ptcb   is a pointer to the task control block of the task being created.
+; *
+; * Note(s)    : 1) Interrupts are disabled during this call.
+; *********************************************************************************************************
+; */
+; void OSTaskCreateHook (OS_TCB *ptcb) KCREENTRANT
+
+	RSEG  ?PR?_?OSTaskCreateHook?OS_CPU_C
+_?OSTaskCreateHook:
+	USING	0
+			; SOURCE LINE # 372
+	MOV  	DPTR,#0FFFDH
+	LCALL	?C?ADDXBP
+	LCALL	?C?PSTXDATA
+; {
+;     ptcb = ptcb;                       /* Prevent compiler warning                                     */
+			; SOURCE LINE # 374
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	LCALL	?C?PLDXDATA
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	LCALL	?C?PSTXDATA
+; }
+			; SOURCE LINE # 375
+	MOV  	DPTR,#03H
+	LJMP 	?C?ADDXBP
+; END OF _?OSTaskCreateHook
+
+; 
+; 
+; /*
+; *********************************************************************************************************
+; *                                           TASK DELETION HOOK
+; *
+; * Description: This function is called when a task is deleted.
+; *
+; * Arguments  : ptcb   is a pointer to the task control block of the task being deleted.
+; *
+; * Note(s)    : 1) Interrupts are disabled during this call.
+; *********************************************************************************************************
+; */
+; void OSTaskDelHook (OS_TCB *ptcb) KCREENTRANT
+
+	RSEG  ?PR?_?OSTaskDelHook?OS_CPU_C
+_?OSTaskDelHook:
+	USING	0
+			; SOURCE LINE # 389
+	MOV  	DPTR,#0FFFDH
+	LCALL	?C?ADDXBP
+	LCALL	?C?PSTXDATA
+; {
+;     ptcb = ptcb;                       /* Prevent compiler warning                                     */
+			; SOURCE LINE # 391
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	LCALL	?C?PLDXDATA
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	LCALL	?C?PSTXDATA
+; }
+			; SOURCE LINE # 392
+	MOV  	DPTR,#03H
+	LJMP 	?C?ADDXBP
+; END OF _?OSTaskDelHook
+
+; 
+; /*
+; *********************************************************************************************************
+; *                                           TASK SWITCH HOOK
+; *
+; * Description: This function is called when a task switch is performed.  This allows you to perform other
+; *              operations during a context switch.
+; *
+; * Arguments  : none
+; *
+; * Note(s)    : 1) Interrupts are disabled during this call.
+; *              2) It is assumed that the global pointer 'OSTCBHighRdy' points to the TCB of the task that
+; *                 will be 'switched in' (i.e. the highest priority task) and, 'OSTCBCur' points to the 
+; *                 task being switched out (i.e. the preempted task).
+; *********************************************************************************************************
+; */
+; void OSTaskSwHook (void) KCREENTRANT
+
+	RSEG  ?PR?_?OSTaskSwHook?OS_CPU_C
+_?OSTaskSwHook:
+			; SOURCE LINE # 409
+; {
+; }
+			; SOURCE LINE # 411
+	RET  	
+; END OF _?OSTaskSwHook
+
+; 
+; /*
+; *********************************************************************************************************
+; *                                           STATISTIC TASK HOOK
+; *
+; * Description: This function is called every second by uC/OS-II's statistics task.  This allows your 
+; *              application to add functionality to the statistics task.
+; *
+; * Arguments  : none
+; *********************************************************************************************************
+; */
+; void OSTaskStatHook (void) KCREENTRANT
+
+	RSEG  ?PR?_?OSTaskStatHook?OS_CPU_C
+_?OSTaskStatHook:
+			; SOURCE LINE # 423
+; {
+; }
+			; SOURCE LINE # 425
+	RET  	
+; END OF _?OSTaskStatHook
+
+; 
+; /*
+; *********************************************************************************************************
+; *                                           OSTCBInit() HOOK
+; *
+; * Description: This function is called by OSTCBInit() after setting up most of the TCB.
+; *
+; * Arguments  : ptcb    is a pointer to the TCB of the task being created.
+; *
+; * Note(s)    : 1) Interrupts may or may not be ENABLED during this call.
+; *********************************************************************************************************
+; */
+; #if OS_VERSION > 203
+; void OSTCBInitHook (OS_TCB *ptcb) KCREENTRANT
+
+	RSEG  ?PR?_?OSTCBInitHook?OS_CPU_C
+_?OSTCBInitHook:
+	USING	0
+			; SOURCE LINE # 439
+	MOV  	DPTR,#0FFFDH
+	LCALL	?C?ADDXBP
+	LCALL	?C?PSTXDATA
+; {
+;     ptcb = ptcb;                                           /* Prevent Compiler warning                 */
+			; SOURCE LINE # 441
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	LCALL	?C?PLDXDATA
+	MOV  	DPH,?C_XBP
+	MOV  	DPL,?C_XBP+01H
+	LCALL	?C?PSTXDATA
+; }
+			; SOURCE LINE # 442
+	MOV  	DPTR,#03H
+	LJMP 	?C?ADDXBP
+; END OF _?OSTCBInitHook
+
+; #endif
+; 
+; 
+; /*
+; *********************************************************************************************************
+; *                                               TICK HOOK
+; *
+; * Description: This function is called every tick.
+; *
+; * Arguments  : none
+; *
+; * Note(s)    : 1) Interrupts may or may not be ENABLED during this call.
+; *********************************************************************************************************
+; */
+; void OSTimeTickHook (void) KCREENTRANT
+
+	RSEG  ?PR?_?OSTimeTickHook?OS_CPU_C
+_?OSTimeTickHook:
+			; SOURCE LINE # 457
+; {
+; }
+			; SOURCE LINE # 459
+	RET  	
+; END OF _?OSTimeTickHook
+
+; 
+; 
+; /*
+; *********************************************************************************************************
+; *                                             IDLE TASK HOOK
+; *
+; * Description: This function is called by the idle task.  This hook has been added to allow you to do  
+; *              such things as STOP the CPU to conserve power.
+; *
+; * Arguments  : none
+; *
+; * Note(s)    : 1) Interrupts are enabled during this call.
+; *********************************************************************************************************
+; */
+; #if OS_VERSION >= 251
+; void OSTaskIdleHook (void) KCREENTRANT
+
+	RSEG  ?PR?_?OSTaskIdleHook?OS_CPU_C
+_?OSTaskIdleHook:
+			; SOURCE LINE # 475
+; {
+; }
+			; SOURCE LINE # 477
+	RET  	
+; END OF _?OSTaskIdleHook
+
+	END

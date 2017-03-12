@@ -1,0 +1,164 @@
+##############################################################################
+#                                                                            #
+# IAR 68HC11 C-Compiler V4.45A/WIN                                           #
+#                                                                            #
+#       Compile time  =  21/Mar/2003  08:01:52                               #
+#       Memory model  =  large                                               #
+#       Source file   =  c:\gmit-notes\rtos\8051\democode\function.c         #
+#       List file     =  c:\gmit-notes\rtos\8051\democode\debug\list\function.lst#
+#       Object file   =  c:\gmit-notes\rtos\8051\democode\debug\obj\function.r07#
+#       Command line  =  -ml -OC:\GMIT-Notes\RTOS\8051\DemoCode\Debug\Obj\   #
+#                        -RCODE -e -gA -r0                                   #
+#                        -LC:\GMIT-Notes\RTOS\8051\DemoCode\Debug\List\ -q   #
+#                        -t8 -IC:\Program Files\IAR11\6811\inc\              #
+#                        C:\GMIT-Notes\RTOS\8051\DemoCode\function.c         #
+#                                                                            #
+#                           Copyright 1999 IAR Systems. All rights reserved. #
+##############################################################################
+
+   \                     	NAME	function(17)
+   \                     	RSEG	CODE(0)
+   \                     	PUBLIC	function1
+   \                     	PUBLIC	function2
+   \                     	PUBLIC	function3
+   \                     	PUBLIC	function4
+   \                     	PUBLIC	main
+   \                     	EXTERN	?CL6811_4_45_L07
+   \                     	RSEG	CODE
+   \                     main:
+      1          
+      2          void function1(void);
+      3          void function2(int);
+      4          void function3(int,int);
+      5          int function4(int,int,int);
+      6          
+      7          
+      8          
+      9          
+     10          int main(void)
+     11          {
+   \   000000   3C                   PSHX
+   \   000001   3C                   PSHX
+   \   000002   3C                   PSHX
+   \   000003   3C                   PSHX
+     12          int i=0,j=1,k=2,l=3;
+   \   000004   30                   TSX
+   \   000005   CC0000               LDD     #0
+   \   000008   ED06                 STD     6,X
+   \   00000A   CC0001               LDD     #1
+   \   00000D   ED00                 STD     0,X
+   \   00000F   CC0002               LDD     #2
+   \   000012   ED02                 STD     2,X
+   \   000014   CC0003               LDD     #3
+   \   000017   ED04                 STD     4,X
+     13          
+     14          function1();
+   \   000019   BD....               JSR     function1
+     15          function2(j);
+   \   00001C   30                   TSX
+   \   00001D   EC00                 LDD     0,X
+   \   00001F   BD....               JSR     function2
+     16          function3(j,k);
+   \   000022   30                   TSX
+   \   000023   EE02                 LDX     2,X
+   \   000025   3C                   PSHX
+   \   000026   30                   TSX
+   \   000027   EC02                 LDD     2,X
+   \   000029   BD....               JSR     function3
+   \   00002C   38                   PULX
+     17          i=function4(j,k,l);
+   \   00002D   30                   TSX
+   \   00002E   EE04                 LDX     4,X
+   \   000030   3C                   PSHX
+   \   000031   30                   TSX
+   \   000032   EE04                 LDX     4,X
+   \   000034   3C                   PSHX
+   \   000035   30                   TSX
+   \   000036   EC04                 LDD     4,X
+   \   000038   BD....               JSR     function4
+   \   00003B   30                   TSX
+   \   00003C   ED0A                 STD     10,X
+   \   00003E   38                   PULX
+   \   00003F   38                   PULX
+     18          }
+   \   000040   38                   PULX
+   \   000041   38                   PULX
+   \   000042   38                   PULX
+   \   000043   38                   PULX
+   \   000044   39                   RTS
+   \                     function1:
+     19          
+     20          void function1(void){}
+   \   000045   39                   RTS
+   \                     function2:
+     21          
+     22          void function2(int a){
+   \   000046   37                   PSHB
+   \   000047   36                   PSHA
+   \   000048   3C                   PSHX
+     23          int x;
+     24          x=a;
+   \   000049   30                   TSX
+   \   00004A   EC02                 LDD     2,X
+   \   00004C   ED00                 STD     0,X
+     25          }
+   \   00004E   38                   PULX
+   \   00004F   38                   PULX
+   \   000050   39                   RTS
+   \                     function3:
+     26          
+     27          void function3(int a, int b){
+   \   000051   37                   PSHB
+   \   000052   36                   PSHA
+   \   000053   3C                   PSHX
+   \   000054   3C                   PSHX
+     28          int x, y;
+     29          x=a;
+   \   000055   30                   TSX
+   \   000056   EC04                 LDD     4,X
+   \   000058   ED02                 STD     2,X
+     30          y=b;
+   \   00005A   EC08                 LDD     8,X
+   \   00005C   ED00                 STD     0,X
+     31          }
+   \   00005E   38                   PULX
+   \   00005F   38                   PULX
+   \   000060   38                   PULX
+   \   000061   39                   RTS
+   \                     function4:
+     32          
+     33          int function4(int a, int b, int c){
+   \   000062   37                   PSHB
+   \   000063   36                   PSHA
+   \   000064   3C                   PSHX
+   \   000065   3C                   PSHX
+   \   000066   3C                   PSHX
+     34          int x,y,z;
+     35          x=a;
+   \   000067   30                   TSX
+   \   000068   EC06                 LDD     6,X
+   \   00006A   ED04                 STD     4,X
+     36          y=b;
+   \   00006C   EC0A                 LDD     10,X
+   \   00006E   ED02                 STD     2,X
+     37          z=c;
+   \   000070   EC0C                 LDD     12,X
+   \   000072   ED00                 STD     0,X
+     38          return (x+y+z);
+   \   000074   EC04                 LDD     4,X
+   \   000076   E302                 ADDD    2,X
+   \   000078   E300                 ADDD    0,X
+     39          }
+   \   00007A   38                   PULX
+   \   00007B   38                   PULX
+   \   00007C   38                   PULX
+   \   00007D   38                   PULX
+   \   00007E   39                   RTS
+   \                     	END
+
+Errors: none
+Warnings: none
+Code size: 127
+Constant size: 0
+Static variable size: 0
+

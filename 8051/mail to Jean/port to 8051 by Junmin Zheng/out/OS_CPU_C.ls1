@@ -1,0 +1,797 @@
+A51 MACRO ASSEMBLER  OS_CPU_C                                                             07/03/2002 08:51:27 PAGE     1
+
+
+MACRO ASSEMBLER A51 V6.20
+OBJECT MODULE PLACED IN ..\out\OS_CPU_C.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE ..\out\OS_CPU_C.src PR(..\out\OS_CPU_C.ls1) EP DEBUG
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; ..\out\OS_CPU_C.SRC generated from: ..\port\OS_CPU_C.C
+                       2     
+                       3     $nomod51 
+                       4     
+                       5     NAME    OS_CPU_C
+                       6     
+  0080                 7     P0      DATA    080H
+  0090                 8     P1      DATA    090H
+  00A0                 9     P2      DATA    0A0H
+  00B0                10     P3      DATA    0B0H
+  00B4                11     T0      BIT     0B0H.4
+  00D6                12     AC      BIT     0D0H.6
+  00B5                13     T1      BIT     0B0H.5
+  0090                14     T2      BIT     090H.0
+  00AF                15     EA      BIT     0A8H.7
+  00A8                16     IE      DATA    0A8H
+  00CE                17     EXF2    BIT     0C8H.6
+  00B7                18     RD      BIT     0B0H.7
+  00AC                19     ES      BIT     0A8H.4
+  00B8                20     IP      DATA    0B8H
+  0098                21     RI      BIT     098H.0
+  00B2                22     INT0    BIT     0B0H.2
+  00D7                23     CY      BIT     0D0H.7
+  0099                24     TI      BIT     098H.1
+  00B3                25     INT1    BIT     0B0H.3
+  00CB                26     RCAP2H  DATA    0CBH
+  00BC                27     PS      BIT     0B8H.4
+  0081                28     SP      DATA    081H
+  0091                29     T2EX    BIT     090H.1
+  00D2                30     OV      BIT     0D0H.2
+  00CA                31     RCAP2L  DATA    0CAH
+  00C9                32     C_T2    BIT     0C8H.1
+  00B6                33     WR      BIT     0B0H.6
+  00CD                34     RCLK    BIT     0C8H.5
+  00CC                35     TCLK    BIT     0C8H.4
+  0099                36     SBUF    DATA    099H
+  0087                37     PCON    DATA    087H
+  0098                38     SCON    DATA    098H
+  0089                39     TMOD    DATA    089H
+  0088                40     TCON    DATA    088H
+  0089                41     IE0     BIT     088H.1
+  008B                42     IE1     BIT     088H.3
+  00F0                43     B       DATA    0F0H
+  00C8                44     CP_RL2  BIT     0C8H.0
+  00E0                45     ACC     DATA    0E0H
+  00A9                46     ET0     BIT     0A8H.1
+  00AB                47     ET1     BIT     0A8H.3
+  008D                48     TF0     BIT     088H.5
+  00AD                49     ET2     BIT     0A8H.5
+  008F                50     TF1     BIT     088H.7
+  00CF                51     TF2     BIT     0C8H.7
+  009A                52     RB8     BIT     098H.2
+  008C                53     TH0     DATA    08CH
+  00A8                54     EX0     BIT     0A8H.0
+  0088                55     IT0     BIT     088H.0
+  008D                56     TH1     DATA    08DH
+  009B                57     TB8     BIT     098H.3
+  00AA                58     EX1     BIT     0A8H.2
+A51 MACRO ASSEMBLER  OS_CPU_C                                                             07/03/2002 08:51:27 PAGE     2
+
+  008A                59     IT1     BIT     088H.2
+  00CD                60     TH2     DATA    0CDH
+  00D0                61     P       BIT     0D0H.0
+  009F                62     SM0     BIT     098H.7
+  008A                63     TL0     DATA    08AH
+  009E                64     SM1     BIT     098H.6
+  008B                65     TL1     DATA    08BH
+  009D                66     SM2     BIT     098H.5
+  00CC                67     TL2     DATA    0CCH
+  00B9                68     PT0     BIT     0B8H.1
+  00BB                69     PT1     BIT     0B8H.3
+  00D3                70     RS0     BIT     0D0H.3
+  00BD                71     PT2     BIT     0B8H.5
+  008C                72     TR0     BIT     088H.4
+  00D4                73     RS1     BIT     0D0H.4
+  008E                74     TR1     BIT     088H.6
+  00CA                75     TR2     BIT     0C8H.2
+  00B8                76     PX0     BIT     0B8H.0
+  00BA                77     PX1     BIT     0B8H.2
+  0083                78     DPH     DATA    083H
+  0082                79     DPL     DATA    082H
+  00CB                80     EXEN2   BIT     0C8H.3
+  009C                81     REN     BIT     098H.4
+  00C8                82     T2CON   DATA    0C8H
+  00B0                83     RXD     BIT     0B0H.0
+  00B1                84     TXD     BIT     0B0H.1
+  00D5                85     F0      BIT     0D0H.5
+  00D0                86     PSW     DATA    0D0H
+                      87     ?PR?_?OSTaskStkInit?OS_CPU_C             SEGMENT CODE INBLOCK 
+                      88     ?PR?_?OSTickISR?OS_CPU_C                 SEGMENT CODE INBLOCK 
+                      89     ?PR?_?OSTaskCreateHook?OS_CPU_C          SEGMENT CODE INBLOCK 
+                      90     ?PR?_?OSTaskDelHook?OS_CPU_C             SEGMENT CODE INBLOCK 
+                      91     ?PR?_?OSTaskSwHook?OS_CPU_C              SEGMENT CODE INBLOCK 
+                      92     ?PR?_?OSTaskStatHook?OS_CPU_C            SEGMENT CODE INBLOCK 
+                      93     ?PR?_?OSTimeTickHook?OS_CPU_C            SEGMENT CODE INBLOCK 
+                      94     ?PR?OS_CPU_C         SEGMENT CODE INBLOCK 
+                      95             EXTRN   CODE (_?OSIntExit)
+                      96             EXTRN   CODE (_?UserTickTimer)
+                      97             EXTRN   CODE (_?OSTimeTick)
+                      98             EXTRN   CODE (_?OSIntEnter)
+                      99             EXTRN   IDATA (Stack)
+                     100             EXTRN   CODE (?C?ADDXBP)
+                     101             EXTRN   CODE (?C?PSTXDATA)
+                     102             EXTRN   CODE (?C?XBPOFF)
+                     103             EXTRN   CODE (?C?PLDXDATA)
+                     104             EXTRN   DATA (?C_XBP)
+                     105             EXTRN   CODE (?C?IILDX)
+                     106             EXTRN   CODE (?C?ISTPTR)
+                     107             EXTRN   CODE (?C?PILDXDATA)
+                     108             EXTRN   CODE (?C?CSTPTR)
+                     109             EXTRN   CODE (?C?PSTPTR)
+                     110             PUBLIC  _?OSTimeTickHook
+                     111             PUBLIC  _?OSTaskStatHook
+                     112             PUBLIC  _?OSTaskSwHook
+                     113             PUBLIC  _?OSTaskDelHook
+                     114             PUBLIC  _?OSTaskCreateHook
+                     115             PUBLIC  _?OSTickISR
+                     116             PUBLIC  _?OSTaskStkInit
+                     117     ; /*
+                     118     ; *****************************************************************************************
+                             ****************
+                     119     ; *                                               uC/OS-II
+                     120     ; *                                         The Real-Time Kernel
+                     121     ; *
+                     122     ; *                        (c) Copyright 1992-1998, Jean J. Labrosse, Plantation, FL
+                     123     ; *                                          All Rights Reserved
+A51 MACRO ASSEMBLER  OS_CPU_C                                                             07/03/2002 08:51:27 PAGE     3
+
+                     124     ; *
+                     125     ; *
+                     126     ; *                                       80x86/80x88 Specific code
+                     127     ; *                                          LARGE MEMORY MODEL
+                     128     ; *
+                     129     ; * File : OS_CPU_C.C
+                     130     ; * By   : Jean J. Labrosse
+                     131     ; *
+                     132     ; *
+                     133     ; * Ported date:     MAY 29, 2002
+                     134     ; * By:              Junmin Zheng, China, (zhengjunm@263.net)
+                     135     ; * Target platform: Keil C51 V6.20
+                     136     ; *         
+                     137     ; *****************************************************************************************
+                             ****************
+                     138     ; */
+                     139     ; 
+                     140     ; #define  OS_CPU_GLOBALS
+                     141     ; #include "..\mainfile\includes.h"
+                     142     ; #include "..\function\os_kcdef.h"
+                     143     ; /*
+                     144     ; *****************************************************************************************
+                             ****************
+                     145     ; *                                        INITIALIZE A TASK'S STACK
+                     146     ; *
+                     147     ; * Description: This function is called by either OSTaskCreate() or OSTaskCreateExt() to i
+                             nitialize the
+                     148     ; *              stack frame of the task being created.  This function is highly processor 
+                             specific.
+                     149     ; *
+                     150     ; * Arguments  : task          is a pointer to the task code
+                     151     ; *
+                     152     ; *              pdata         is a pointer to a user supplied data area that will be passe
+                             d to the task
+                     153     ; *                            when the task first executes.
+                     154     ; *
+                     155     ; *              ptos          is a pointer to the top of stack.  It is assumed that 'ptos'
+                              points to
+                     156     ; *                            a 'free' entry on the task stack.  If OS_STK_GROWTH is set t
+                             o 1 then 
+                     157     ; *                            'ptos' will contain the HIGHEST valid address of the stack. 
+                              Similarly, if
+                     158     ; *                            OS_STK_GROWTH is set to 0, the 'ptos' will contains the LOWE
+                             ST valid address
+                     159     ; *                            of the stack.
+                     160     ; *
+                     161     ; *              opt           specifies options that can be used to alter the behavior of 
+                             OSTaskStkInit().
+                     162     ; *                            (see uCOS_II.H for OS_TASK_OPT_???).
+                     163     ; *
+                     164     ; * Returns    : Always returns the location of the new top-of-stack' once the processor re
+                             gisters have
+                     165     ; *              been placed on the stack in the proper order.
+                     166     ; *
+                     167     ; * Note(s)    : Interrupts are enabled when your task starts executing. You can change thi
+                             s by setting the
+                     168     ; *              PSW to 0x0002 instead.  In this case, interrupts would be disabled upon ta
+                             sk startup.  The
+                     169     ; *              application code would be responsible for enabling interrupts at the begin
+                             ning of the task
+                     170     ; *              code.  You will need to modify OSTaskIdle() and OSTaskStat() so that they 
+                             enable 
+                     171     ; *              interrupts.  Failure to do this will make your system crash!
+                     172     ; *****************************************************************************************
+                             ****************
+                     173     ; */
+A51 MACRO ASSEMBLER  OS_CPU_C                                                             07/03/2002 08:51:27 PAGE     4
+
+                     174     ; 
+                     175     ; /* The stack variable points to the start pointer in hardware stack and is defined in OS_
+                             CPU_A */
+                     176     ; extern idata unsigned char Stack[1];
+                     177     ; 
+                     178     
+----                 179             RSEG  ?PR?OS_CPU_C
+0000                 180     Com0008:
+0000                 181     L?0009:
+                     182             USING   0
+0000                 183     L?0010:
+0000 120000   F      184             LCALL   ?C?CSTPTR
+0003                 185     L?0011:
+0003 850083   F      186             MOV     DPH,?C_XBP
+0006 850082   F      187             MOV     DPL,?C_XBP+01H
+0009 74FF            188             MOV     A,#0FFH
+000B F5F0            189             MOV     B,A
+000D 020000   F      190             LJMP    ?C?PILDXDATA
+0010                 191     L?0012:
+                     192             USING   0
+0010 850083   F      193             MOV     DPH,?C_XBP
+0013 850082   F      194             MOV     DPL,?C_XBP+01H
+0016 A3              195             INC     DPTR
+0017 74FF            196             MOV     A,#0FFH
+0019 75F0FE          197             MOV     B,#0FEH
+001C 120000   F      198             LCALL   ?C?IILDX
+001F 900003          199             MOV     DPTR,#03H
+0022 120000   F      200             LCALL   ?C?XBPOFF
+0025 120000   F      201             LCALL   ?C?PLDXDATA
+0028 AE02            202             MOV     R6,AR2
+002A AF01            203             MOV     R7,AR1
+002C                 204     L?0013:
+002C 850083   F      205             MOV     DPH,?C_XBP
+002F 850082   F      206             MOV     DPL,?C_XBP+01H
+0032 22              207             RET     
+0033                 208     L?0014:
+                     209             USING   0
+0033                 210     L?0015:
+0033 90FFFD          211             MOV     DPTR,#0FFFDH
+0036 120000   F      212             LCALL   ?C?ADDXBP
+0039 020000   F      213             LJMP    ?C?PSTXDATA
+003C                 214     L?0016:
+                     215             USING   0
+003C 120000   F      216             LCALL   ?C?PLDXDATA
+003F EE              217             MOV     A,R6
+0040 8FF0            218             MOV     B,R7
+0042 020000   F      219             LJMP    ?C?ISTPTR
+                     220     ; END OF Com0008
+                     221     
+                     222     ; OS_STK *OSTaskStkInit (void (*task)(void *pd) KCREENTRANT, void * vd, OS_STK *ptos, INT16
+                             U opt) KCREENTRANT
+                     223     
+----                 224             RSEG  ?PR?_?OSTaskStkInit?OS_CPU_C
+0000                 225     _?OSTaskStkInit:
+                     226             USING   0
+                     227                             ; SOURCE LINE # 62
+0000 120000   F      228             LCALL   L?0014
+0003 90FFFD          229             MOV     DPTR,#0FFFDH
+0006 120000   F      230             LCALL   ?C?ADDXBP
+                     231     ; {   
+                     232     ;       INT8U * stk;
+                     233     ;     opt    = opt;                           /* 'opt' is not used, prevent warning        
+                                           */
+                     234                             ; SOURCE LINE # 65
+0009 90000C          235             MOV     DPTR,#0CH
+000C 120000   F      236             LCALL   ?C?XBPOFF
+A51 MACRO ASSEMBLER  OS_CPU_C                                                             07/03/2002 08:51:27 PAGE     5
+
+000F E0              237             MOVX    A,@DPTR
+0010 FE              238             MOV     R6,A
+0011 A3              239             INC     DPTR
+0012 E0              240             MOVX    A,@DPTR
+0013 FF              241             MOV     R7,A
+0014 90000C          242             MOV     DPTR,#0CH
+0017 120000   F      243             LCALL   ?C?XBPOFF
+001A EE              244             MOV     A,R6
+001B F0              245             MOVX    @DPTR,A
+001C A3              246             INC     DPTR
+001D EF              247             MOV     A,R7
+001E F0              248             MOVX    @DPTR,A
+                     249     ;     stk    = (INT8U *) ptos;                /* Load stack pointer                        
+                                           */
+                     250                             ; SOURCE LINE # 66
+001F 900009          251             MOV     DPTR,#09H
+0022 120000   F      252             LCALL   ?C?XBPOFF
+0025 120000   F      253             LCALL   ?C?PLDXDATA
+0028 120000   F      254             LCALL   L?0013
+002B 120000   F      255             LCALL   ?C?PSTXDATA
+                     256     ; 
+                     257     ;       stk                             -= sizeof(INT16U);      /* The value should be load
+                             ed to PC    */
+                     258                             ; SOURCE LINE # 68
+                     259     ;       *(INT16U*)stk    = (INT16U) task;       /* next time when this task is running */
+                     260                             ; SOURCE LINE # 69
+002E 120000   F      261             LCALL   L?0012
+0031 120000   F      262             LCALL   L?0016
+                     263     ; 
+                     264     ;       stk                             -= sizeof(INT16U);      /* The value should be load
+                             ed to PC    */
+                     265                             ; SOURCE LINE # 71
+                     266     ;       *(INT16U*)stk    = (INT16U) task;       /* next time when this task is running */
+                     267                             ; SOURCE LINE # 72
+0034 120000   F      268             LCALL   L?0012
+0037 120000   F      269             LCALL   L?0016
+                     270     ; 
+                     271     ; /* Following is the registers pushed into hardware stack */
+                     272     ;       *--stk                   = 'A';                 /* ACC */
+                     273                             ; SOURCE LINE # 75
+003A 120000   F      274             LCALL   L?0011
+003D 7441            275             MOV     A,#041H
+                     276     ;       *--stk                   = 'B';                 /* B   */
+                     277                             ; SOURCE LINE # 76
+003F 120000   F      278             LCALL   L?0009
+0042 7442            279             MOV     A,#042H
+                     280     ;       *--stk                   = 'L';                 /* DPL */
+                     281                             ; SOURCE LINE # 77
+0044 120000   F      282             LCALL   L?0009
+0047 744C            283             MOV     A,#04CH
+                     284     ;       *--stk                   = 'H';                 /* DPH */
+                     285                             ; SOURCE LINE # 78
+0049 120000   F      286             LCALL   L?0010
+004C 7448            287             MOV     A,#048H
+                     288     ;       *--stk                   = PSW;                                 /* PSW */
+                     289                             ; SOURCE LINE # 79
+004E 120000   F      290             LCALL   L?0010
+0051 E5D0            291             MOV     A,PSW
+                     292     ;       *--stk                   = 0;                   /* R0  */
+                     293                             ; SOURCE LINE # 80
+0053 120000   F      294             LCALL   L?0010
+0056 E4              295             CLR     A
+0057 120000   F      296             LCALL   ?C?CSTPTR
+                     297     ; 
+                     298     ;       stk                             -= sizeof(void *);      /* Keil C uses R1,R2,R3 to 
+                             pass the */
+A51 MACRO ASSEMBLER  OS_CPU_C                                                             07/03/2002 08:51:27 PAGE     6
+
+                     299                             ; SOURCE LINE # 82
+005A 120000   F      300             LCALL   L?0013
+005D A3              301             INC     DPTR
+005E 74FF            302             MOV     A,#0FFH
+0060 75F0FD          303             MOV     B,#0FDH
+0063 120000   F      304             LCALL   ?C?IILDX
+                     305     ;       *(void**)stk     = vd;                  /* arguments of functions.          */
+                     306                             ; SOURCE LINE # 83
+0066 900006          307             MOV     DPTR,#06H
+0069 120000   F      308             LCALL   ?C?XBPOFF
+006C 120000   F      309             LCALL   ?C?PLDXDATA
+006F C003            310             PUSH    AR3
+0071 C002            311             PUSH    AR2
+0073 C001            312             PUSH    AR1
+0075 120000   F      313             LCALL   L?0013
+0078 120000   F      314             LCALL   ?C?PLDXDATA
+007B 120000   F      315             LCALL   ?C?PSTPTR
+                     316     ; 
+                     317     ;       *--stk                   = 4;                   /* R4  */
+                     318                             ; SOURCE LINE # 85
+007E 120000   F      319             LCALL   L?0011
+0081 7404            320             MOV     A,#04H
+                     321     ;       *--stk                   = 5;                   /* R5  */
+                     322                             ; SOURCE LINE # 86
+0083 120000   F      323             LCALL   L?0010
+0086 7405            324             MOV     A,#05H
+                     325     ;       *--stk                   = 6;                   /* R6  */
+                     326                             ; SOURCE LINE # 87
+0088 120000   F      327             LCALL   L?0010
+008B 7406            328             MOV     A,#06H
+                     329     ;       *--stk                   = 7;                   /* R7  */
+                     330                             ; SOURCE LINE # 88
+008D 120000   F      331             LCALL   L?0010
+0090 7407            332             MOV     A,#07H
+                     333     ; 
+                     334     ;     *--stk           = 0x80;                /* IE, EA is enabled  */
+                     335                             ; SOURCE LINE # 90
+0092 120000   F      336             LCALL   L?0010
+0095 7480            337             MOV     A,#080H
+0097 120000   F      338             LCALL   ?C?CSTPTR
+                     339     ; /*
+                     340     ;     Next is calculating the hardware stack pointer.
+                     341     ; */
+                     342     ;     *--stk                     = (INT8U) Stack-1    /* Initial value when main was called
+                                 */
+                     343                             ; SOURCE LINE # 94
+009A 7400     F      344             MOV     A,#LOW (Stack)
+009C 2411            345             ADD     A,#011H
+009E FF              346             MOV     R7,A
+009F 120000   F      347             LCALL   L?0011
+00A2 EF              348             MOV     A,R7
+00A3 120000   F      349             LCALL   ?C?CSTPTR
+                     350     ;                          +1                   /* IE */
+                     351     ;                          +8                   /* R0-R7, eight registers was saved      */
+                     352     ;                        +5                   /* PSW, ACC, B, DPH, DPL, five registers */
+                     353     ;                        +sizeof(INT16U)      /* The PC value to be loaded             */
+                     354     ;                        +sizeof(INT16U)      /* The PC value to be loaded             */
+                     355     ;                                          ;
+                     356     ; 
+                     357     ;     return ((void *)stk);
+                     358                             ; SOURCE LINE # 102
+00A6 120000   F      359             LCALL   L?0013
+00A9 120000   F      360             LCALL   ?C?PLDXDATA
+                     361     ; }
+                     362                             ; SOURCE LINE # 103
+00AC                 363     ?C0001:
+A51 MACRO ASSEMBLER  OS_CPU_C                                                             07/03/2002 08:51:27 PAGE     7
+
+00AC 90000E          364             MOV     DPTR,#0EH
+00AF 020000   F      365             LJMP    ?C?ADDXBP
+                     366     ; END OF _?OSTaskStkInit
+                     367     
+----                 368     CSEG    AT      0000BH
+000B 020000   F      369             LJMP    _?OSTickISR
+                     370     
+                     371     ; 
+                     372     ; 
+                     373     ; 
+                     374     ; void UserTickTimer(void) KCREENTRANT;
+                     375     ; 
+                     376     ; /* OSTickISR can be writen in c language now, so it is more easy for user to write code f
+                             or their own */
+                     377     ; void OSTickISR(void) KCREENTRANT interrupt 1 
+                     378     
+----                 379             RSEG  ?PR?_?OSTickISR?OS_CPU_C
+                     380             USING   0
+0000                 381     _?OSTickISR:
+0000 C0E0            382             PUSH    ACC
+0002 C0F0            383             PUSH    B
+0004 C083            384             PUSH    DPH
+0006 C082            385             PUSH    DPL
+0008 C0D0            386             PUSH    PSW
+000A 75D000          387             MOV     PSW,#00H
+000D C000            388             PUSH    AR0
+000F C001            389             PUSH    AR1
+0011 C002            390             PUSH    AR2
+0013 C003            391             PUSH    AR3
+0015 C004            392             PUSH    AR4
+0017 C005            393             PUSH    AR5
+0019 C006            394             PUSH    AR6
+001B C007            395             PUSH    AR7
+                     396             USING   0
+                     397                             ; SOURCE LINE # 110
+                     398     ; {
+                     399     ;  
+                     400     ; #pragma ASM
+                     401     ; PUSH IE
+001D C0A8            402               PUSH IE
+                     403     ; #pragma ENDASM
+                     404     ; OSIntEnter();
+                     405                             ; SOURCE LINE # 116
+001F 120000   F      406             LCALL   _?OSIntEnter
+                     407     ; UserTickTimer();                              
+                     408                             ; SOURCE LINE # 117
+0022 120000   F      409             LCALL   _?UserTickTimer
+                     410     ; OSTimeTick();                                 
+                     411                             ; SOURCE LINE # 118
+0025 120000   F      412             LCALL   _?OSTimeTick
+                     413     ; OSIntExit();
+                     414                             ; SOURCE LINE # 119
+0028 120000   F      415             LCALL   _?OSIntExit
+                     416     ; #pragma ASM
+                     417     ; POP IE
+002B D0A8            418               POP IE
+                     419     ; #pragma ENDASM                
+                     420     ; }
+                     421                             ; SOURCE LINE # 123
+002D D007            422             POP     AR7
+002F D006            423             POP     AR6
+0031 D005            424             POP     AR5
+0033 D004            425             POP     AR4
+0035 D003            426             POP     AR3
+0037 D002            427             POP     AR2
+0039 D001            428             POP     AR1
+A51 MACRO ASSEMBLER  OS_CPU_C                                                             07/03/2002 08:51:27 PAGE     8
+
+003B D000            429             POP     AR0
+003D D0D0            430             POP     PSW
+003F D082            431             POP     DPL
+0041 D083            432             POP     DPH
+0043 D0F0            433             POP     B
+0045 D0E0            434             POP     ACC
+0047 32              435             RETI    
+                     436     ; END OF _?OSTickISR
+                     437     
+                     438     ; 
+                     439     ; /* If you want to write ISRs for your own, just do as OSTickISR() */
+                     440     ; 
+                     441     ; /*$PAGE*/
+                     442     ; #if OS_CPU_HOOKS_EN
+                     443     ; 
+                     444     ; 
+                     445     ; /*
+                     446     ; *****************************************************************************************
+                             ****************
+                     447     ; *                                          TASK CREATION HOOK
+                     448     ; *
+                     449     ; * Description: This function is called when a task is created.
+                     450     ; *
+                     451     ; * Arguments  : ptcb   is a pointer to the task control block of the task being created.
+                     452     ; *
+                     453     ; * Note(s)    : 1) Interrupts are disabled during this call.
+                     454     ; *****************************************************************************************
+                             ****************
+                     455     ; */
+                     456     ; void OSTaskCreateHook (OS_TCB *ptcb) KCREENTRANT
+                     457     
+----                 458             RSEG  ?PR?_?OSTaskCreateHook?OS_CPU_C
+0000                 459     _?OSTaskCreateHook:
+                     460             USING   0
+                     461                             ; SOURCE LINE # 142
+0000 120000   F      462             LCALL   L?0014
+                     463     ; {
+                     464     ;     ptcb = ptcb;                       /* Prevent compiler warning                       
+                                           */
+                     465                             ; SOURCE LINE # 144
+0003 120000   F      466             LCALL   L?0013
+0006 120000   F      467             LCALL   ?C?PLDXDATA
+0009 120000   F      468             LCALL   L?0013
+000C 120000   F      469             LCALL   ?C?PSTXDATA
+                     470     ; }
+                     471                             ; SOURCE LINE # 145
+000F 900003          472             MOV     DPTR,#03H
+0012 020000   F      473             LJMP    ?C?ADDXBP
+                     474     ; END OF _?OSTaskCreateHook
+                     475     
+                     476     ; 
+                     477     ; 
+                     478     ; /*
+                     479     ; *****************************************************************************************
+                             ****************
+                     480     ; *                                           TASK DELETION HOOK
+                     481     ; *
+                     482     ; * Description: This function is called when a task is deleted.
+                     483     ; *
+                     484     ; * Arguments  : ptcb   is a pointer to the task control block of the task being deleted.
+                     485     ; *
+                     486     ; * Note(s)    : 1) Interrupts are disabled during this call.
+                     487     ; *****************************************************************************************
+                             ****************
+                     488     ; */
+                     489     ; void OSTaskDelHook (OS_TCB *ptcb) KCREENTRANT
+A51 MACRO ASSEMBLER  OS_CPU_C                                                             07/03/2002 08:51:27 PAGE     9
+
+                     490     
+----                 491             RSEG  ?PR?_?OSTaskDelHook?OS_CPU_C
+0000                 492     _?OSTaskDelHook:
+                     493             USING   0
+                     494                             ; SOURCE LINE # 159
+0000 120000   F      495             LCALL   L?0015
+                     496     ; {
+                     497     ;     ptcb = ptcb;                       /* Prevent compiler warning                       
+                                           */
+                     498                             ; SOURCE LINE # 161
+0003 120000   F      499             LCALL   L?0013
+0006 120000   F      500             LCALL   ?C?PLDXDATA
+0009 120000   F      501             LCALL   L?0013
+000C 120000   F      502             LCALL   ?C?PSTXDATA
+                     503     ; }
+                     504                             ; SOURCE LINE # 162
+000F 900003          505             MOV     DPTR,#03H
+0012 020000   F      506             LJMP    ?C?ADDXBP
+                     507     ; END OF _?OSTaskDelHook
+                     508     
+                     509     ; 
+                     510     ; /*
+                     511     ; *****************************************************************************************
+                             ****************
+                     512     ; *                                           TASK SWITCH HOOK
+                     513     ; *
+                     514     ; * Description: This function is called when a task switch is performed.  This allows you 
+                             to perform other
+                     515     ; *              operations during a context switch.
+                     516     ; *
+                     517     ; * Arguments  : none
+                     518     ; *
+                     519     ; * Note(s)    : 1) Interrupts are disabled during this call.
+                     520     ; *              2) It is assumed that the global pointer 'OSTCBHighRdy' points to the TCB 
+                             of the task that
+                     521     ; *                 will be 'switched in' (i.e. the highest priority task) and, 'OSTCBCur' 
+                             points to the 
+                     522     ; *                 task being switched out (i.e. the preempted task).
+                     523     ; *****************************************************************************************
+                             ****************
+                     524     ; */
+                     525     ; void OSTaskSwHook (void) KCREENTRANT
+                     526     
+----                 527             RSEG  ?PR?_?OSTaskSwHook?OS_CPU_C
+0000                 528     _?OSTaskSwHook:
+                     529                             ; SOURCE LINE # 179
+                     530     ; {
+                     531     ; }
+                     532                             ; SOURCE LINE # 181
+0000 22              533             RET     
+                     534     ; END OF _?OSTaskSwHook
+                     535     
+                     536     ; 
+                     537     ; /*
+                     538     ; *****************************************************************************************
+                             ****************
+                     539     ; *                                           STATISTIC TASK HOOK
+                     540     ; *
+                     541     ; * Description: This function is called every second by uC/OS-II's statistics task.  This 
+                             allows your 
+                     542     ; *              application to add functionality to the statistics task.
+                     543     ; *
+                     544     ; * Arguments  : none
+                     545     ; *****************************************************************************************
+                             ****************
+                     546     ; */
+A51 MACRO ASSEMBLER  OS_CPU_C                                                             07/03/2002 08:51:27 PAGE    10
+
+                     547     ; void OSTaskStatHook (void) KCREENTRANT
+                     548     
+----                 549             RSEG  ?PR?_?OSTaskStatHook?OS_CPU_C
+0000                 550     _?OSTaskStatHook:
+                     551                             ; SOURCE LINE # 193
+                     552     ; {
+                     553     ; }
+                     554                             ; SOURCE LINE # 195
+0000 22              555             RET     
+                     556     ; END OF _?OSTaskStatHook
+                     557     
+                     558     ; 
+                     559     ; /*
+                     560     ; *****************************************************************************************
+                             ****************
+                     561     ; *                                               TICK HOOK
+                     562     ; *
+                     563     ; * Description: This function is called every tick.
+                     564     ; *
+                     565     ; * Arguments  : none
+                     566     ; *
+                     567     ; * Note(s)    : 1) Interrupts may or may not be ENABLED during this call.
+                     568     ; *****************************************************************************************
+                             ****************
+                     569     ; */
+                     570     ; void OSTimeTickHook (void) KCREENTRANT
+                     571     
+----                 572             RSEG  ?PR?_?OSTimeTickHook?OS_CPU_C
+0000                 573     _?OSTimeTickHook:
+                     574                             ; SOURCE LINE # 208
+                     575     ; {
+                     576     ; }
+                     577                             ; SOURCE LINE # 210
+0000 22              578             RET     
+                     579     ; END OF _?OSTimeTickHook
+                     580     
+                     581             END
+A51 MACRO ASSEMBLER  OS_CPU_C                                                             07/03/2002 08:51:27 PAGE    11
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E                          T Y P E  V A L U E   ATTRIBUTES
+
+?C0001. . . . . . . . . . . . .  C ADDR   00ACH   R   SEG=?PR?_?OSTASKSTKINIT?OS_CPU_C
+?C?ADDXBP . . . . . . . . . . .  C ADDR   -----       EXT
+?C?CSTPTR . . . . . . . . . . .  C ADDR   -----       EXT
+?C?IILDX. . . . . . . . . . . .  C ADDR   -----       EXT
+?C?ISTPTR . . . . . . . . . . .  C ADDR   -----       EXT
+?C?PILDXDATA. . . . . . . . . .  C ADDR   -----       EXT
+?C?PLDXDATA . . . . . . . . . .  C ADDR   -----       EXT
+?C?PSTPTR . . . . . . . . . . .  C ADDR   -----       EXT
+?C?PSTXDATA . . . . . . . . . .  C ADDR   -----       EXT
+?C?XBPOFF . . . . . . . . . . .  C ADDR   -----       EXT
+?C_XBP. . . . . . . . . . . . .  D ADDR   -----       EXT
+?PR?OS_CPU_C. . . . . . . . . .  C SEG    0045H       REL=INBLOCK
+?PR?_?OSTASKCREATEHOOK?OS_CPU_C  C SEG    0015H       REL=INBLOCK
+?PR?_?OSTASKDELHOOK?OS_CPU_C. .  C SEG    0015H       REL=INBLOCK
+?PR?_?OSTASKSTATHOOK?OS_CPU_C .  C SEG    0001H       REL=INBLOCK
+?PR?_?OSTASKSTKINIT?OS_CPU_C. .  C SEG    00B2H       REL=INBLOCK
+?PR?_?OSTASKSWHOOK?OS_CPU_C . .  C SEG    0001H       REL=INBLOCK
+?PR?_?OSTICKISR?OS_CPU_C. . . .  C SEG    0048H       REL=INBLOCK
+?PR?_?OSTIMETICKHOOK?OS_CPU_C .  C SEG    0001H       REL=INBLOCK
+AC. . . . . . . . . . . . . . .  B ADDR   00D0H.6 A   
+ACC . . . . . . . . . . . . . .  D ADDR   00E0H   A   
+AR0 . . . . . . . . . . . . . .  D ADDR   0000H   A   
+AR1 . . . . . . . . . . . . . .  D ADDR   0001H   A   
+AR2 . . . . . . . . . . . . . .  D ADDR   0002H   A   
+AR3 . . . . . . . . . . . . . .  D ADDR   0003H   A   
+AR4 . . . . . . . . . . . . . .  D ADDR   0004H   A   
+AR5 . . . . . . . . . . . . . .  D ADDR   0005H   A   
+AR6 . . . . . . . . . . . . . .  D ADDR   0006H   A   
+AR7 . . . . . . . . . . . . . .  D ADDR   0007H   A   
+B . . . . . . . . . . . . . . .  D ADDR   00F0H   A   
+COM0008 . . . . . . . . . . . .  C ADDR   0000H   R   SEG=?PR?OS_CPU_C
+CP_RL2. . . . . . . . . . . . .  B ADDR   00C8H.0 A   
+CY. . . . . . . . . . . . . . .  B ADDR   00D0H.7 A   
+C_T2. . . . . . . . . . . . . .  B ADDR   00C8H.1 A   
+DPH . . . . . . . . . . . . . .  D ADDR   0083H   A   
+DPL . . . . . . . . . . . . . .  D ADDR   0082H   A   
+EA. . . . . . . . . . . . . . .  B ADDR   00A8H.7 A   
+ES. . . . . . . . . . . . . . .  B ADDR   00A8H.4 A   
+ET0 . . . . . . . . . . . . . .  B ADDR   00A8H.1 A   
+ET1 . . . . . . . . . . . . . .  B ADDR   00A8H.3 A   
+ET2 . . . . . . . . . . . . . .  B ADDR   00A8H.5 A   
+EX0 . . . . . . . . . . . . . .  B ADDR   00A8H.0 A   
+EX1 . . . . . . . . . . . . . .  B ADDR   00A8H.2 A   
+EXEN2 . . . . . . . . . . . . .  B ADDR   00C8H.3 A   
+EXF2. . . . . . . . . . . . . .  B ADDR   00C8H.6 A   
+F0. . . . . . . . . . . . . . .  B ADDR   00D0H.5 A   
+IE. . . . . . . . . . . . . . .  D ADDR   00A8H   A   
+IE0 . . . . . . . . . . . . . .  B ADDR   0088H.1 A   
+IE1 . . . . . . . . . . . . . .  B ADDR   0088H.3 A   
+INT0. . . . . . . . . . . . . .  B ADDR   00B0H.2 A   
+INT1. . . . . . . . . . . . . .  B ADDR   00B0H.3 A   
+IP. . . . . . . . . . . . . . .  D ADDR   00B8H   A   
+IT0 . . . . . . . . . . . . . .  B ADDR   0088H.0 A   
+IT1 . . . . . . . . . . . . . .  B ADDR   0088H.2 A   
+L?0009. . . . . . . . . . . . .  C ADDR   0000H   R   SEG=?PR?OS_CPU_C
+L?0010. . . . . . . . . . . . .  C ADDR   0000H   R   SEG=?PR?OS_CPU_C
+L?0011. . . . . . . . . . . . .  C ADDR   0003H   R   SEG=?PR?OS_CPU_C
+L?0012. . . . . . . . . . . . .  C ADDR   0010H   R   SEG=?PR?OS_CPU_C
+L?0013. . . . . . . . . . . . .  C ADDR   002CH   R   SEG=?PR?OS_CPU_C
+L?0014. . . . . . . . . . . . .  C ADDR   0033H   R   SEG=?PR?OS_CPU_C
+A51 MACRO ASSEMBLER  OS_CPU_C                                                             07/03/2002 08:51:27 PAGE    12
+
+L?0015. . . . . . . . . . . . .  C ADDR   0033H   R   SEG=?PR?OS_CPU_C
+L?0016. . . . . . . . . . . . .  C ADDR   003CH   R   SEG=?PR?OS_CPU_C
+OS_CPU_C. . . . . . . . . . . .  N NUMB   -----       
+OV. . . . . . . . . . . . . . .  B ADDR   00D0H.2 A   
+P . . . . . . . . . . . . . . .  B ADDR   00D0H.0 A   
+P0. . . . . . . . . . . . . . .  D ADDR   0080H   A   
+P1. . . . . . . . . . . . . . .  D ADDR   0090H   A   
+P2. . . . . . . . . . . . . . .  D ADDR   00A0H   A   
+P3. . . . . . . . . . . . . . .  D ADDR   00B0H   A   
+PCON. . . . . . . . . . . . . .  D ADDR   0087H   A   
+PS. . . . . . . . . . . . . . .  B ADDR   00B8H.4 A   
+PSW . . . . . . . . . . . . . .  D ADDR   00D0H   A   
+PT0 . . . . . . . . . . . . . .  B ADDR   00B8H.1 A   
+PT1 . . . . . . . . . . . . . .  B ADDR   00B8H.3 A   
+PT2 . . . . . . . . . . . . . .  B ADDR   00B8H.5 A   
+PX0 . . . . . . . . . . . . . .  B ADDR   00B8H.0 A   
+PX1 . . . . . . . . . . . . . .  B ADDR   00B8H.2 A   
+RB8 . . . . . . . . . . . . . .  B ADDR   0098H.2 A   
+RCAP2H. . . . . . . . . . . . .  D ADDR   00CBH   A   
+RCAP2L. . . . . . . . . . . . .  D ADDR   00CAH   A   
+RCLK. . . . . . . . . . . . . .  B ADDR   00C8H.5 A   
+RD. . . . . . . . . . . . . . .  B ADDR   00B0H.7 A   
+REN . . . . . . . . . . . . . .  B ADDR   0098H.4 A   
+RI. . . . . . . . . . . . . . .  B ADDR   0098H.0 A   
+RS0 . . . . . . . . . . . . . .  B ADDR   00D0H.3 A   
+RS1 . . . . . . . . . . . . . .  B ADDR   00D0H.4 A   
+RXD . . . . . . . . . . . . . .  B ADDR   00B0H.0 A   
+SBUF. . . . . . . . . . . . . .  D ADDR   0099H   A   
+SCON. . . . . . . . . . . . . .  D ADDR   0098H   A   
+SM0 . . . . . . . . . . . . . .  B ADDR   0098H.7 A   
+SM1 . . . . . . . . . . . . . .  B ADDR   0098H.6 A   
+SM2 . . . . . . . . . . . . . .  B ADDR   0098H.5 A   
+SP. . . . . . . . . . . . . . .  D ADDR   0081H   A   
+STACK . . . . . . . . . . . . .  I ADDR   -----       EXT
+T0. . . . . . . . . . . . . . .  B ADDR   00B0H.4 A   
+T1. . . . . . . . . . . . . . .  B ADDR   00B0H.5 A   
+T2. . . . . . . . . . . . . . .  B ADDR   0090H.0 A   
+T2CON . . . . . . . . . . . . .  D ADDR   00C8H   A   
+T2EX. . . . . . . . . . . . . .  B ADDR   0090H.1 A   
+TB8 . . . . . . . . . . . . . .  B ADDR   0098H.3 A   
+TCLK. . . . . . . . . . . . . .  B ADDR   00C8H.4 A   
+TCON. . . . . . . . . . . . . .  D ADDR   0088H   A   
+TF0 . . . . . . . . . . . . . .  B ADDR   0088H.5 A   
+TF1 . . . . . . . . . . . . . .  B ADDR   0088H.7 A   
+TF2 . . . . . . . . . . . . . .  B ADDR   00C8H.7 A   
+TH0 . . . . . . . . . . . . . .  D ADDR   008CH   A   
+TH1 . . . . . . . . . . . . . .  D ADDR   008DH   A   
+TH2 . . . . . . . . . . . . . .  D ADDR   00CDH   A   
+TI. . . . . . . . . . . . . . .  B ADDR   0098H.1 A   
+TL0 . . . . . . . . . . . . . .  D ADDR   008AH   A   
+TL1 . . . . . . . . . . . . . .  D ADDR   008BH   A   
+TL2 . . . . . . . . . . . . . .  D ADDR   00CCH   A   
+TMOD. . . . . . . . . . . . . .  D ADDR   0089H   A   
+TR0 . . . . . . . . . . . . . .  B ADDR   0088H.4 A   
+TR1 . . . . . . . . . . . . . .  B ADDR   0088H.6 A   
+TR2 . . . . . . . . . . . . . .  B ADDR   00C8H.2 A   
+TXD . . . . . . . . . . . . . .  B ADDR   00B0H.1 A   
+WR. . . . . . . . . . . . . . .  B ADDR   00B0H.6 A   
+_?OSINTENTER. . . . . . . . . .  C ADDR   -----       EXT
+_?OSINTEXIT . . . . . . . . . .  C ADDR   -----       EXT
+_?OSTASKCREATEHOOK. . . . . . .  C ADDR   0000H   R   SEG=?PR?_?OSTASKCREATEHOOK?OS_CPU_C
+_?OSTASKDELHOOK . . . . . . . .  C ADDR   0000H   R   SEG=?PR?_?OSTASKDELHOOK?OS_CPU_C
+_?OSTASKSTATHOOK. . . . . . . .  C ADDR   0000H   R   SEG=?PR?_?OSTASKSTATHOOK?OS_CPU_C
+_?OSTASKSTKINIT . . . . . . . .  C ADDR   0000H   R   SEG=?PR?_?OSTASKSTKINIT?OS_CPU_C
+_?OSTASKSWHOOK. . . . . . . . .  C ADDR   0000H   R   SEG=?PR?_?OSTASKSWHOOK?OS_CPU_C
+_?OSTICKISR . . . . . . . . . .  C ADDR   0000H   R   SEG=?PR?_?OSTICKISR?OS_CPU_C
+A51 MACRO ASSEMBLER  OS_CPU_C                                                             07/03/2002 08:51:27 PAGE    13
+
+_?OSTIMETICK. . . . . . . . . .  C ADDR   -----       EXT
+_?OSTIMETICKHOOK. . . . . . . .  C ADDR   0000H   R   SEG=?PR?_?OSTIMETICKHOOK?OS_CPU_C
+_?USERTICKTIMER . . . . . . . .  C ADDR   -----       EXT
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

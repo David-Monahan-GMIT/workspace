@@ -1,0 +1,19 @@
+".\bin\obj\OS_TIME.obj",
+".\bin\obj\OS_FLAG.obj",
+".\bin\obj\OS_MBOX.obj",
+".\bin\obj\OS_MEM.obj",
+".\bin\obj\OS_MUTEX.obj",
+".\bin\obj\OS_Q.obj",
+".\bin\obj\OS_SEM.obj",
+".\bin\obj\OS_TASK.obj",
+".\bin\obj\OS_CORE.obj",
+".\bin\obj\OS_CPU_A.obj",
+".\bin\obj\OS_CPU_C.obj",
+".\bin\obj\TASKS.obj",
+".\bin\obj\STARTUP.obj" 
+TO ".\bin\obj\kernel" REGFILE (.\bin\obj\kernel.ORC) 
+PRINT(".\bin\lst\kernel.m51") NOLINES, NOSYMBOLS, NOPUBLICS 
+RAMSIZE(256) 
+DISABLEWARNING (16) 
+CODE( 0X0000-0XFFFE )
+XDATA( 0X0000-0X7FFF )
