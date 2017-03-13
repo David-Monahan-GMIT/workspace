@@ -1,19 +1,60 @@
 /*
- * Matrix.cpp
+ * Matrix.h
  *
  *  Created on: 24 Jan 2017
  *      Author: Dave
  */
+
+#ifndef SRC_MATRIX_H_
+#define SRC_MATRIX_H_
+
+#define VERBOSE 1
+
 #include <iostream>
 #include <cmath>
+#include <time.h>
 #include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
-#include "Matrix.h"
-
 namespace DavesMatrix {
 
-int Matrix::matrix_cnt = 0;
-Matrix::Matrix() : rows(0), cols(0), mat(nullptr) {
+template <class T>
+class Matrix {
+	private:
+		unsigned int rows;
+		unsigned int cols;
+		T **mat;
+		static int matrix_cnt;
+		
+	public:
+	//constructors
+		Matrix();
+		Matrix(T num);
+		Matrix(unsigned int row, unsigned int col);
+		Matrix(const Matrix&);
+		~Matrix();
+	// Functions
+		unsigned int getRows() const { return rows; }
+		unsigned int getCols() const { return cols; }
+		int getMatrixCnt() const { return matrix_cnt; }
+
+		T getElement(unsigned int row, unsigned int col) const;
+		void setElement(unsigned int row, unsigned int col, T i);
+	//	friend std::ostream &operator<<(std::ostream &, const Matrix &);
+		Matrix& operator=(const Matrix &matrix);
+		void operator+=(const Matrix &matrix);
+		void operator-=(const Matrix &matrix);
+		const bool operator==(const Matrix &matrix);
+		const bool operator!=(const Matrix &matrix);
+		const Matrix operator+(const Matrix &matrix) const;
+		const Matrix operator-(const Matrix &matrix) const;
+		const Matrix operator*(const Matrix &matrix) const;
+		const T operator()(unsigned int, unsigned int);
+
+	};
+template <class T>
+int Matrix<T>::matrix_cnt = 0;
+
+template <class T>
+Matrix<T>::Matrix() : rows(0), cols(0), mat(nullptr) {
 
 	#if VERBOSE
 		std::cout << "Default Constructor" << std::endl;
@@ -21,17 +62,18 @@ Matrix::Matrix() : rows(0), cols(0), mat(nullptr) {
 	matrix_cnt++;
 }
 
-Matrix::Matrix(double num) : rows(10), cols(10), mat(nullptr) {
+template <class T>
+Matrix<T>::Matrix(T num) : rows(10), cols(10), mat(nullptr) {
 	#if VERBOSE
 		std::cout << "Initialising Constructor" << std::endl;
 	#endif
 	srand((unsigned int)num);
-	
+
 	unsigned int i,j;
 
-	mat = new double* [rows];	// New is an operator that can be overloaded, or to add to an existing class
+	mat = new T* [rows];	// New is an operator that can be overloaded, or to add to an existing class
 	for(i=0;i<rows;i++) {
-		mat[i] = new double [cols];
+		mat[i] = new T [cols];
 		for(j=0;j<cols;j++) {
 			mat[i][j] = rand()%100 +1;
 		}
@@ -39,19 +81,20 @@ Matrix::Matrix(double num) : rows(10), cols(10), mat(nullptr) {
 	matrix_cnt++;
 }
 
-Matrix::Matrix(unsigned int row, unsigned int col) : rows(row), cols(col), mat(nullptr) {
+template <class T>
+Matrix<T>::Matrix(unsigned int row, unsigned int col) : rows(row), cols(col), mat(nullptr) {
 
 	#if VERBOSE
 		std::cout << "Custom Matrix Constructor" << std::endl;
 	#endif
 	//rows=row;
 	//cols=col;
-	
+
 	unsigned int i,j;
 	unsigned int k=1;
-	mat = new double* [rows];
+	mat = new T* [rows];
 	for(i=0;i<rows;i++) {
-		mat[i] = new double[cols];
+		mat[i] = new T[cols];
 		for(j=0;j<cols;j++) {
 			mat[i][j] = k;
 			k++;
@@ -60,7 +103,8 @@ Matrix::Matrix(unsigned int row, unsigned int col) : rows(row), cols(col), mat(n
 	matrix_cnt++;
 }
 
-Matrix::Matrix(const Matrix& matCopy) : rows(0), cols(0), mat(nullptr) {
+template <class T>
+Matrix<T>::Matrix(const Matrix& matCopy) : rows(0), cols(0), mat(nullptr) {
 
 	#if VERBOSE
 		std::cout << "Copy Constructor" << std::endl;
@@ -71,9 +115,9 @@ Matrix::Matrix(const Matrix& matCopy) : rows(0), cols(0), mat(nullptr) {
 
 	unsigned int i,j;
 
-	mat = new double* [rows];
+	mat = new T* [rows];
 	for(i=0;i<rows;i++) {
-		mat[i] = new double[cols];
+		mat[i] = new T[cols];
 		for(j=0;j<cols;j++) {
 			mat[i][j] = matCopy.getElement(i,j);
 		}
@@ -82,11 +126,12 @@ Matrix::Matrix(const Matrix& matCopy) : rows(0), cols(0), mat(nullptr) {
 
 }
 
-Matrix::~Matrix() {
+template <class T>
+Matrix<T>::~Matrix() {
 	#if VERBOSE
 		std::cout << "Default Destructor" << std::endl;
 	#endif
-	if(mat != nullptr){ 
+	if(mat != nullptr){
 		for(unsigned int i=0; i<rows; i++) {
 			delete [] mat[i];
 		}
@@ -95,8 +140,8 @@ Matrix::~Matrix() {
 	matrix_cnt--;
 }
 
-
-double Matrix::getElement(unsigned int row, unsigned int col) const {
+template <class T>
+T Matrix<T>::getElement(unsigned int row, unsigned int col) const {
 	try {
 		if (row <= rows && col <= cols) {
 			return mat[row][col];
@@ -111,11 +156,12 @@ double Matrix::getElement(unsigned int row, unsigned int col) const {
 	return 0;
 }
 
-void Matrix::setElement(unsigned int row, unsigned int col, double i){
+template <class T>
+void Matrix<T>::setElement(unsigned int row, unsigned int col, T i){
 	// sets the element located at [row,col]
 	try {
 		if (row <= rows && col <= cols) {
-			mat[row][col] = i;
+			mat[row][col] = (T) i;
 		} else {
 			throw std::out_of_range("number out of range");
 		}
@@ -124,20 +170,22 @@ void Matrix::setElement(unsigned int row, unsigned int col, double i){
 		std::cout <<"Exception: "<< e.what() << std::endl;
 	}
 }
-
-std::ostream& operator<<(std::ostream &output, const Matrix &m) {
+// DavesMatrix::operator<<(std::ostream&, DavesMatrix::Matrix<double> const&)
+template <class T>
+std::ostream& operator<<(std::ostream &output, const Matrix<T> &m) {
 	// Generate a formatted string for the matrix and return it
 	unsigned int i,j;
 	for(i=0; i<m.getRows();i++) {
 		for(j=0;j<m.getCols();j++) {
-			output << m.getElement(i,j) << " ";
+			output << (m.getElement(i,j)) << " ";
 		}
 		output << std::endl;
-	}	
+	}
 	return output;
 }
 
-Matrix& Matrix::operator=(const Matrix &matrix) {
+template <class T>
+Matrix<T>& Matrix<T>::operator=(const Matrix<T> &matrix) {
 
 	// Check for self assignment
 	if(this != &matrix){
@@ -157,9 +205,9 @@ Matrix& Matrix::operator=(const Matrix &matrix) {
 		unsigned int i,j; // elements
 		// Allocate memory for a new matrix and assign it's elements the correct values
 
-		mat = new double* [rows];
+		mat = new T* [rows];
 		for(i=0;i<rows;i++) {
-			mat[i] = new double[cols];
+			mat[i] = new T[cols];
 			for(j=0;j<cols;j++) {
 				mat[i][j] = matrix.getElement(i,j);
 			}
@@ -168,7 +216,8 @@ Matrix& Matrix::operator=(const Matrix &matrix) {
 	return *this;
 }
 
-const Matrix Matrix::operator+(const Matrix &matrix) const {
+template <class T>
+const Matrix<T> Matrix<T>::operator+(const Matrix<T> &matrix) const {
 	Matrix result(*this);
 	if(matrix.getCols() == cols && matrix.getRows() == rows){
 		unsigned int i,j;
@@ -181,8 +230,9 @@ const Matrix Matrix::operator+(const Matrix &matrix) const {
 	return result;
 }
 
-const Matrix Matrix::operator-(const Matrix &matrix) const {
-	Matrix result(*this);
+template <class T>
+const Matrix<T> Matrix<T>::operator-(const Matrix<T> &matrix) const {
+	Matrix<T> result(*this);
 	if(matrix.getCols() == cols && matrix.getRows() == rows){
 		unsigned int i,j;
 		for(i=0;i<rows;i++) {
@@ -194,7 +244,8 @@ const Matrix Matrix::operator-(const Matrix &matrix) const {
 	return result;
 }
 
-void Matrix::operator+=(const Matrix &matrix) {
+template <class T>
+void Matrix<T>::operator+=(const Matrix<T> &matrix) {
 	if(matrix.getCols() == cols && matrix.getRows() == rows){
 		unsigned int i,j;
 		for(i=0;i<rows;i++) {
@@ -205,7 +256,8 @@ void Matrix::operator+=(const Matrix &matrix) {
 	}
 }
 
-void Matrix::operator-=(const Matrix &matrix) {
+template <class T>
+void Matrix<T>::operator-=(const Matrix<T> &matrix) {
 	if(matrix.getCols() == cols && matrix.getRows() == rows){
 		unsigned int i,j;
 		for(i=0;i<rows;i++) {
@@ -216,7 +268,8 @@ void Matrix::operator-=(const Matrix &matrix) {
 	}
 }
 
-const bool Matrix::operator==(const Matrix &matrix) {
+template <class T>
+const bool Matrix<T>::operator==(const Matrix<T> &matrix) {
 	if(matrix.getCols() == cols && matrix.getRows() == rows) {
 		unsigned int i,j;
 		for(i=0;i<rows;i++) {
@@ -231,15 +284,17 @@ const bool Matrix::operator==(const Matrix &matrix) {
 	return false;
 }
 
-const bool Matrix::operator!=(const Matrix &matrix) {
+template <class T>
+const bool Matrix<T>::operator!=(const Matrix<T> &matrix) {
 	return !(*this==matrix);
 }
 
-const Matrix Matrix::operator*(const Matrix &matrix) const {
+template <class T>
+const Matrix<T> Matrix<T>::operator*(const Matrix<T> &matrix) const {
 	std::cout << "Compare rows to cols: " << matrix.getRows() << " " << cols << std::endl;
 	if(matrix.getRows() == cols) {
-		double temp = 0;
-		Matrix result(rows, matrix.getCols());
+		T temp = 0;
+		Matrix<T> result(rows, matrix.getCols());
 		for(unsigned int i=0;i<rows;i++) {
 			for(unsigned int j=0;j<matrix.getCols();j++) {
 				for(unsigned int m=0; m<cols; m++) {
@@ -255,8 +310,10 @@ const Matrix Matrix::operator*(const Matrix &matrix) const {
 	}
 }
 
-const double Matrix::operator()(unsigned int i, unsigned int j) {
-	return *(*mat +i) +j;
+template <class T>
+const T Matrix<T>::operator()(unsigned int i, unsigned int j) {
+	return (T) (*(*mat +i) +j);
 }
 
 }
+#endif /* SRC_MATRIX_H_ */

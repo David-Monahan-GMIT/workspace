@@ -11,6 +11,7 @@
 #define VERBOSE 1
 
 #include <iostream>
+namespace DavesMatrix {
 class Matrix {
 	private:
 		unsigned int rows;
@@ -26,8 +27,10 @@ class Matrix {
 		Matrix(const Matrix&);
 		~Matrix();
 	// Functions
-		unsigned int getRows() const;
-		unsigned int getCols() const;
+		unsigned int getRows() const { return rows; }
+		unsigned int getCols() const { return cols; }
+		int getMatrixCnt() const { return matrix_cnt; }
+
 		double getElement(unsigned int row, unsigned int col) const;
 		void setElement(unsigned int row, unsigned int col, double i);
 		friend std::ostream &operator<<(std::ostream &, const Matrix &);
@@ -40,5 +43,7 @@ class Matrix {
 		const Matrix operator-(const Matrix &matrix) const;
 		const Matrix operator*(const Matrix &matrix) const;
 		const double operator()(unsigned int, unsigned int);
+
 	};
+}
 #endif /* SRC_MATRIX_H_ */
