@@ -16,6 +16,7 @@ void testOperatorsBool();
 void testOperatorsPlusMinusAssignment();
 void testMultiplication();
 void testExceptions();
+void testTemplate();
 
 
 #endif /* SRC_TEST_H_ */

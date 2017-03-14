@@ -15,39 +15,34 @@ using namespace DavesMatrix ;
 
 void TestCaseMenu(int argc, char **argv) {
 
+
+	void (*testFunctions[])() = {
+			testConstructors(),
+			testAssignment(),
+			testOperatorsPlusMinusAssignment(),
+			testOperatorsBool(),
+			testOperatorsPlusMinus(),
+			testMultiplication(),
+			testExceptions(),
+			testTemplate()
+		};
+
+	// Divide the number of bytes in the array by the standard size of a function pointer
+	// This is better than trying to work out the value manually as it will scale with 32 or 64 bit systems
+	const int nTests =  sizeof(testFunctions)/sizeof(void*);
+
 	for(int i=0; i<argc; i++) {
 		int test = atoi(*(argv + i));
-		switch(test) {
-		case 1 :
-			testConstructors();
-			break;
-		case 2 :
-			testAssignment();
-			break;
-		case 3 :
-			testOperatorsPlusMinusAssignment();
-			break;
-		case 4 :
-			testOperatorsBool();
-			break;
-		case 5 :
-			testOperatorsPlusMinus();
-			break;
-		case 6 :
-			testMultiplication();
-			break;
-		case 7 :
-			testExceptions();
-			break;
-		}
+		(*testFunctions[test])();
+		testConstructors();
 	}
 }
 
 void testConstructors() {
-	Matrix m1; // empty matrix default constructor
-	Matrix m2(2.2);
-	Matrix m3(3,5);
-	Matrix m4(m3);
+	Matrix<double> m1; // empty matrix default constructor
+	Matrix<double> m2(2.2);
+	Matrix<double> m3(3,5);
+	Matrix<double> m4(m3);
 
 	std::cout << "Matrix 2= " << std::endl << m2;
 	std::cout << "Matrix 2 element at 5,5 = " << m2.getElement(5,5) << std::endl;
@@ -169,7 +164,7 @@ void testMultiplication() {
 }
 
 void testExceptions() {
-	Matrix m1(3,3), m2(4,4);
+	Matrix<double> m1(3,3), m2(4,4);
 	std::cout << "Matrix 1 = " << std::endl << m1;
 	std::cout << "Matrix 2 = " << std::endl << m2;
 	std::cout << "Expect out of range:" << std::endl;
@@ -178,5 +173,19 @@ void testExceptions() {
 	m2.setElement(5,5,1.1);
 	std::cout << "**************************************************************" << std::endl;
 	std::cout << "END TEST 7 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+
+}
+
+void testTemplate() {
+	Matrix<double> m1(4,3);
+
+	unsigned int row = m1.getRows();
+	unsigned int col = m1.getCols();
+
+	std::cout << "Matrix 1 size: " << row << "x" << col << std::endl;
+	std::cout << "Matrix 1 = " << std::endl << m1;
+
+
+
 
 }
