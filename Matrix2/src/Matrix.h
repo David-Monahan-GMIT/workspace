@@ -14,7 +14,7 @@
 #include <cmath>
 #include <time.h>
 #include <stdlib.h>     /* srand, rand */
-namespace DavesMatrix {
+//namespace DavesMatrix {
 
 template <class T>
 class Matrix {
@@ -315,5 +315,5 @@ const T Matrix<T>::operator()(unsigned int i, unsigned int j) {
 	return (T) (*(*mat +i) +j);
 }
 
-}
-#endif /* SRC_MATRIX_H_ */
+//}
+#endif //SRC_MATRIX_H_

@@ -6,12 +6,12 @@
  */
 #include <iostream>
 #include <string>
-#include "Test.h"
+//#include "Test.h"
 
 int main(int argc, char *argv[]) {
 
-	TestCaseMenu<double>(argc,argv);
-	TestCaseMenu<int>(argc,argv);
-	TestCaseMenu<float>(argc,argv);
+	//TestCaseMenu<double>(argc,argv);
+	//TestCaseMenu<int>(argc,argv);
+	//TestCaseMenu<float>(argc,argv);
 	return 0;
 }

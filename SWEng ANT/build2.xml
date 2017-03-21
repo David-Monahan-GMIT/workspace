@@ -1,0 +1,11 @@
+<project default="hello">
+	<target name="hello">
+		<echo message="Hello, World"/>
+	</target>
+	<target name="goodbye">
+		<echo message="goodbye, World"/>
+	</target>
+	<target name="happy">
+		<echo message="Happy Happy Happy"/>
+	</target>
+</project>
