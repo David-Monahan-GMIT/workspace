@@ -8,7 +8,7 @@
 #ifndef SRC_TEST_H_
 #define SRC_TEST_H_
 
-void TestCaseMenu(int argc, char *argv[]);
+void CallTestFunction(int argc, char *argv[]);
 void testConstructors();
 void testAssignment();
 void testOperatorsPlusMinus();

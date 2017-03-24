@@ -17,7 +17,7 @@ class Matrix {
 		unsigned int rows;
 		unsigned int cols;
 		double **mat;
-		static int matrix_cnt = 0;
+		static int matrix_cnt;
 		
 	public:
 	//constructors
