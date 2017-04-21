@@ -13,6 +13,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <vector>
+#include <algorithm>
 
 namespace DavesMatrix {
 template <class T>
@@ -20,13 +21,14 @@ template <class T>
 		private:
 			unsigned int rows;
 			unsigned int cols;
-			std::vector<std::vector<double> > mat;
+			std::vector<std::vector<T> > mat;
 			static int matrix_cnt;
 
 		public:
+
 			//constructors
 					Matrix();
-					Matrix(double num);
+					Matrix(<T> num);
 					Matrix(unsigned int row, unsigned int col);
 					Matrix(const Matrix&);
 					~Matrix();
@@ -34,9 +36,9 @@ template <class T>
 					unsigned int getRows() const { return rows; }
 					unsigned int getCols() const { return cols; }
 					int getMatrixCnt() const { return matrix_cnt; }
-					double getElement(unsigned int row, unsigned int col) const;
+					<T> getElement(unsigned int row, unsigned int col) const;
 					void setElement(unsigned int row, unsigned int col, double i);
-					std::vector<std::vector<double> > getMatrix() const { return mat; }
+					std::vector<std::vector<T> > getMatrix() const { return mat; }
 					//friend std::ostream &operator<<(std::ostream &, const Matrix &);
 					Matrix& operator=(const Matrix &matrix);
 					void operator+=(const Matrix &matrix);
@@ -47,7 +49,17 @@ template <class T>
 					const Matrix operator-(const Matrix &matrix) const;
 					const Matrix operator*(const Matrix &matrix) const;
 					const double operator()(unsigned int, unsigned int);
+
+					int RandomNumber() { return ((std::rand() %100 + 1)) ; }
 	};
+
+class UniqueNumber {
+private:
+	int x;
+public:
+	UniqueNumber() { x=0;}
+	int operator() () {return x++;}
+};
 template <class T>
 int Matrix<T>::matrix_cnt = 0;
 
@@ -71,11 +83,14 @@ Matrix<T>::Matrix(double num) : rows(10), cols(10){
 		mat[i].resize(cols);
 	}
 
-	srand((unsigned int)num);
-	for(unsigned int i=0;i<rows;i++) {
-		for(unsigned int j=0;j<cols;j++) {
-			mat[i][j] = rand()%100 +1;
+	//srand((unsigned int)num);
+/*	for (auto &r:mat) {
+		for(auto &c:r){
+			c = RandomNumber();
 		}
+	}*/
+	for (auto r=mat.begin(); r != mat.end(); r++ ) {
+		std::generate(r->begin(), r->end(), RandomNumber);
 	}
 	matrix_cnt++;
 }
@@ -93,14 +108,12 @@ Matrix<T>::Matrix(unsigned int row, unsigned int col) : rows(row), cols(col) {
 		mat[i].resize(cols);
 	}
 
-
-
-	for(unsigned int i=0;i<rows;i++) {
-		for(unsigned int j=0;j<cols;j++) {
-			mat[i][j] = k;
-			k++;
+	for (typename std::vector<std::vector<T>>::iterator r = mat.begin(); r != mat.end(); r++) {
+			for(typename std::vector<T>::iterator c = r->begin(); c!=r->end(); c++){
+				*c = k;
+				k++;
+			}
 		}
-	}
 	matrix_cnt++;
 }
 
@@ -127,7 +140,7 @@ Matrix<T>::~Matrix() {
 }
 
 template <class T>
-double Matrix<T>::getElement(unsigned int row, unsigned int col) const {
+<T> Matrix<T>::getElement(unsigned int row, unsigned int col) const {
 	try {
 		if (row <= rows && col <= cols) {
 			return mat[row][col];
@@ -143,7 +156,7 @@ double Matrix<T>::getElement(unsigned int row, unsigned int col) const {
 }
 
 template <class T>
-void Matrix<T>::setElement(unsigned int row, unsigned int col, double i){
+void Matrix<T>::setElement(unsigned int row, unsigned int col, <T> i){
 	// sets the element located at [row,col]
 	try {
 		if (row <= rows && col <= cols) {
@@ -160,10 +173,18 @@ void Matrix<T>::setElement(unsigned int row, unsigned int col, double i){
 template <class T>
 std::ostream& operator<<(std::ostream &output, const Matrix<T> &m) {
 	// Generate a formatted string for the matrix and return it
-	unsigned int i,j;
+/*	unsigned int i,j;
 	for(i=0; i<m.getRows();i++) {
 		for(j=0;j<m.getCols();j++) {
 			output << m.getElement(i,j) << " ";
+		}
+		output << std::endl;
+	}
+	return output;*/
+
+	for (auto r : m.getMatrix()) {
+		for(auto c : r){
+			output << c << " ";
 		}
 		output << std::endl;
 	}
@@ -254,7 +275,7 @@ template <class T>
 const Matrix<T> Matrix<T>::operator*(const Matrix<T> &matrix) const {
 	std::cout << "Compare rows to cols: " << matrix.getRows() << " " << cols << std::endl;
 	if(matrix.getRows() == cols) {
-		double temp = 0;
+		<T> temp = 0;
 		Matrix<T> result(rows, matrix.getCols());
 		for(unsigned int i=0;i<rows;i++) {
 			for(unsigned int j=0;j<matrix.getCols();j++) {
@@ -272,10 +293,8 @@ const Matrix<T> Matrix<T>::operator*(const Matrix<T> &matrix) const {
 }
 
 template <class T>
-const double Matrix<T>::operator()(unsigned int i, unsigned int j) {
+const <T> Matrix<T>::operator()(unsigned int i, unsigned int j) {
 	return mat[i][j];
 }
-
-
 }
 #endif /* SRC_MATRIX_H_ */
