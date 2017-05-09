@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<project name="AntQ1" default="setup">
+		<target name="setup" depends="createMainClass">	
+			<get src="http://gmitweb.gmit.ie/pdunne/markingguide.html" dest="." />		
+		</target>
+		
+		<target name="createMainClass" depends="createDirs">
+			<touch file="./src/q1_week1/Main.java" />
+			<touch file="./src/q2_week1/Main.java" />
+			<touch file="./src/q3_week1/Main.java" />			
+		</target>		
+		<target name="createDirs" >
+			<mkdir dir="./src/q1_week1"/>
+			<mkdir dir="./src/q2_week1"/>
+			<mkdir dir="./src/q3_week1"/>			
+		</target>
+	</project>

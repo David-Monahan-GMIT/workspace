@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<project name="AntQ2" default="about">
+	
+	<property name="bin-dir" value="bin"/>
+	<property name="src-dir" value="src" />
+	<property name="doc-dir" value="doc" />
+	<property name="zip-name" value="zip" />
+		<target name="about" >
+			<echo message="Hello from ant -seng lab exam March 2013"/>
+		</target>
+		
+		<target name="setup" >
+			<mkdir dir="./${bin-dir}"/>
+			<mkdir dir="./${src-dir}"/>
+			<mkdir dir="./${doc-dir}"/>
+			<mkdir dir="./${zip-name}"/>				
+		</target>		
+		
+		<target name="genJavadoc" depends="setup">
+			<javadoc sourcefiles="./${src-dir}/Container.java" destdir="./${doc-dir}" />			
+		</target>
+		
+		<target name="zipUp" depends="setup">
+		 <zip destfile="${zip-name}/antq2.zip"
+      		 basedir="./../AntQ2/"
+  		/>
+		</target>
+	</project>
